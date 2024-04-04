@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zawadi/global/widgets/app_bar.dart';
+import 'package:zawadi/global/widgets/payment_form.dart';
 import '../../../../global/styles/app_colors.dart';
 import '../models/card_model.dart';
 import '../utilities/app_text.dart';
@@ -24,9 +25,13 @@ class CardDetailInputScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: model.bgColor,
-      appBar: const QrooAppBar(title1: "Card Detail Input", hasBackButton: true),
+      appBar: const QrooAppBar(
+          title1: 'Zawadi',
+          title2: ' Digital',
+          hasBackButton: true
+      ),
       body: SingleChildScrollView(
+        //backgroundColor: selectedCard.value?.bgColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -67,28 +72,9 @@ class CardDetailInputScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 10),
-                  _buildTextFormField('Recipient', 'name'),
-                  const SizedBox(height: 10),
-                  _buildTextFormField('Email', 'email'),
-                  const SizedBox(height: 10),
-                  _buildTextFormField('Message', 'message', maxLines: 4),
-                  const SizedBox(height: 10),
-                  const _PaymentMethods(),
-                  const SizedBox(height: 32),
-                  CustomElevatedButton(
-                    text: 'Continue',
-                    backgroundColor: Colors.black87,
-                    fixedSize: Size(size.width, 50),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => const CardPurchasedScreen()),
-                        ),
-                      );
-                    },
-                  ),
+                  //_buildTextFormField('Message', 'message', maxLines: 4),
+                  //const SizedBox(height: 10),
+                  PaymentFormWidget(initialContext: context, amount: giftValue,),
                 ],
               ),
             )
@@ -127,63 +113,6 @@ class CardDetailInputScreen extends StatelessWidget {
             ),
           ),
           maxLines: maxLines ?? 1,
-        ),
-      ],
-    );
-  }
-}
-
-class _PaymentMethods extends ConsumerWidget {
-  const _PaymentMethods({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppText.medium(
-          'Payment Method',
-          color: Colors.black87,
-          fontSize: 16,
-          fontWeight: FontWeight.w900,
-        ),
-        const SizedBox(height: 10),
-        ListView(
-          shrinkWrap: true,
-          children: [
-            ListTile(
-              contentPadding: const EdgeInsets.all(0),
-              leading: Radio(
-                value: 'Mastercard',
-                groupValue: 'Mastercard',
-                onChanged: (value) {},
-              ),
-              title: Row(
-                children: [
-                  SvgPicture.asset(""),
-                  const SizedBox(width: 12),
-                  AppText.medium('4180', fontWeight: FontWeight.normal),
-                ],
-              ),
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.all(0),
-              leading: Radio(
-                value: 'Paypal',
-                groupValue: 'Mastercard',
-                onChanged: (value) {},
-              ),
-              title: Row(
-                children: [
-                  const SizedBox(width: 12),
-                  AppText.medium('Paypal', fontWeight: FontWeight.normal),
-                ],
-              ),
-            ),
-          ],
         ),
       ],
     );

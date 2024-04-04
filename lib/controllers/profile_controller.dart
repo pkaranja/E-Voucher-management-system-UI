@@ -7,6 +7,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../models/user_model.dart';
+
 class ProfileController with ChangeNotifier {
   DatabaseReference dbref = FirebaseDatabase.instance.ref().child('Users');
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -87,5 +89,20 @@ class ProfileController with ChangeNotifier {
     dbref
         .child(user.uid)
         .update({'profilePic': newUrl.toString()}).then((value) {});
+  }
+
+  Future<UserModel?> getUserData() async {
+    try {
+      DatabaseEvent userDataEvent = await dbref.child(user.uid).once();
+      if (userDataEvent.snapshot.value != null) {
+        return UserModel.fromSnapshot(userDataEvent.snapshot);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+      return null;
+    }
+
   }
 }

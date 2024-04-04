@@ -25,12 +25,11 @@ class CardDetailScreen extends ConsumerWidget {
     final selectedCard = ref.watch(selectedCardProvider);
 
     return Scaffold(
-      backgroundColor: selectedCard.value?.bgColor,
+      //backgroundColor: selectedCard.value?.bgColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const _SelectedCard(),
-          const _CustomizeButton(),
           Hero(
             tag: "BottomSheet",
             child: _GiftCardValue(
@@ -64,7 +63,7 @@ class _SelectedCard extends ConsumerWidget {
           children: [
             IconButton(
               onPressed: () => selectedCardNotifier.prevCard(),
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
             ),
             Expanded(
               child: Container(
@@ -90,33 +89,11 @@ class _SelectedCard extends ConsumerWidget {
             ),
             IconButton(
               onPressed: () => selectedCardNotifier.nextCard(),
-              icon: Icon(Icons.arrow_forward_sharp)
+              icon: const Icon(Icons.arrow_forward_sharp)
             ),
           ],
         ),
         error: (e, s) => Center(child: AppText.medium("Card not found: $e")),
-      ),
-    );
-  }
-}
-
-class _CustomizeButton extends StatelessWidget {
-  const _CustomizeButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: Colors.black38,
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(width: 10),
-          AppText.small('Customize', color: kGreenColor, letterSpacing: 1)
-        ],
       ),
     );
   }
@@ -158,10 +135,10 @@ class _GiftCardValue extends ConsumerWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               children: [
-                ...[50, 100, 200, 500, 1000].map(
+                ...[500, 10000, 20000, 50000, 100000, 200000].map(
                   (value) {
                     return CustomChips(
-                      label: '\$$value',
+                      label: '\Tsh$value',
                       focusColor: Colors.black87,
                       isSelected: selectedAmount == value,
                       onTap: () {

@@ -29,15 +29,6 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
   bool loading = false;
   bool obscureText = true;
   String imageUrl = " ";
-
-  String? dropdownValue = 'Income range';
-  final items = [
-    'Income range',
-    'Less than 200K',
-    '200K - 400K',
-    '400K - 600K',
-    'More than 600K'
-  ];
   String? value;
 
   DropdownMenuItem<String> buildMenuItem(String item) =>

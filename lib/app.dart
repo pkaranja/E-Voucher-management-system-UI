@@ -2,13 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zawadi/pages/home/providers/events_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zawadi/global/app_state.dart';
 import 'package:zawadi/global/router.dart';
 import 'package:zawadi/global/permissions_handler.dart';
-import 'package:zawadi/global/theme.dart';
 import 'package:zawadi/global/auth_provider.dart';
 import 'package:flutter/foundation.dart';
 
@@ -60,7 +58,6 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => AppStateProvider()),
         ChangeNotifierProvider(create: (context) => AppPermissionProvider()),
         ChangeNotifierProvider(create: (context) => AuthStateProvider()),
-        ChangeNotifierProvider(create: (context) => EventsProvider()),
 
         ProxyProvider<AppStateProvider, AppRouter>(
             update: (context, appStateProvider, _) => AppRouter(

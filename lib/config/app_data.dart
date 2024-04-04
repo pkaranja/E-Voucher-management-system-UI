@@ -104,14 +104,6 @@ List<CartEventModel> cartItems = [
   ),
 ];
 
-//Profile
-UserModel user = UserModel(
-  name: 'Alexandro James',
-  email: 'yourmail@mail.com',
-  cpf: '##########',
-  phone: '+12 34 5 6789-1011',
-  password: '********',
-);
 
 // Orders List
 List<OrderModel> orders = [

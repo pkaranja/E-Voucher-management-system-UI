@@ -131,8 +131,7 @@ class AuthStateProvider with ChangeNotifier {
     } catch (e) {
       showDialog(
           context: context,
-          builder: (context) =>
-              errorDialog(context, "Something went wrong please try again"));
+          builder: (context) => errorDialog(context, "Something went wrong please try again"));
       setPrcState(ProcessingState.done);
     }
     // notify the listeners.

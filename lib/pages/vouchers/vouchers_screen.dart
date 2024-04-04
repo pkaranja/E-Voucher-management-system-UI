@@ -11,11 +11,6 @@ class VouchersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const QrooAppBar(
-        title1: 'Zawadi',
-        title2: ' Digital',
-        hasBackButton: false,
-      ),
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
         physics: const BouncingScrollPhysics(),

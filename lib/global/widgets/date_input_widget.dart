@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_field_style.dart';
 
-class DynamicInputWidget extends StatelessWidget {
-  const DynamicInputWidget(
+class DateInputWidget extends StatelessWidget {
+  const DateInputWidget(
       {required this.controller,
       required this.obscureText,
       required this.focusNode,

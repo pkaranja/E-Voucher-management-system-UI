@@ -27,10 +27,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final InputValidators authValidator = InputValidators();
 
   final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   final FocusNode emailFocusNode = FocusNode();
+  final FocusNode phoneNumberFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
   final FocusNode confirmPasswordFocusNode = FocusNode();
 
@@ -42,10 +44,13 @@ class _SignupScreenState extends State<SignupScreen> {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    phoneNumberController.dispose();
 
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
     confirmPasswordFocusNode.dispose();
+    phoneNumberFocusNode.dispose();
+
   }
 
   void toggleObscureText() {
@@ -60,34 +65,32 @@ class _SignupScreenState extends State<SignupScreen> {
         loading = true;
       });
 
-      await _auth
-          .createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
           email: emailController.text.toString(),
           password: confirmPasswordController.text.toString())
           .then((value) {
-          ref.child(value.user!.uid.toString()).set({
-            'uid': value.user!.uid.toString(),
-            'email': value.user!.email.toString(),
-            'firstName': '',
-            'lastName': '',
-            'phoneNumber': '',
-            'dob': '',
-            'age': '',
-            'profilePic': '',
-          });
+            ref.child(value.user!.uid.toString()).set({
+              'uid': value.user!.uid.toString(),
+              'email': value.user!.email.toString(),
+              'firstName': '',
+              'lastName': '',
+              'phoneNumber': phoneNumberController.text.toString(),
+              'dob': '',
+              'profilePic': '',
+            });
 
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const VerifyEmailScreen()));
-        setState(() {
-          loading = false;
-        });
-      }).onError((error, stackTrace) {
-        ToastMessage().toastMessage(error.toString(), Colors.red);
-        setState(() {
-          loading = false;
-        });
-      });
-    }
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const VerifyEmailScreen()));
+              setState(() {
+                loading = false;
+              });
+          }).onError((error, stackTrace) {
+            ToastMessage().toastMessage(error.toString(), Colors.red);
+            setState(() {
+              loading = false;
+            });
+          });
+     }
   }
 
   @override
@@ -150,7 +153,22 @@ class _SignupScreenState extends State<SignupScreen> {
                                   toggleObscureText: null,
                                   validator: authValidator.emailValidator,
                                   prefIcon: const Icon(Icons.alternate_email, size: 18),
-                                  hint: "Enter Email Address",
+                                  hint: "Enter valid email address",
+                                  textInputAction: TextInputAction.next,
+                                  isNonPasswordField: true,
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+                                SizedBox(
+                                  height: constraints.maxHeight * 0.02,
+                                ),
+                                DynamicInputWidget(
+                                  controller: phoneNumberController,
+                                  obscureText: false,
+                                  focusNode: phoneNumberFocusNode,
+                                  toggleObscureText: null,
+                                  validator: authValidator.textValidator,
+                                  prefIcon: const Icon(Icons.phone, size: 18),
+                                  hint: "Enter valid phone number",
                                   textInputAction: TextInputAction.next,
                                   isNonPasswordField: true,
                                   keyboardType: TextInputType.emailAddress,
@@ -160,7 +178,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                                 DynamicInputWidget(
                                   controller: passwordController,
-                                  hint: "Enter Password",
+                                  hint: "Create secure password",
                                   obscureText: obscureText,
                                   focusNode: passwordFocusNode,
                                   toggleObscureText: toggleObscureText,
@@ -174,7 +192,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                                 DynamicInputWidget(
                                   controller: confirmPasswordController,
-                                  hint: "Confirm Password",
+                                  hint: "Confirm password",
                                   obscureText: obscureText,
                                   focusNode: confirmPasswordFocusNode,
                                   toggleObscureText: toggleObscureText,

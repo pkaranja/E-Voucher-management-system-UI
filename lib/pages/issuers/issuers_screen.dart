@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../global/widgets/app_bar.dart';
+import '../../global/widgets/payment_form.dart';
 
 class IssuersScreen extends StatefulWidget {
   const IssuersScreen({Key? key, this.title}) : super(key: key);
@@ -35,6 +36,7 @@ class _IssuersScreenState extends State<IssuersScreen> {
             ),
           ),
         ],
+
       ),
     );
   }

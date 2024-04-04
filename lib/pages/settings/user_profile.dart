@@ -25,7 +25,6 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   final ref = FirebaseDatabase.instance.ref('Users');
-
   final user = FirebaseAuth.instance.currentUser!;
 
   @override

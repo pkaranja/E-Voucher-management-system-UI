@@ -3,9 +3,14 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:zawadi/pages/settings/update_profile.dart';
 
 import '../../controllers/flutter_toast.dart';
+import '../../controllers/profile_controller.dart';
+import '../../models/user_model.dart';
 import '../../widgets/check_email_widget.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
@@ -26,7 +31,6 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     super.initState();
 
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-
     if (isEmailVerified == false) {
       sendVerificationEmail();
 
@@ -38,9 +42,15 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   Future sendVerificationEmail() async {
     final user = FirebaseAuth.instance.currentUser!;
     await user.sendEmailVerification().then((value) {
-      ToastMessage().toastMessage('Email sent!', Colors.green);
+      showTopSnackBar(
+          Overlay.of(context),
+          const CustomSnackBar.info( message: 'Verification email sent' )
+      );
     }).onError((error, stackTrace) {
-      ToastMessage().toastMessage(error.toString(), Colors.red);
+      showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.error( message: error.toString() )
+      );
     });
   }
 
@@ -53,14 +63,15 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     if (isEmailVerified == true) {
       timer?.cancel();
 
-      DatabaseReference splitRef =
-      ref.child(user.uid.toString()).child('kyc');
+      int age = calculateAge() as int;
+
+      DatabaseReference splitRef = ref.child(user.uid.toString()).child('kyc');
       splitRef.set({
-        'age': 0,
+        'age': age,
         'location': "",
+        'address': "",
         'gender': "",
         'nationality': "",
-        'address': "",
         'govt_id': "",
         'govt_id_expiry_date': "",
         'govt_type': "",
@@ -78,6 +89,31 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     timer?.cancel();
     super.dispose();
   }
+
+  Future<int> calculateAge() async {
+    UserModel userData = ProfileController().getUserData() as UserModel;
+
+    if (userData.dob != null) {
+      if (userData.dob != null) {
+        // Parse the date of birth string into a DateTime object
+        DateTime dob = DateFormat('yyyy-MM-dd').parse(userData.dob);
+        // Calculate the age
+        DateTime now = DateTime.now();
+        int age = now.year - dob.year;
+        if (now.month < dob.month || (now.month == dob.month && now.day < dob.day)) {
+          age--; // Adjust age if birthday hasn't occurred yet this year
+        }
+
+        return age;
+      } else {
+        print('Date of birth not found.');
+      }
+    } else {
+      print('User data incomplete.');
+    }
+    return 0;
+  }
+
 
   @override
   Widget build(BuildContext context) => isEmailVerified
