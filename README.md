@@ -1,16 +1,34 @@
-# zawadi
+# Zawadi UI
 
-Browse and discover a wide selection of digital gift cards from popular retailers, restaurants, and online stores in Tanzania.
+The E-Voucher Management System UI is a modern and user-friendly interface built using Flutter, designed to seamlessly interact with the backend API for managing electronic vouchers. This UI provides intuitive functionalities for users to access and manage vouchers effortlessly.
 
-## Getting Started
+# E-Voucher Management System UI
 
-This project is a starting point for a Flutter application.
+The E-Voucher Management System UI is a sleek and user-friendly interface built using Flutter, designed to seamlessly interact with the backend API for managing electronic vouchers. This UI provides intuitive functionalities for users to access and manage vouchers effortlessly.
 
-A few resources to get you started if this is your first Flutter project:
+## Features
+- **User Authentication:** Secure login and registration functionality for users.
+- **Voucher Management:** View, create, update, and delete vouchers with ease.
+- **Transaction Tracking:** Monitor transactions associated with vouchers conveniently.
+- **User Profile:** Manage user account details and preferences seamlessly.
+- **Responsive Design:** Ensures optimal user experience across various devices and screen sizes.
+- **Integration:** Direct integration with the backend API for seamless data exchange.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Technologies Used
+- Flutter 3
+- Dart
+- Material Design
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## How to Use
+1. Clone the repository: `git clone <repository-url>`
+2. Navigate to the project directory: `cd evoucher-management-ui`
+3. Run the application: `flutter run`
+4. Connect the UI to the backend API by specifying the API endpoints.
+
+## Contributing
+Contributions to enhance the E-Voucher Management System UI are welcome! Fork the repository, make improvements, and submit pull requests.
+
+## License
+This project is licensed under the MIT License.
+
+Thank you for using the E-Voucher Management System UI!
