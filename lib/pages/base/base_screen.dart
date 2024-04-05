@@ -48,8 +48,12 @@ class _BaseScreenState extends State<BaseScreen> {
             label: 'Explore',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: 'Vouchers',
+            icon: Icon(Icons.card_giftcard),
+            label: 'Redeem',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet_outlined),
+            label: 'Purchased',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

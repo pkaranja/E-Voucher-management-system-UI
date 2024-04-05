@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../controllers/apiRequests.dart';
@@ -135,10 +134,6 @@ class _HomePageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
-    final cards = ref.watch(filteredCardsProvider);
-
-    ref.watch(selectedCardIdProvider);
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -160,27 +155,28 @@ class _HomePageWidget extends ConsumerWidget {
             ],
           ),
 
+          SizedBox(height: 10.h),
+
           SizedBox(
             height: 120.h,
             child: issuerCategories.isEmpty
                 ? const Center( child: CircularProgressIndicator() ) // Show loading indicator if data is not fetched yet
                 : ListView.separated(
-              padding: const EdgeInsets.only(left: 20),
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              scrollDirection: Axis.horizontal,
-              itemCount: issuerCategories.length,
-              itemBuilder: (context, index) {
-                final category = issuerCategories[index];
-                return CategoryCard(category: category);
-              },
-              separatorBuilder: (BuildContext context, int index) {
+                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                scrollDirection: Axis.horizontal,
+                itemCount: issuerCategories.length,
+                itemBuilder: (context, index) {
+                  final category = issuerCategories[index];
+                  return CategoryCard(category: category);
+                },
+                separatorBuilder: (BuildContext context, int index) {
                 return SizedBox(
                   width: 15.w,
                 );
               },
             ),
           ),
-          // End Categories
+          //End Categories
 
           SizedBox(height: 27.h),
 
@@ -197,7 +193,6 @@ class _HomePageWidget extends ConsumerWidget {
                     style: GoogleFonts.workSans(
                       textStyle: TextStyle(
                         fontSize: 20.sp,
-                        color: Colors.white,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w600,
                       ),
@@ -223,7 +218,7 @@ class _HomePageWidget extends ConsumerWidget {
                   )
                 ],
               ),
-              SizedBox(height: 15.w),
+              SizedBox(height: 10.h),
             ],
           ),
 
@@ -251,9 +246,7 @@ class _HomePageWidget extends ConsumerWidget {
           ),
           //End Popular
 
-
           SizedBox(height: 27.h),
-
 
           //Explore
           Column(
@@ -279,6 +272,124 @@ class _HomePageWidget extends ConsumerWidget {
               SizedBox(height: 15.w),
             ],
           ),
+
+
+          Container(
+            height: 240.h,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              gradient: const LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color(0xFF0D921B),
+                  Color(0xFFAC2E82),
+                ],
+              ),
+            ),
+            alignment: Alignment.bottomRight,
+            child: SizedBox(
+              height: 240.h,
+              width: double.infinity,
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 10, bottom: 60.h),
+                    child: Image.asset(
+                      'assets/images/gift_box.png',
+                      fit: BoxFit.contain,
+                      colorBlendMode: BlendMode.dstATop,
+                      width: 120.h,
+                    ),
+                  ),
+                  ContainerWithCircle(),
+                ],
+              ),
+            ),
+          ),
+
+          SizedBox(height: 15.h),
+
+          Container(
+            height: 240.h,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              gradient: const LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color(0xFF000000),
+                  Color(0xFFFFFFFF),
+                ],
+              ),
+            ),
+            alignment: Alignment.bottomRight,
+            child: SizedBox(
+              height: 240.h,
+              width: double.infinity,
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 10, bottom: 60.h),
+                    child: Image.asset(
+                      'assets/images/gift_box.png',
+                      fit: BoxFit.contain,
+                      colorBlendMode: BlendMode.dstATop,
+                      width: 120.h,
+                    ),
+                  ),
+                  ContainerWithCircle2(),
+                ],
+              ),
+            ),
+          ),
+
+          SizedBox(height: 15.h),
+
+          Container(
+            height: 240.h,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              gradient: const LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color(0xFF7F340A),
+                  Color(0xFFFFFFFF),
+                ],
+              ),
+            ),
+            alignment: Alignment.bottomRight,
+            child: SizedBox(
+              height: 240.h,
+              width: double.infinity,
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 10, bottom: 60.h),
+                    child: Image.asset(
+                      'assets/images/gift_box.png',
+                      fit: BoxFit.contain,
+                      colorBlendMode: BlendMode.dstATop,
+                      width: 120.h,
+                    ),
+                  ),
+                  ContainerWithCircle3(),
+                ],
+              ),
+            ),
+          ),
+
+          SizedBox(height: 15.h),
 
           Container(
               height: 240.h,
@@ -352,6 +463,276 @@ Future<void> _handleError(dynamic error, String reason, {StackTrace? stackTrace}
       error.toString(),
       stackTraceString.isNotEmpty ? StackTrace.fromString(stackTraceString) : null,
       reason: reason,
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+class ContainerWithCircle extends StatelessWidget {
+  final double circleRadius = 80.0;
+  final double circleBorderWidth = 3.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topLeft,
+      children: <Widget>[
+      Padding(
+          padding: EdgeInsets.only(top: circleRadius / 2.0),
+          child: Container(
+            height: 60.h,
+            decoration: const ShapeDecoration(
+              color: Color(0xFFC4C4C4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.zero,
+                  topRight: Radius.zero,
+                  bottomLeft: Radius.circular(16.0),
+                  bottomRight: Radius.circular(16.0),
+                ),
+              ),
+            ),
+            alignment: Alignment.bottomRight,
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+            child: ElevatedButton(
+              onPressed: () {
+                GoRouter.of(context).goNamed(
+                  APP_PAGE.issuer.routeName,
+                  pathParameters: {'issuerId': 'df137d12-e9c6-46a6-b819-a5b201d3ba18'}
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.0),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.shopping_cart), // Add cart icon
+                  SizedBox(width: 2.0), // Add space between icon and text
+                  Text(
+                      'Buy voucher',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFF262626),
+                        fontSize: 14,
+                        fontFamily: 'Work Sans',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+              ),
+            ),
+          ),
+        ),
+
+        Padding(
+          padding: EdgeInsets.only(left: 16.w),
+          child: Container(
+            width: circleRadius,
+            height: circleRadius,
+            decoration: const ShapeDecoration( shape: CircleBorder(), color: Colors.white ),
+            child: Padding(
+              padding: EdgeInsets.all(circleBorderWidth),
+              child: const DecoratedBox(
+                decoration: ShapeDecoration(
+                    shape: CircleBorder(),
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          'https://scontent.fdar10-1.fna.fbcdn.net/v/t39.30808-6/326477840_920176965661402_8423363002638498982_n.png?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=ze1HNW1bv7MAb5gt0qC&_nc_ht=scontent.fdar10-1.fna&oh=00_AfD0b4h0FEFlpInVKF-EFZ3YGLZXXML7fvXVU8FzSM38_g&oe=66153A05',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+        ),
+      ],
+    );
+  }
+}
+
+
+
+
+class ContainerWithCircle2 extends StatelessWidget {
+  final double circleRadius = 80.0;
+  final double circleBorderWidth = 3.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topLeft,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(top: circleRadius / 2.0),
+          child: Container(
+            height: 100.h,
+            decoration: const ShapeDecoration(
+              color: Color(0xFFC4C4C4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.zero,
+                  topRight: Radius.zero,
+                  bottomLeft: Radius.circular(16.0),
+                  bottomRight: Radius.circular(16.0),
+                ),
+              ),
+            ),
+            alignment: Alignment.bottomRight,
+            padding: EdgeInsets.symmetric(horizontal: 33.w, vertical: 20.h),
+            child: GestureDetector(
+              onTap: () {
+                GoRouter.of(context).goNamed(
+                    APP_PAGE.issuer.routeName,
+                    pathParameters: {'issuerId': 'df137d12-e9c6-46a6-b819-a5b201d3ba18'}
+                );
+              },
+              child: Container(
+                //width: ,
+                height: 35.h,
+                padding: const EdgeInsets.all(8),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Buy now',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF262626),
+                    fontSize: 14,
+                    fontFamily: 'Work Sans',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 16.w),
+          child: Container(
+            width: circleRadius,
+            height: circleRadius,
+            decoration: const ShapeDecoration( shape: CircleBorder(), color: Colors.white ),
+            child: Padding(
+              padding: EdgeInsets.all(circleBorderWidth),
+              child: const DecoratedBox(
+                decoration: ShapeDecoration(
+                  shape: CircleBorder(),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/prints/orcadeco.jpg'),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+        ),
+      ],
+    );
+  }
+}
+
+
+class ContainerWithCircle3 extends StatelessWidget {
+  final double circleRadius = 80.0;
+  final double circleBorderWidth = 3.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topLeft,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(top: circleRadius / 2.0),
+          child: Container(
+            height: 100.h,
+            decoration: const ShapeDecoration(
+              color: Color(0xFFC4C4C4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.zero,
+                  topRight: Radius.zero,
+                  bottomLeft: Radius.circular(16.0),
+                  bottomRight: Radius.circular(16.0),
+                ),
+              ),
+            ),
+            alignment: Alignment.bottomRight,
+            padding: EdgeInsets.symmetric(horizontal: 33.w, vertical: 20.h),
+            child: GestureDetector(
+              onTap: () {
+                GoRouter.of(context).goNamed(
+                    APP_PAGE.issuer.routeName,
+                    pathParameters: {'issuerId': 'df137d12-e9c6-46a6-b819-a5b201d3ba18'}
+                );
+              },
+              child: Container(
+                //width: ,
+                height: 35.h,
+                padding: const EdgeInsets.all(8),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Buy now',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF262626),
+                    fontSize: 14,
+                    fontFamily: 'Work Sans',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 16.w),
+          child: Container(
+            width: circleRadius,
+            height: circleRadius,
+            decoration: const ShapeDecoration( shape: CircleBorder(), color: Colors.white ),
+            child: Padding(
+              padding: EdgeInsets.all(circleBorderWidth),
+              child: const DecoratedBox(
+                decoration: ShapeDecoration(
+                  shape: CircleBorder(),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/prints/samaki.jpg'),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+        ),
+      ],
     );
   }
 }

@@ -4,6 +4,7 @@ class IssuerCategoryModel {
   String name;
   String status;
   String? backgroundColor;
+  int order;
 
   IssuerCategoryModel({
     required this.id,
@@ -11,6 +12,7 @@ class IssuerCategoryModel {
     required this.icon,
     required this.status,
     this.backgroundColor,
+    required this.order,
   });
 
   factory IssuerCategoryModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class IssuerCategoryModel {
       name: json['name'],
       status: json['status'],
       backgroundColor: json['backgroundColor'],
+      order: json['order'],
     );
   }
 

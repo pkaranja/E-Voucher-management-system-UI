@@ -145,7 +145,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     constraints: constraints,
                                     title: 'First Name',
                                     iconName: Icons.person,
-                                    titleValue: map['firstname']),
+                                    titleValue: map['firstName']),
                                 ProfileTab(
                                     constraints: constraints,
                                     title: 'Last Name',
