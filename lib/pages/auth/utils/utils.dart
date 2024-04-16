@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 
 showSnackBar(BuildContext context,
     {required String message, required bool hasError}) {
@@ -41,3 +42,10 @@ loadingDialog(BuildContext context) {
     ),
   );
 }
+
+String apiDateFormatter(DateTime date){
+  String formattedDateTime = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(date);
+
+  return formattedDateTime;
+}
+

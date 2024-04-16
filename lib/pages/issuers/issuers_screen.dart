@@ -69,8 +69,8 @@ class _IssuersScreenState extends State<IssuersScreen> {
               widget.title ?? 'Issuers',
               style: const TextStyle(
                 fontSize: 32.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.normal,
+                fontFamily: 'QrooFont',
               ),
             ),
           ),

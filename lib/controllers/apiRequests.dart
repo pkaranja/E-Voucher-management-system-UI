@@ -1,11 +1,18 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 import 'package:zawadi/global/error_handler.dart';
 
 import '../global/build_search_body.dart';
+import '../models/profile_model.dart';
+import '../models/user_model.dart';
+import '../models/user_model.dart';
+import '../pages/auth/utils/utils.dart';
 
 class ApiRequests {
   FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
@@ -19,6 +26,79 @@ class ApiRequests {
   //Default Headers
   //TODO: use the api auth file
   final headers = {'Content-Type': 'application/json', };
+
+
+  //Fetch Profile
+  Future<Map<String, dynamic>> fetchProfile(String firebaseUserId) async {
+    var url = Uri.http(baseUrl, '/api/users/getByFirebaseId/$firebaseUserId');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        handleError(fetchProfile, 'Error fetching profile from API with CODE $response.statusCode');
+        throw Exception('Failed to fetch profile: ${response.statusCode}');
+      }
+    } catch (e) {
+      handleError(e, 'Failed to fetch profile from API');
+      throw Exception('Failed to fetch profile: $e');
+    }
+  }
+
+  //Update Profile
+  Future<Map<String, dynamic>> updateProfile(Map<String, dynamic> userData, String firebaseUid) async {
+    var url = Uri.http(baseUrl, '/api/users');
+
+    DateTime dateTime = DateFormat("d MMMM yyyy").parse(userData["dateOfBirth"]);
+    String formattedDateOfBirth = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(dateTime);
+
+    ProfileModel profileModel = ProfileModel(isEmailVerified: false, complete: false);
+    profileModel.externalId = firebaseUid;
+    profileModel.address = userData["address"];
+    profileModel.lastLogin = apiDateFormatter(DateTime.now());
+    profileModel.phoneNumber = userData["phoneNumber"];
+    profileModel.giftcardsPurchased = 0;
+    profileModel.giftcardsReceived = 0;
+    profileModel.status = 'ACTIVE';
+    profileModel.firstName = userData["firstName"];
+    profileModel.lastName = userData["lastName"];
+    profileModel.dateOfBirth = formattedDateOfBirth.toString();
+    profileModel.age = userData["age"];
+    profileModel.location = '';
+    profileModel.gender = 'UNDISCLOSED';
+    profileModel.nationality = '';
+    profileModel.govtId = '';
+    profileModel.govtIdType = '';
+    profileModel.region = '';
+    profileModel.privacyPolicyConsent = true;
+    profileModel.privacyPolicyConsentDate = apiDateFormatter(DateTime.now());
+    profileModel.termsAndConditionConsent = true;
+    profileModel.termsAndConditionConsentDate = apiDateFormatter(DateTime.now());
+    profileModel.isAutopayOn = false;
+    profileModel.phoneNumberValidated = false;
+
+    print(profileModel.toJsonObject());
+
+    try {
+      final body = profileModel.toJsonObject();
+      var response = await http.post(url, headers: headers, body: body);
+
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        handleError(fetchProfile, 'Error fetching profile from API with CODE $response.statusCode');
+        throw Exception('Failed to fetch profile: ${response.statusCode}');
+      }
+    } catch (e) {
+      handleError(e, 'Failed to fetch profile from API');
+      throw Exception('Failed to fetch profile: $e');
+    }
+  }
+
 
   //Fetch Categories
   Future<List<dynamic>> fetchCategories() async {

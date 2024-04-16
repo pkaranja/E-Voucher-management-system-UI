@@ -32,8 +32,10 @@ class AppRouter {
 
   Future<bool> checkUserData() async {
     final user = FirebaseAuth.instance.currentUser;
+    bool emailVerified = prefs.getBool('isEmailVerified') ?? false;
+    bool profileComplete = prefs.getBool('complete') ?? false;
 
-    if(user != null) {
+    if(user != null && profileComplete != false && emailVerified != false ) {
       DatabaseReference ref = FirebaseDatabase.instance.reference().child('Users');
 
       final snapshot = await ref.child(user.uid).get();
@@ -55,7 +57,7 @@ class AppRouter {
         builder: (context, state) => const BaseScreen(),
       ),
 
-      // Add the onboard Screen
+      // Add the onboarding Screen
       GoRoute(
         path: APP_PAGE.onboard.routePath,
         name: APP_PAGE.onboard.routeName,
@@ -67,7 +69,7 @@ class AppRouter {
         name: APP_PAGE.auth.routeName,
         builder: (context, state) => const LoginScreen()),
 
-      // Add verify email screen to th router
+      // Verify email page
       GoRoute(
           path: APP_PAGE.verifyEmail.routePath,
           name: APP_PAGE.verifyEmail.routeName,
@@ -149,6 +151,9 @@ class AppRouter {
       // Checking if current path is auth or not
       bool isAuthenticating = state.matchedLocation == authPath;
 
+      // Checking if current path is profile update or not
+      bool isProfileUpdate = state.matchedLocation == editProfilePath;
+
       // Fetching user data existence
       bool userDataExists = await checkUserData();
 
@@ -163,6 +168,7 @@ class AppRouter {
         // return null if the current location is already OnboardScreen to prevent looping
         return isOnboarding ? null : onboardPath;
       }
+
       // only authenticate if user is not logged in
       else if (!isLoggedIn) {
         return isAuthenticating ? null : authPath;

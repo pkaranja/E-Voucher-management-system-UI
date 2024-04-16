@@ -4,6 +4,7 @@ class InputValidators {
   static const String passwordErrMsg = "Password must have at least 6 characters.";
   static const String confirmPasswordErrMsg = "Two passwords don't match.";
   static const String textInputErrMsg = "Please enter a valid input.";
+  static const String phoneInputErrMsg = "Please enter a valid phone number in the format 0*********.";
 
 // A simple email validator that  checks presence and position of @
   String? emailValidator(String? val) {
@@ -63,6 +64,21 @@ class InputValidators {
   String? textValidator(String? val) {
     final String textInput = val as String;
     if (textInput.isEmpty || textInput.length <= 2) return textInputErrMsg;
+    return null;
+  }
+
+  // Phone number validator
+  String? phoneNumberValidator(String? val) {
+    final String phoneNumber = val as String;
+
+    // Regular expression to validate the phone number format
+    final RegExp regExp = RegExp(r'^[0-9]{10}$');
+
+    // Check if the phone number is empty or doesn't match the expected format
+    if (phoneNumber.isEmpty || !regExp.hasMatch(phoneNumber)) {
+      return textInputErrMsg;
+    }
+
     return null;
   }
 }

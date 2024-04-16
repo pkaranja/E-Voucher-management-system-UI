@@ -11,9 +11,10 @@ class QrooAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title2;
   // A bool to check whether its a subpage or not.
   final bool isSubPage;
-  // Search icon.
-  final bool hasSearchFunction;
-
+  // Shopping cart data available.
+  final bool hasShoppingCartData;
+  //Notifications available
+  final bool hasNotifications;
   final bool hasBackButton;
 
   @override
@@ -24,7 +25,8 @@ class QrooAppBar extends StatefulWidget implements PreferredSizeWidget {
         required this.title1,
         this.title2 = "",
         this.isSubPage = false,
-        this.hasSearchFunction = false,
+        this.hasShoppingCartData = false,
+        this.hasNotifications = false,
         required this.hasBackButton,
         this.prefSize = const Size.fromHeight(56.0),
         super.key});
@@ -72,14 +74,15 @@ class _QrooAppBarState extends State<QrooAppBar> {
         },
       ) : null,
       actions: [
-        widget.hasSearchFunction ? IconButton(
+        widget.hasShoppingCartData ? IconButton(
           onPressed: () => GoRouter.of(context).goNamed(APP_PAGE.search.routeName),
-          icon: const Icon(Icons.search),
+          icon: const Icon(Icons.shopping_cart_outlined),
         ) : const Icon(null),
-        IconButton(
-          icon: const Icon(Icons.shopping_cart_sharp),
-          onPressed: () => GoRouter.of(context).goNamed(APP_PAGE.cart.routeName),
-        ),
+
+        widget.hasNotifications ? IconButton(
+          onPressed: () => GoRouter.of(context).goNamed(APP_PAGE.search.routeName),
+          icon: const Icon(Icons.notifications_active),
+        ) : const Icon(null),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../styles/app_colors.dart';
 import '../styles/text_field_style.dart';
@@ -45,38 +46,42 @@ class DateInputWidget extends StatelessWidget {
       style: Theme.of(context).textTheme.bodyMedium,
       controller: controller,
       decoration: InputDecoration(
-          hintText: hint,
-          prefixIcon: prefIcon,
-          suffixIcon: IconButton(
-            onPressed: toggleObscureText,
-            // If is non-password filed like email the suffix icon will be null
-            icon: isNonPasswordField
-                ? const Icon(null)
-                : obscureText
-                ? const Icon(Icons.visibility)
-                : const Icon(Icons.visibility_off),
-          ),
-          //hintText: hint,
-          hintStyle: const TextStyle(fontSize: 16, color: themeSecondaryColor),
-          filled: true,
-          hoverColor: themeSecondaryColor,
-          focusColor: themeGreyColor,
-          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
-          enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+        hintText: hint,
+        prefixIcon: prefIcon,
+        suffixIcon: IconButton(
+          onPressed: toggleObscureText,
+          icon: isNonPasswordField
+              ? const Icon(null)
+              : obscureText
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        ),
+        hintStyle: const TextStyle(fontSize: 16, color: themeSecondaryColor),
+        filled: true,
+        hoverColor: themeSecondaryColor,
+        focusColor: themeGreyColor,
+        focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+        enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
       ),
       focusNode: focusNode,
       textInputAction: textInputAction,
       obscureText: obscureText,
       validator: validator,
       keyboardType: keyboardType,
-      onTap: () async{
+      onTap: () async {
         FocusScope.of(context).requestFocus(FocusNode());
-        date = await showDatePicker(
-            context: context,
-            initialDate:DateTime.now(),
-            firstDate:DateTime(1900),
-            lastDate: DateTime(2100));
-      }
+        final selectedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2100),
+        );
+        if (selectedDate != null) {
+          final formattedDate = DateFormat("d MMMM yyyy").format(selectedDate);
+          // Update the text field's value with the selected date
+          controller.text = formattedDate;
+        }
+      },
     );
   }
 }
