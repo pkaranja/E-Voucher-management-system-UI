@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zawadi/pages/issuers/issuers_screen.dart';
-
-import '../models/card_model.dart';
+import '../../../../models/voucher_model.dart';
 import '../providers/filtered_cards_provider.dart';
 import '../providers/search_query_provider.dart';
 import '../providers/selected_card_category_provider.dart';

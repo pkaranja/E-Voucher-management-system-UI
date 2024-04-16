@@ -42,7 +42,7 @@ class DateInputWidget extends StatelessWidget {
     DateTime? date = DateTime(1900);
 
     return TextFormField(
-      style: textFieldTextStyle(),
+      style: Theme.of(context).textTheme.bodyMedium,
       controller: controller,
       decoration: InputDecoration(
           hintText: hint,
@@ -57,10 +57,10 @@ class DateInputWidget extends StatelessWidget {
                 : const Icon(Icons.visibility_off),
           ),
           //hintText: hint,
-          hintStyle: const TextStyle(fontSize: 14, color: kGrayC),
+          hintStyle: const TextStyle(fontSize: 16, color: themeSecondaryColor),
           filled: true,
-          hoverColor: kGreenColor,
-          focusColor: kGrayC,
+          hoverColor: themeSecondaryColor,
+          focusColor: themeGreyColor,
           focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
           enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
       ),

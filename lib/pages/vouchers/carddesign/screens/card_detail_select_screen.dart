@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zawadi/global/styles/app_colors.dart';
-import 'package:zawadi/global/widgets/app_bar.dart';
 
-import '../models/card_model.dart';
+import '../../../../models/voucher_model.dart';
 import '../providers/selected_card_provider.dart';
 import '../providers/selected_gift_amount_provider.dart';
 import '../utilities/app_text.dart';
@@ -55,7 +53,7 @@ class _SelectedCard extends ConsumerWidget {
     final selectedGiftAmount = ref.watch(selectedGiftAmountProvider);
 
     return Container(
-      height: size.height * 0.5,
+      height: size.height * 0.9,
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: selectedCard.when(
         loading: () => const Center(child: CircularProgressIndicator()),

@@ -126,6 +126,14 @@ flutter:
     - assets/svgs/
 
   fonts:
+    - family: QrooFont
+      fonts:
+        - asset: assets/fonts/QrooRegular.ttf
+        - asset: assets/fonts/QrooBold.ttf
+          weight: 700
+        - asset: assets/fonts/QrooLight.ttf
+          weight: 300
+
     - family: Teko
       fonts:
         - asset: assets/fonts/Teko-Regular.otf
@@ -141,3 +149,7 @@ flutter:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
+
+    - family: Halter
+      fonts:
+        - asset: assets/fonts/halter.ttf

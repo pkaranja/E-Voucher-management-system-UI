@@ -15,6 +15,7 @@ class DynamicInputWidget extends StatelessWidget {
       required this.isNonPasswordField,
       required this.hint,
       this.keyboardType,
+      this.maxLines,
       Key? key})
       : super(key: key);
 
@@ -36,11 +37,12 @@ class DynamicInputWidget extends StatelessWidget {
   final TextInputAction textInputAction;
   final String hint;
   final TextInputType? keyboardType;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: textFieldTextStyle(),
+      style: Theme.of(context).textTheme.bodyMedium,
       controller: controller,
       decoration: InputDecoration(
           hintText: hint,
@@ -55,10 +57,10 @@ class DynamicInputWidget extends StatelessWidget {
                 : const Icon(Icons.visibility_off),
           ),
           //hintText: hint,
-          hintStyle: const TextStyle(fontSize: 14, color: kGrayC),
+          hintStyle: Theme.of(context).textTheme.bodyMedium,
           filled: true,
-          hoverColor: kGreenColor,
-          focusColor: kGrayC,
+          hoverColor: themeSecondaryColor,
+          focusColor: themeGreyColor,
           focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
           enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
       ),
@@ -67,6 +69,7 @@ class DynamicInputWidget extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       keyboardType: keyboardType,
+      maxLines: maxLines ?? 1,
     );
   }
 }

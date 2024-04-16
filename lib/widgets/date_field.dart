@@ -29,7 +29,7 @@ class CustomDateField extends StatelessWidget {
     DateTime? date = DateTime(1900);
 
     return TextFormField(
-      style: const TextStyle(color: kGrayTextC),
+      style: const TextStyle(color: themeExtraDarkGreyColor),
       cursorColor: Theme.of(context).primaryColor,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,

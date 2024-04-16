@@ -1,17 +1,14 @@
-
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:zawadi/global/widgets/logo.dart';
 import 'package:zawadi/pages/auth/sign_up_screen.dart';
 import 'package:zawadi/global/input_validators.dart';
 import 'package:zawadi/global/widgets/text_input_widget.dart';
-
-import '../../controllers/flutter_toast.dart';
 import '../../global/styles/app_colors.dart';
 import '../../widgets/button.dart';
 import 'forgot_password.dart';
@@ -58,30 +55,28 @@ class _LoginScreenState extends State<LoginScreen> {
       loading = true;
     });
     await _auth
-        .signInWithEmailAndPassword(
-          email: emailController.text.toString().trim(),
-          password: passwordController.text.toString().trim())
-        .then((value) {
-      GoRouter.of(context).go('/');
-
-      showTopSnackBar(
-        Overlay.of(context),
-        const CustomSnackBar.info(
-          message:
-          'Login succesful, redirecting you now',
-        ),
-      );
-
-      setState(() {
-        loading = false;
+      .signInWithEmailAndPassword(
+        email: emailController.text.toString().trim(),
+        password: passwordController.text.toString().trim()
+        )
+      .then((value) {
+        GoRouter.of(context).go('/');
+        setState(() {
+          loading = false;
+        });
+      }).onError((error, stackTrace) {
+        showTopSnackBar(
+            Overlay.of(context),
+            const CustomSnackBar.error(
+              message:
+              'Something went wrong while processing your request, please try again later',
+            ),
+        );
+        setState(() {
+          loading = false;
+        });
       });
-    }).onError((error, stackTrace) {
-      ToastMessage().toastMessage(error.toString(), Colors.red);
-      setState(() {
-        loading = false;
-      });
-    });
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return true;
       },
       child: Scaffold(
-        // resizeToAvoidBottomInset: false,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
@@ -102,17 +96,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: constraints.maxHeight * 0.2,
+                          height: constraints.maxHeight * 0.18,
                         ),
-                        const Center(
-                          child: Text(
-                            'Zawadi',
-                            style: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ),
+                        const LogoWidget(size: 140),
                         SizedBox(
                           height: constraints.maxHeight * 0.2,
                         ),
@@ -121,9 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Stack(
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 30),
-
+                                padding: const EdgeInsets.symmetric( vertical: 20, horizontal: 30 ),
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).cardColor,
                                   borderRadius: const BorderRadius.all(
@@ -140,14 +124,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                       SizedBox(
                                           height:
                                           constraints.maxHeight * 0.015),
-                                      const Text(
+                                       Text(
                                         'Log in\nto your account',
                                         style: TextStyle(
-                                          fontSize: 30,
+                                          fontSize: 25.sp,
+                                          color: themeAlmostBlackColor,
+                                          fontFamily: 'QrooFont',
+                                          fontWeight: FontWeight.normal
                                         ),
                                       ),
                                       SizedBox(
-                                        height: constraints.maxHeight * 0.025,
+                                        height: constraints.maxHeight * 0.02,
                                       ),
                                       DynamicInputWidget(
                                         controller: emailController,
@@ -156,17 +143,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                         toggleObscureText: null,
                                         validator: authValidator.emailValidator,
                                         prefIcon: const Icon(Icons.alternate_email, size: 18),
-                                        hint: "Enter Email Address",
+                                        hint: "Enter email address",
                                         textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.emailAddress,
                                         isNonPasswordField: true,
                                       ),
                                       SizedBox(
-                                        height: constraints.maxHeight * 0.025,
+                                        height: constraints.maxHeight * 0.02,
                                       ),
                                       DynamicInputWidget(
                                         controller: passwordController,
-                                        hint: "Enter Password",
+                                        hint: "Enter password",
                                         obscureText: obscureText,
                                         focusNode: passwordFocusNode,
                                         toggleObscureText: toggleObscureText,
@@ -198,20 +185,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                       Row(
                                         children: [
-                                          const Text(
+                                          Text(
                                             'New to Zawadi?',
                                             style: TextStyle(
-                                                color: kGrayTextC,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400),
+                                              color: themeAlmostBlackColor,
+                                              fontSize: 12.sp,
+                                              fontFamily: 'QrooFont'
+                                            ),
                                           ),
                                           TextButton(
                                             child: Text(
                                               'Register',
                                               style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                  fontSize: 16),
+                                                color: Theme.of(context).primaryColor,
+                                                fontFamily: 'QrooFont',
+                                                fontSize: 13.sp,
+                                                fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                             onPressed: () {
                                               Navigator.push(
@@ -227,9 +217,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: Text(
                                           'Forgot Password?',
                                           style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 16),
+                                            color: Theme.of(context).primaryColor,
+                                            fontFamily: 'QrooFont',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
                                         ),
                                         onPressed: () {
                                           Navigator.push(

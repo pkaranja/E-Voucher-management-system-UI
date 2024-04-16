@@ -51,8 +51,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               decoration: const BoxDecoration(),
               child: CustomPaint(
                 painter: CustomBackground(
-                  firstColor: primaryColor,
-                  secondColor: primaryDark,
+                  firstColor: themePrimaryColor,
+                  secondColor: themePrimaryDarkColor,
                 ),
               ),
             ),

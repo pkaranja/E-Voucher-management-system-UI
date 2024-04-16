@@ -1,4 +1,5 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zawadi/controllers/flutter_toast.dart';
 import 'package:zawadi/global/input_validators.dart';
 import 'package:zawadi/global/widgets/text_input_widget.dart';
@@ -6,10 +7,10 @@ import 'package:zawadi/global/widgets/text_input_widget.dart';
 import 'package:zawadi/widgets/button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:zawadi/widgets/text_field.dart';
 import 'package:flutter/services.dart';
 
 import '../../global/styles/app_colors.dart';
+import '../../global/widgets/logo.dart';
 import 'check_mail_screen.dart';
 import 'login_screen.dart';
 
@@ -61,7 +62,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -70,17 +71,10 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      Container(
-                        height: constraints.maxHeight * 0.63,
-                        color: Theme.of(context).primaryColor,
+                      SizedBox(
+                        height: constraints.maxHeight * 0.65,
                         child: const Center(
-                          child: Text(
-                            'Zawadi',
-                            style: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
+                           child: LogoWidget(size: 140),
                         ),
                       ),
                       Padding(
@@ -101,20 +95,28 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                               children: [
                                 SizedBox(height: constraints.maxHeight * 0.015),
                                 Text(
-                                  remoteConfig.getString('forgotPasswordTitle'),
-                                  style: const TextStyle(
-                                    fontSize: 28,
+                                  'Recover password',
+                                  style: TextStyle(
+                                    fontSize: 28.sp,
+                                    color: themeAlmostBlackColor,
+                                    fontFamily: 'QrooFont',
+                                    fontWeight: FontWeight.normal
                                   ),
                                 ),
                                 SizedBox(
-                                  height: constraints.maxHeight * 0.03,
+                                  height: constraints.maxHeight * 0.02,
                                 ),
                                 Text(
-                                    remoteConfig.getString('forgotPasswordTxt'),
-                                    style: const TextStyle( color: whiteColor)
+                                    'Enter the email associated with your account and we will send you link to reset the password',
+                                    style: TextStyle(
+                                      fontSize: 13.sp,
+                                      color: themeAlmostBlackColor,
+                                      fontFamily: 'QrooFont',
+                                      fontWeight: FontWeight.normal
+                                    ),
                                 ),
                                 SizedBox(
-                                  height: constraints.maxHeight * 0.03,
+                                  height: constraints.maxHeight * 0.02,
                                 ),
                                 DynamicInputWidget(
                                   controller: emailController,
@@ -123,12 +125,12 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                                   toggleObscureText: null,
                                   validator: authValidator.emailValidator,
                                   prefIcon: const Icon(Icons.alternate_email, size: 18),
-                                  hint: "Enter Email Address",
+                                  hint: "Enter email address",
                                   textInputAction: TextInputAction.done,
                                   isNonPasswordField: true,
                                 ),
                                 SizedBox(
-                                  height: constraints.maxHeight * 0.04,
+                                  height: constraints.maxHeight * 0.02,
                                 ),
 
                                 // Container(child: TextB,)

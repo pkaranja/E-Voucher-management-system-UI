@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:go_router/go_router.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:zawadi/global/constants.dart';
 import 'package:zawadi/pages/base/base_screen.dart';
 import 'package:zawadi/pages/cart/cart_tab.dart';
 import 'package:zawadi/pages/issuers/issuers_screen.dart';
@@ -95,18 +96,40 @@ class AppRouter {
         path: APP_PAGE.issuers.routePath,
         name: APP_PAGE.issuers.routeName,
         builder: (context, state) {
-          String? title = state.pathParameters['title'];
-          return IssuersScreen(title: title ?? '');
+          final String? title = state.pathParameters['title'];
+          final int? categoryId = state.pathParameters['categoryId'] as int?;
+          final String? q = state.pathParameters['q'];
+          IssuerListType issuerListType = parseIssuerListType(state.pathParameters['issuerListType']!);
+
+          return IssuersScreen(
+              title: title ?? '',
+              issuerListType: issuerListType,
+              q: q ?? '',
+              categoryId: categoryId ?? 0);
         },),
 
-      // Issuers page
+      // Issuer page
       GoRoute(
         path: APP_PAGE.issuer.routePath,
         name: APP_PAGE.issuer.routeName,
         builder: (context, state) {
           String? issuerId = state.pathParameters['issuerId'];
-          return IssuerScreen(issuerId: issuerId ?? '', cardId: 1,);
-        },),
+          String? issuerName = state.pathParameters['issuerName'];
+          return IssuerScreen(issuerId: issuerId!, issuerName: issuerName!, cardId: 1,);
+        },
+      ),
+
+      // Category page
+      GoRoute(
+        path: APP_PAGE.category.routePath,
+        name: APP_PAGE.category.routeName,
+        builder: (context, state) {
+          //return default category incase there is no id passed
+          int categoryId = int.tryParse(state.pathParameters['categoryId'] ?? '') ?? 1;
+          String? title = state.pathParameters['title'];
+          return IssuersScreen(categoryId: categoryId, title: title, issuerListType: IssuerListType.CATEGORY,);
+        },
+      ),
 
     ],
 

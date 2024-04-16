@@ -22,136 +22,60 @@ class ThemeSwitch extends ChangeNotifier {
 
 class AppTheme {
   static final lightTheme = ThemeData(
-    canvasColor: kCardColor,
+    primaryColor: themePrimaryColor,
+    primaryColorLight: themePrimaryLightColor,
+    primaryColorDark: themePrimaryDarkColor,
+    hintColor: themeAlmostBlackColor,
     textTheme: const TextTheme(
-      //display large
-        displayLarge: TextStyle(
-            letterSpacing: -.5,
-            color: kFontBlackC,
-            fontSize: 38,
-            fontWeight: FontWeight.w600),
-
-        //label large
-        labelLarge: TextStyle(
-            letterSpacing: -.5,
-            color: Colors.white,
-            fontSize: 32,
-            fontWeight: FontWeight.w700),
-
-        //label medium
-        labelMedium: TextStyle(
-            fontSize: 25, color: kFontBlackC, fontWeight: FontWeight.w700),
-
-        //label small
-        labelSmall: TextStyle(
-            letterSpacing: -.1,
-            color: Colors.white,
-            fontSize: 15,
-            fontWeight: FontWeight.w500),
-
-        //display small
-        displaySmall: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w300,
-            height: 1.25,
-            letterSpacing: .2),
-
-        //display medium
-        displayMedium: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          height: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        bodyLarge: TextStyle(color: kFontBlackC),
-        bodyMedium: TextStyle(color: kFontBlackC),
-        bodySmall: TextStyle(color: kFontBlackC)),
-    fontFamily: 'Questrial',
-    scaffoldBackgroundColor: Colors.white,
-    colorScheme: const ColorScheme.light(),
-    primaryColor: kGreenColor,
-    cardColor: kCardColor,
-    inputDecorationTheme: InputDecorationTheme(
-      hoverColor: kGreenColor,
-      focusColor: kTextFieldColor,
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: kTextFieldBorderC),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: kTextFieldBorderC),
-        borderRadius: BorderRadius.circular(12),
+      bodyMedium: TextStyle(
+        fontSize: 16,
+        color: themeAlmostBlackColor,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'QrooFont'
+      )
+    ),
+    canvasColor: const Color(0xFFF4F5F4),
+    scaffoldBackgroundColor: themeLightGreyColor,
+    colorScheme: const ColorScheme.light(
+      background: themeLightGreyColor,
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      focusColor: themeSecondaryColor,
+      hintStyle: TextStyle(
+        fontSize: 16,
+        color: themeGreyColor,
+        fontWeight: FontWeight.w400,
       ),
     ),
+    cardColor: themeDarkGreyColor,
+    dividerColor: const Color(0xFF591F27),
+    brightness: Brightness.light,
   );
 
+
+
+
+
+
   static final darkTheme = ThemeData(
-      canvasColor: kDarkCardC,
-      datePickerTheme: const DatePickerThemeData(
-          todayBorder: BorderSide(color: kDarkGreenColor),
-          rangePickerSurfaceTintColor: kDarkGreenColor),
-      fontFamily: 'Questrial',
-      scaffoldBackgroundColor: kDarkScaffoldC,
-      colorScheme: const ColorScheme.dark(),
-      cardColor: kDarkCardC,
-      primaryColor: kDarkGreenColor,
-      textTheme: const TextTheme(
-        //display large
-        displayLarge: TextStyle(
-            letterSpacing: -.5,
-            color: kFontLightGrey,
-            fontSize: 38,
-            fontWeight: FontWeight.w600),
-
-        //label large
-        labelLarge: TextStyle(
-            letterSpacing: -.5,
-            color: kFontLightGrey,
-            fontSize: 32,
-            fontWeight: FontWeight.w700),
-
-        //label medium
-        labelMedium: TextStyle(
-            fontSize: 25,
-            color: kFontLightGrey,
-            fontWeight:
-            FontWeight.w700),
-
-        //label small
-        labelSmall: TextStyle(
-            letterSpacing: -.1,
-            color: kFontBlackC,
-            fontSize: 15,
-            fontWeight: FontWeight.w500),
-
-        //display small
-        displaySmall: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w300,
-            height: 1.25,
-            letterSpacing: .2),
-
-        //display medium
-        displayMedium: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          height: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        bodyLarge: TextStyle(color: kFontLightGrey),
-        bodyMedium: TextStyle(color: kFontLightGrey),
-        bodySmall: TextStyle(color: kFontLightGrey)),
-      inputDecorationTheme: InputDecorationTheme(
-          hoverColor: kDarkGreenColor,
-          focusColor: kDarkGreenColor,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadius.circular(12),
-          )),
+    primaryColor: const Color(0xFFDA5726),
+    primaryColorLight: const Color(0xFFE17A51),
+    primaryColorDark: const Color(0xFFAE471E),
+    hintColor: themeLightGreyColor,
+    textTheme: const TextTheme(
+        bodyMedium: TextStyle(
+            fontSize: 16,
+            color: themeLightGreyColor
+        )
+    ),
+    canvasColor: const Color(0xFF591F27),
+    scaffoldBackgroundColor: themeAlmostBlackColor,
+    colorScheme: const ColorScheme.dark(
+      background: themeAlmostBlackColor,
+    ),
+    cardColor: themeDarkGreyColor,
+    dividerColor: const Color(0xFFF4F5F4),
+    brightness: Brightness.dark,
   );
 
   static bool isDarkMode(BuildContext context) {

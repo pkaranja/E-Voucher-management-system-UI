@@ -11,6 +11,7 @@ class VouchersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
         physics: const BouncingScrollPhysics(),

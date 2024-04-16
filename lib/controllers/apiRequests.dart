@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:zawadi/global/error_handler.dart';
+
+import '../global/build_search_body.dart';
 
 class ApiRequests {
   FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
@@ -15,6 +16,11 @@ class ApiRequests {
   late final int networkRetryDelay = remoteConfig.getInt('networkRetryDelay');
   late final String baseUrl = remoteConfig.getString('api_base');
 
+  //Default Headers
+  //TODO: use the api auth file
+  final headers = {'Content-Type': 'application/json', };
+
+  //Fetch Categories
   Future<List<dynamic>> fetchCategories() async {
     List<dynamic> categoryResponseData = [];
     var url = Uri.http(baseUrl, '/api/categories');
@@ -26,61 +32,62 @@ class ApiRequests {
         categoryResponseData = json.decode(response.body);
         loadRemoteDataSucceed = true;
       } else {
-        _handleError(fetchCategories);
+        handleError(fetchCategories, 'Error fetching categories from API with CODE $response.statusCode');
       }
     } catch (e) {
-      _handleError(fetchCategories);
+      handleError(e, 'Error fetching categories');
     }
     return categoryResponseData;
   }
 
   //Fetch Issuers
-  Future<List<dynamic>> fetchIssuers({String? search, String? filter, int? page, int? pageSize}) async {
-    List<dynamic> issuersResponseData = [];
+  Future<Map<String, dynamic>> fetchIssuers({
+    String? filterKey,
+    String? filterOperator,
+    String? fieldType,
+    String? searchValue,
+    String? sortKey,
+    String? sortDirection,
+    int? page,
+    int? size,
+    int? categoryId
+  }) async {
 
-    var queryParameters = {
-      'status': 'ACTIVE',
-      'page': page?.toString(),
-      'pageSize': pageSize?.toString(),
-      'search': search,
-      'filter': filter,
-    };
+    Uri url;
 
-    var url = Uri.http(baseUrl, '/api/issuers', queryParameters);
-
-    try {
-      var response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        issuersResponseData = json.decode(response.body);
-        loadRemoteDataSucceed = true;
-      } else {
-        _handleError(fetchIssuers);
-      }
-    } catch (e) {
-      _handleError(fetchIssuers);
+    if ( categoryId != 0 && categoryId != null  ) {
+      url = Uri.parse('http://$baseUrl/api/categories/$categoryId/issuers');
+    }else{
+      url = Uri.parse('http://$baseUrl/api/issuers');
     }
 
-    return issuersResponseData;
-  }
-
-
-
-  Future<void> _handleError(Future<List<dynamic>> Function() requestMethod) async {
-    if (!loadRemoteDataSucceed && retries < maxRetries) {
-      log("Retrying API");
-      retries++;
-      Future.delayed(Duration(milliseconds: networkRetryDelay), () {
-        requestMethod();
-        // You can add more retry logic here if needed
-      });
-    } else {
-      //throw Exception('Failed to load data from API');
-      await FirebaseCrashlytics.instance.recordError(
-          "API Request error on $requestMethod",
-          StackTrace.current,
-          reason: 'Error fetching data from API'
+    try {
+      // Get authentication headers
+      final body = buildRequestBody(
+        filterKey: filterKey,
+        filterOperator: filterOperator,
+        fieldType: fieldType,
+        searchValue: searchValue,
+        sortKey: sortKey,
+        sortDirection: sortDirection,
+        page: page,
+        size: size,
       );
+
+      var response = await http.post(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> issuersResponseData = json.decode(response.body);
+        return issuersResponseData; // Return the data on success
+      } else {
+        // Handle error response
+        handleError('Failed to fetch issuers.', 'Status code: ${response.statusCode}');
+        throw Exception('Failed to fetch issuers');
+      }
+    } catch (e) {
+      // Handle network or server errors
+      handleError(e, 'Failed to fetch issuers');
+      throw Exception('Failed to fetch issuers');
     }
   }
 }

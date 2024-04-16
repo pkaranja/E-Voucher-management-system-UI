@@ -29,8 +29,8 @@ class CustomChips extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: isSelected
-              ? focusColor ?? primaryColor
-              : primaryDark,
+              ? focusColor ?? themePrimaryColor
+              : themePrimaryDarkColor,
         ),
         child: Center(
           child: AppText.small(

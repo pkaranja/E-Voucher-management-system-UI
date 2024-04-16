@@ -1,8 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:zawadi/config/custom_colors.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/pages/home/home_tab.dart';
 import 'package:zawadi/pages/vouchers/vouchers_screen.dart';
 import 'package:zawadi/pages/settings/user_profile.dart';
+
+import '../auth/verify_screen.dart';
+import '../settings/settings.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -14,54 +20,101 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   int currentIndex = 0;
   final pageController = PageController();
+  bool isEmailVerified = false;
+
+  final user = FirebaseAuth.instance.currentUser!;
+
+  @override
+  void initState() {
+    super.initState();
+    isEmailVerified = user.emailVerified;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Scaffold(
-      backgroundColor: Colors.transparent,
-      body: PageView(
-        physics:const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        children: const [
-          HomeTab(),
-          VouchersScreen(),
-          UserProfileScreen(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-            pageController.jumpToPage(index);
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.transparent,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: CustomColors.customSwatchColor.shade700,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_rounded),
-            label: 'Explore',
+    if (!isEmailVerified) {
+      return const VerifyEmailScreen();
+    } else {
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: Scaffold(
+          body: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: pageController,
+            children: const [
+              HomeTab(),
+              VouchersScreen(),
+              UserProfileScreen(),
+              SettingsScreen(),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: 'Redeem',
+          bottomNavigationBar: NavigationBarTheme(
+            data: NavigationBarThemeData (
+                indicatorColor: themePrimaryLightColor.withOpacity(0.5),
+                labelTextStyle: MaterialStateProperty.all(
+                  const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'QrooFont'
+                  ),
+                ) ,
+              ),
+            child: NavigationBar(
+              elevation: 0,
+              backgroundColor: Theme.of(context).colorScheme.background,
+              animationDuration: const Duration (seconds: 1),
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+              height: 70,
+              selectedIndex: currentIndex,
+              onDestinationSelected: (index) {
+                setState(() {
+                  currentIndex = index;
+                  pageController.jumpToPage(index);
+                });
+              },
+
+              destinations: [
+                NavigationDestination(
+                  icon: SvgPicture.asset(
+                      'assets/svgs/explore.svg',
+                      width: 30,
+                      height: 30,
+                      colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
+                    ),
+                  label: 'Explore',
+                ),
+                NavigationDestination(
+                  icon: SvgPicture.asset(
+                      'assets/svgs/gift.svg',
+                      width: 28,
+                      height: 28,
+                      colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
+                    ),
+                  label: 'Received',
+                ),
+                NavigationDestination(
+                  icon: SvgPicture.asset(
+                    'assets/svgs/purchased.svg',
+                    width: 30,
+                    height: 30,
+                    colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
+                  ),
+                  label: 'Purchased',
+                ),
+                NavigationDestination(
+                  icon: SvgPicture.asset(
+                    'assets/svgs/settings.svg',
+                    width: 30,
+                    height: 30,
+                    colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
+                  ),
+                  label: 'Settings',
+                ),
+              ],
+            )
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_balance_wallet_outlined),
-            label: 'Purchased',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    ),
-    );
+        ),
+      );
+    }
   }
 }

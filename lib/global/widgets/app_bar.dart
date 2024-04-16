@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/pages/settings/user_profile.dart';
 import '../../config/custom_colors.dart';
@@ -36,7 +37,7 @@ class _QrooAppBarState extends State<QrooAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Text.rich(
         TextSpan(
             style: const TextStyle(

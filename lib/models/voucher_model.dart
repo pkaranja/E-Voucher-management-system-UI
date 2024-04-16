@@ -1,22 +1,22 @@
 import 'dart:ui';
 
-import 'package:zawadi/global/styles/app_colors.dart';
+import 'package:flutter/material.dart';
 
-enum VoucherCategory {
+enum CardCategory {
   birthday,
   christmas,
   general,
   congratulation,
 }
 
-class VoucherModel {
+class CardModel {
   final int id;
   final String name;
   final String thumbnailPath;
   final Color bgColor;
-  final List<VoucherCategory> categories;
+  final List<CardCategory> categories;
 
-  const VoucherModel({
+  const CardModel({
     required this.id,
     required this.name,
     required this.thumbnailPath,
@@ -24,34 +24,48 @@ class VoucherModel {
     required this.bgColor,
   });
 
-  static List<VoucherModel> sampleCards = [
-    const VoucherModel(
+  static List<CardModel> sampleCards = [
+    const CardModel(
       id: 1,
-      name: 'Happy Birthday',
-      thumbnailPath: 'assets/images/categories/health_spa_color.png',
-      categories: [VoucherCategory.general, VoucherCategory.congratulation],
-      bgColor: primaryHighContrast,
+      name: 'Birthday',
+      thumbnailPath: 'assets/prints/birthday.jpg',
+      categories: [CardCategory.general, CardCategory.birthday],
+      bgColor: Colors.purple,
     ),
-    const VoucherModel(
+    const CardModel(
       id: 2,
-      name: 'Giving Season',
-      thumbnailPath: 'assets/images/categories/electronics_color.png',
-      categories: [VoucherCategory.general, VoucherCategory.birthday],
-      bgColor: primaryDark,
+      name: 'Easter',
+      thumbnailPath: 'assets/prints/easter.jpg',
+      categories: [ CardCategory.general ],
+      bgColor: Colors.yellow,
     ),
-    const VoucherModel(
+    const CardModel(
       id: 3,
-      name: 'Birthday Gift',
-      thumbnailPath: 'assets/images/categories/clothes_and_accessories_color.png',
-      categories: [VoucherCategory.general, VoucherCategory.birthday],
-      bgColor: kGrayC,
+      name: 'Birthday',
+      thumbnailPath: 'assets/prints/black_box.jpg',
+      categories: [CardCategory.general],
+      bgColor: Colors.blueAccent,
     ),
-    const VoucherModel(
+    const CardModel(
       id: 4,
-      name: 'Holly Jolly Socks',
-      thumbnailPath: 'assets/images/categories/baby_and_kids_bw.png',
-      categories: [VoucherCategory.birthday, VoucherCategory.general],
-      bgColor: kGreenColor,
+      name: 'Merry Christmas',
+      thumbnailPath: 'assets/prints/merry_christmas.jpg',
+      categories: [CardCategory.general, CardCategory.christmas],
+      bgColor: Colors.green,
+    ),
+    const CardModel(
+      id: 5,
+      name: 'Thanks',
+      thumbnailPath: 'assets/prints/thanks.jpg',
+      categories: [CardCategory.general],
+      bgColor: Colors.black,
+    ),
+    const CardModel(
+      id: 6,
+      name: 'Giving Season',
+      thumbnailPath: 'assets/prints/gift_box.jpg',
+      categories: [CardCategory.general, CardCategory.congratulation],
+      bgColor: Colors.blueGrey,
     ),
   ];
 }

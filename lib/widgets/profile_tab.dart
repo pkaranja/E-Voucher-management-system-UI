@@ -25,7 +25,7 @@ class ProfileTab extends StatelessWidget {
           children: [
             Icon(
               iconName,
-              color: kGrayTextC,
+              color: themeExtraDarkGreyColor,
               size: 25,
             ),
             SizedBox(
@@ -36,7 +36,7 @@ class ProfileTab extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(color: kGrayTextC, fontSize: 14),
+                  style: const TextStyle(color: themeExtraDarkGreyColor, fontSize: 14),
                 ),
                 Text(
                   titleValue,
@@ -51,7 +51,7 @@ class ProfileTab extends StatelessWidget {
         ),
         Divider(
           thickness: 1,
-          color: kGrayTextC.withOpacity(0.2),
+          color: themeExtraDarkGreyColor.withOpacity(0.2),
         ),
         SizedBox(
           height: constraints.maxHeight * 0.01,

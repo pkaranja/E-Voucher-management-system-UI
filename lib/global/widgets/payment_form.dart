@@ -152,11 +152,12 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
                       focusNode: voucherMessageFocusNode,
                       toggleObscureText: null,
                       validator: formValidator.textValidator,
-                      prefIcon: const Icon(Icons.phone, size: 18),
+                      prefIcon: const Icon(Icons.message, size: 18),
                       hint: "Enter voucher message",
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.text,
                       isNonPasswordField: true,
+                      maxLines: 5,
                     ),
                     Container(
                       width: double.infinity,
@@ -182,10 +183,17 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
   _onPressed() {
     final currentState = formKey.currentState;
     if (currentState != null && currentState.validate()) {
+      _createGiftCard();
       _handlePaymentInitialization();
     }
   }
 
+  //Create gift card on Zawadi platform
+  _createGiftCard() async {
+
+  }
+
+  //Initialize payment
   _handlePaymentInitialization() async {
     final Customer customer = Customer(
       name: userData!.fullName,

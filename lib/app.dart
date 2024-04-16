@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:zawadi/global/router.dart';
 import 'package:zawadi/global/permissions_handler.dart';
 import 'package:zawadi/global/auth_provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 
 import 'global/styles/theme.dart';
 
@@ -70,16 +72,25 @@ class _MyAppState extends State<MyApp> {
           final GoRouter router = Provider.of<AppRouter>(context).router;
           final themeSwitch = Provider.of<ThemeSwitch>(context);
 
+          final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+          final systemNavigationBarColor = isDarkMode ? themeAlmostBlackColor : themeLightGreyColor;
+
           return ScreenUtilInit(
             designSize: const Size(390, 844),
-            builder: (context, child) => MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                routeInformationProvider: router.routeInformationProvider,
-                routeInformationParser: router.routeInformationParser,
-                theme: AppTheme.lightTheme,
-                darkTheme: AppTheme.darkTheme,
-                themeMode: themeSwitch.themeMode,
-                routerDelegate: router.routerDelegate),
+            builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                systemNavigationBarColor: systemNavigationBarColor,
+              ),
+              child: MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  routeInformationProvider: router.routeInformationProvider,
+                  routeInformationParser: router.routeInformationParser,
+                  theme: AppTheme.lightTheme,
+                  darkTheme: AppTheme.darkTheme,
+                  themeMode: themeSwitch.themeMode,
+                  routerDelegate: router.routerDelegate
+                ),
+            ),
           );
         }),
       ),

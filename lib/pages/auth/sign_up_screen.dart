@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zawadi/global/input_validators.dart';
 import 'package:zawadi/pages/auth/verify_screen.dart';
 import 'package:zawadi/global/widgets/text_input_widget.dart';
 
 import '../../controllers/flutter_toast.dart';
 import '../../global/styles/app_colors.dart';
+import '../../global/widgets/logo.dart';
 import '../../widgets/button.dart';
 import '../../widgets/text_field.dart';
 import 'login_screen.dart';
@@ -27,12 +29,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final InputValidators authValidator = InputValidators();
 
   final emailController = TextEditingController();
-  final phoneNumberController = TextEditingController();
+  final fullNameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   final FocusNode emailFocusNode = FocusNode();
-  final FocusNode phoneNumberFocusNode = FocusNode();
+  final FocusNode fullNameFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
   final FocusNode confirmPasswordFocusNode = FocusNode();
 
@@ -44,12 +46,12 @@ class _SignupScreenState extends State<SignupScreen> {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-    phoneNumberController.dispose();
+    fullNameController.dispose();
 
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
     confirmPasswordFocusNode.dispose();
-    phoneNumberFocusNode.dispose();
+    fullNameFocusNode.dispose();
 
   }
 
@@ -69,15 +71,28 @@ class _SignupScreenState extends State<SignupScreen> {
           email: emailController.text.toString(),
           password: confirmPasswordController.text.toString())
           .then((value) {
-            ref.child(value.user!.uid.toString()).set({
-              'uid': value.user!.uid.toString(),
-              'email': value.user!.email.toString(),
-              'firstName': '',
-              'lastName': '',
-              'phoneNumber': phoneNumberController.text.toString(),
-              'dob': '',
-              'profilePic': '',
-            });
+              User? user = value.user;
+              String fullName = fullNameController.text.toString();
+
+              // Splitting the full name into first and last name
+              List<String> nameParts = fullName.split(' ');
+
+              // Extracting first and last name
+              String firstName = nameParts.isNotEmpty ? nameParts[0] : '';
+              String lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
+
+              user?.updateDisplayName(fullName);
+
+              ref.child(value.user!.uid).set({
+                    'uid': value.user!.uid.toString(),
+                    'email': value.user!.email.toString(),
+                    'firstName': firstName,
+                    'lastName': lastName,
+                    'phoneNumber': '',
+                    'dob': '',
+                    'profilePic': '',
+                    'kyc': ''
+                  });
 
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const VerifyEmailScreen()));
@@ -96,7 +111,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -105,17 +120,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: constraints.maxHeight * 0.45,
-                        color: Theme.of(context).primaryColor,
                         child: const Center(
-                          child: Text(
-                            'Zawadi',
-                            style: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
+                          child: LogoWidget(size: 140),
                         ),
                       ),
                       Padding(
@@ -137,11 +145,29 @@ class _SignupScreenState extends State<SignupScreen> {
                               // mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(height: constraints.maxHeight * 0.015),
-                                const Text(
-                                  'Create Account',
+                                Text(
+                                  'Create account',
                                   style: TextStyle(
-                                    fontSize: 28,
+                                    fontSize: 25.sp,
+                                    color: themeAlmostBlackColor,
+                                    fontFamily: 'QrooFont',
+                                    fontWeight: FontWeight.normal
                                   ),
+                                ),
+                                SizedBox(
+                                  height: constraints.maxHeight * 0.02,
+                                ),
+                                DynamicInputWidget(
+                                  controller: fullNameController,
+                                  obscureText: false,
+                                  focusNode: fullNameFocusNode,
+                                  toggleObscureText: null,
+                                  validator: authValidator.textValidator,
+                                  prefIcon: const Icon(Icons.person, size: 18),
+                                  hint: "Enter full name",
+                                  textInputAction: TextInputAction.next,
+                                  isNonPasswordField: true,
+                                  keyboardType: TextInputType.name,
                                 ),
                                 SizedBox(
                                   height: constraints.maxHeight * 0.02,
@@ -154,21 +180,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                   validator: authValidator.emailValidator,
                                   prefIcon: const Icon(Icons.alternate_email, size: 18),
                                   hint: "Enter valid email address",
-                                  textInputAction: TextInputAction.next,
-                                  isNonPasswordField: true,
-                                  keyboardType: TextInputType.emailAddress,
-                                ),
-                                SizedBox(
-                                  height: constraints.maxHeight * 0.02,
-                                ),
-                                DynamicInputWidget(
-                                  controller: phoneNumberController,
-                                  obscureText: false,
-                                  focusNode: phoneNumberFocusNode,
-                                  toggleObscureText: null,
-                                  validator: authValidator.textValidator,
-                                  prefIcon: const Icon(Icons.phone, size: 18),
-                                  hint: "Enter valid phone number",
                                   textInputAction: TextInputAction.next,
                                   isNonPasswordField: true,
                                   keyboardType: TextInputType.emailAddress,
@@ -212,7 +223,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                   child: Text(
                                     'By signing up you’re agree to our Privacy Policy and Terms and Conditions',
                                     style: TextStyle(
-                                        fontSize: 14, color: kGrayTextC),
+                                        fontSize: 14,
+                                        color: themeExtraDarkGreyColor,
+                                        fontFamily: 'QrooFont'
+                                    ),
                                   ),
                                 ),
 
@@ -220,7 +234,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                   height: constraints.maxHeight * 0.02,
                                 ),
 
-                                // Container(child: TextB,)
                                 TButton(
                                   loading: loading,
                                   constraints: constraints,
@@ -234,25 +247,28 @@ class _SignupScreenState extends State<SignupScreen> {
                                 Row(
                                   children: [
                                     const Text(
-                                      'Joined us?',
+                                      'Have an account?',
                                       style: TextStyle(
-                                          color: kGrayTextC,
+                                          color: themeAlmostBlackColor,
                                           fontSize: 16,
-                                          fontWeight: FontWeight.w400),
+                                          fontFamily: 'QrooFont'
+                                      ),
                                     ),
                                     TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => const LoginScreen()));
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const LoginScreen()));
                                         },
                                         child: Text('Login',
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 16,
-                                            )))
+                                          style: TextStyle(
+                                            color: Theme.of(context).primaryColor,
+                                            fontFamily: 'QrooFont',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold
+                                          )),
+                                      )
                                   ],
                                 ),
                               ],

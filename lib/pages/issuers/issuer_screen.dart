@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 
 import '../../global/widgets/app_bar.dart';
-import '../../global/widgets/payment_form.dart';
+import '../../models/voucher_model.dart';
 import '../../widgets/error_message_widget.dart';
-import '../vouchers/carddesign/models/card_model.dart';
 import '../vouchers/carddesign/providers/selected_card_provider.dart';
 import '../vouchers/carddesign/providers/selected_gift_amount_provider.dart';
 import '../vouchers/carddesign/screens/card_detail_input_data_screen.dart';
@@ -16,14 +16,16 @@ import '../vouchers/carddesign/widgets/custom_gift_card.dart';
 class IssuerScreen extends ConsumerWidget {
   final int cardId;
   final String issuerId;
+  final String issuerName;
 
-  const IssuerScreen({Key? key, required this.issuerId, required this.cardId}) : super(key: key);
+  const IssuerScreen({Key? key, required this.issuerId, required this.cardId, required this.issuerName}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedCard = ref.watch(selectedCardProvider);
 
     return Scaffold(
+      backgroundColor: selectedCard.value?.bgColor,
       appBar: const QrooAppBar(
         title1: 'Zawadi',
         title2: ' Digital',
@@ -37,11 +39,11 @@ class IssuerScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  issuerId,
+                  issuerName,
                   style: const TextStyle(
                     fontSize: 32.0,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
+                    fontFamily: 'QrooFont',
                   ),
                 ),
               ),
@@ -86,7 +88,7 @@ class _SelectedCard extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final selectedCard = ref.watch(selectedCardProvider);
     final selectedCardNotifier = ref.read(selectedCardProvider.notifier);
-    final selectedGiftAmount = ref.watch(selectedGiftAmountProvider);
+    final selectedGiftAmount = ref.watch(selectedGiftAmountProvider) ?? 10000;
 
     return Container(
       color: backgroundColor,
@@ -190,7 +192,7 @@ class _GiftCardValue extends ConsumerWidget {
           ),
           CustomElevatedButton(
             text: 'Continue',
-            backgroundColor: isAmountSelected ? Colors.black87 : Colors.grey,
+            backgroundColor: isAmountSelected ? themePrimaryDarkColor : Colors.grey,
             fixedSize: Size(size.width, 50),
             onPressed: () {
               isAmountSelected && selectedCard != null

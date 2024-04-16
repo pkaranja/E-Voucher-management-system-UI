@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zawadi/global/widgets/app_bar.dart';
 import 'package:zawadi/global/widgets/payment_form.dart';
 import '../../../../global/styles/app_colors.dart';
-import '../models/card_model.dart';
+import '../../../../models/voucher_model.dart';
 import '../utilities/app_text.dart';
-import '../widgets/custom_elevated_button.dart';
 import '../widgets/custom_gift_card.dart';
-import 'card_detail_purchased_screen.dart';
 
 class CardDetailInputScreen extends StatelessWidget {
   final CardModel model;
@@ -38,7 +34,7 @@ class CardDetailInputScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20.0),
               child: Container(
-                height: size.height * 0.25,
+                height: size.height * 0.37,
                 decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -72,8 +68,6 @@ class CardDetailInputScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  //_buildTextFormField('Message', 'message', maxLines: 4),
-                  //const SizedBox(height: 10),
                   PaymentFormWidget(initialContext: context, amount: giftValue,),
                 ],
               ),
@@ -81,40 +75,6 @@ class CardDetailInputScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Column _buildTextFormField(String label, String hintText, {int? maxLines}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppText.medium(
-          label,
-          color: Colors.black87,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-        const SizedBox(height: 10.0),
-        TextFormField(
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: primaryColor,
-            fontSize: 14,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.grey,
-            hintText: hintText,
-            hintStyle: const TextStyle(color: Colors.grey),
-            contentPadding: const EdgeInsets.all(20.0),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
-              borderSide: BorderSide.none,
-            ),
-          ),
-          maxLines: maxLines ?? 1,
-        ),
-      ],
     );
   }
 }

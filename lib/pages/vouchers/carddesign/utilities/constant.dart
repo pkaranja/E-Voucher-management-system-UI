@@ -1,4 +1,5 @@
-import '../models/card_model.dart';
+
+import '../../../../models/voucher_model.dart';
 
 extension CardCategoryExtention on CardCategory {
   String capitalName() =>

@@ -10,6 +10,7 @@ import 'package:zawadi/pages/settings/update_profile.dart';
 
 import '../../controllers/flutter_toast.dart';
 import '../../controllers/profile_controller.dart';
+import '../../global/styles/app_colors.dart';
 import '../../models/user_model.dart';
 import '../../widgets/check_email_widget.dart';
 
@@ -24,23 +25,21 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   Timer? timer;
 
   final user = FirebaseAuth.instance.currentUser!;
-  DatabaseReference ref = FirebaseDatabase.instance.ref().child('Users');
 
   @override
   void initState() {
     super.initState();
 
-    isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    isEmailVerified = user.emailVerified;
     if (isEmailVerified == false) {
       sendVerificationEmail();
-
       timer = Timer.periodic(
-          const Duration(seconds: 1), (_) => checkEmailVerified());
+          const Duration(seconds: 1), (_) => checkEmailVerified()
+      );
     }
   }
 
   Future sendVerificationEmail() async {
-    final user = FirebaseAuth.instance.currentUser!;
     await user.sendEmailVerification().then((value) {
       showTopSnackBar(
           Overlay.of(context),
@@ -62,25 +61,6 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
     if (isEmailVerified == true) {
       timer?.cancel();
-
-      int age = calculateAge() as int;
-
-      DatabaseReference splitRef = ref.child(user.uid.toString()).child('kyc');
-      splitRef.set({
-        'age': age,
-        'location': "",
-        'address': "",
-        'gender': "",
-        'nationality': "",
-        'govt_id': "",
-        'govt_id_expiry_date': "",
-        'govt_type': "",
-        'region': "",
-        'privacy_policy_consent': true,
-        'terms_and_condition_consent': true,
-        'isAutopayOn': false,
-        'phone_number_validated': false,
-      });
     }
   }
 
@@ -90,46 +70,23 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     super.dispose();
   }
 
-  Future<int> calculateAge() async {
-    UserModel userData = ProfileController().getUserData() as UserModel;
-
-    if (userData.dob != null) {
-      if (userData.dob != null) {
-        // Parse the date of birth string into a DateTime object
-        DateTime dob = DateFormat('yyyy-MM-dd').parse(userData.dob);
-        // Calculate the age
-        DateTime now = DateTime.now();
-        int age = now.year - dob.year;
-        if (now.month < dob.month || (now.month == dob.month && now.day < dob.day)) {
-          age--; // Adjust age if birthday hasn't occurred yet this year
-        }
-
-        return age;
-      } else {
-        print('Date of birth not found.');
-      }
-    } else {
-      print('User data incomplete.');
-    }
-    return 0;
-  }
-
-
   @override
   Widget build(BuildContext context) => isEmailVerified
       ? const UpdateAccountScreen()
       : WillPopScope(
     onWillPop: () async => false,
     child: Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'A verification link has been\nsent to your email!',
               style: TextStyle(
-                  fontSize: 20, color: Theme.of(context).cardColor),
+                  fontSize: 20,
+                  color: themeAlmostBlackColor
+              ),
               textAlign: TextAlign.center,
             ),
             CheckEmailWidget(

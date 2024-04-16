@@ -1,103 +1,172 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:zawadi/models/issuers_model.dart';
 
+import '../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
+import '../router_utils.dart';
 import '../styles/app_colors.dart';
 
-class IssuerVerticalCard extends StatelessWidget {
+class IssuerVerticalCard extends ConsumerWidget {
+
   const IssuerVerticalCard({
-    Key? key,
-    required this.issuer,
+    Key? key, required this.issuer
   }) : super(key: key);
 
   final IssuersModel issuer;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8.r),
-          child: Container(
-            width: 244.w,
-            height: 165.h,
-            color: kGrayC,
-            child: Stack(
-              children: [
-                // Image from URL with error and loading builders
-                Image.network(
-                  issuer.logo,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    } else {
-                      // Show a preloader while the image is loading
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                    // Show a temporary image or an alternative widget when the image fails to load
-                    return Container(
-                      color: Colors.grey, // Temporary background color
-                      child: const Icon(
-                        Icons.image_not_supported,
-                        color: Colors.white, // Temporary icon color
-                        size: 64.0,
-                      ),
-                    );
-                  },
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+        height: 220.h,
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              issuer.primaryColor,
+              issuer.secondaryColor
+            ],
+          ),
+        ),
+        alignment: Alignment.bottomRight,
+        child: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 15.w),
+              child: Text(
+                issuer.name,
+                style: TextStyle(
+                  color: issuer.secondaryFontColor,
+                  fontSize: 18,
+                  fontFamily: 'Halter',
+                  fontWeight: FontWeight.w400,
                 ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 15.w, bottom: 12.w),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          issuer.name,
-                          maxLines: 1,
-                          style: GoogleFonts.workSans(
-                            textStyle: TextStyle(
-                              fontSize: 16.sp,
-                              color: Colors.black,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.edit_location),
-                            SizedBox(width: 4.w),
-                            Text(
-                              issuer.address!,
-                              maxLines: 1,
-                              style: GoogleFonts.workSans(
-                                textStyle: TextStyle(
-                                  fontSize: 10.sp,
-                                  color: Colors.black,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 10, bottom: 40.h),
+                    child: Image.asset(
+                      'assets/images/gift_box.png',
+                      fit: BoxFit.contain,
+                      colorBlendMode: BlendMode.dstATop,
+                      width: 100.w,
                     ),
                   ),
+                  ContainerWithCircle(logo: issuer.logo, id: issuer.id, name: issuer.name  ),
+                ],
+              ),
+            ),
+          ],
+        )
+    );
+  }
+}
+
+
+class ContainerWithCircle extends ConsumerWidget {
+  final String id;
+  final String logo;
+  final String name;
+  final double circleRadius = 80.0;
+  final double circleBorderWidth = 3.0;
+
+  const ContainerWithCircle({super.key,
+    required this.id,
+    required this.logo,
+    required this.name,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Stack(
+      alignment: Alignment.topLeft,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(top: circleRadius / 2.0),
+          child: Container(
+            height: 60.h,
+            decoration: const ShapeDecoration(
+              color: Color(0xFFC4C4C4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.zero,
+                  topRight: Radius.zero,
+                  bottomLeft: Radius.circular(16.0),
+                  bottomRight: Radius.circular(16.0),
                 ),
-              ],
+              ),
+            ),
+            alignment: Alignment.bottomRight,
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+            child: ElevatedButton(
+              onPressed: () {
+                ref
+                   .read(selectedCardIdProvider.notifier)
+                   .setSelectedCardId(2);
+
+                GoRouter.of(context).goNamed(
+                    APP_PAGE.issuer.routeName,
+                    pathParameters: {'issuerId': id, 'issuerName': name}
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.0),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.shopping_cart), // Add cart icon
+                  SizedBox(width: 2.0), // Add space between icon and text
+                  Text(
+                    'Buy',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF262626),
+                      fontSize: 14,
+                      fontFamily: 'QrooFont',
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+
+        Padding(
+          padding: EdgeInsets.only(left: 15.w),
+          child: Container(
+            width: circleRadius,
+            height: circleRadius,
+            decoration: const ShapeDecoration( shape: CircleBorder(), color: Colors.white ),
+            child: Padding(
+              padding: EdgeInsets.all(circleBorderWidth),
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  shape: const CircleBorder(),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(logo),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

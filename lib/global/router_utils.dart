@@ -1,4 +1,4 @@
-enum APP_PAGE { onboard, auth, home, search, vouchers, favorite, issuers, issuer, verifyEmail, editProfile, profile, cart }
+enum APP_PAGE { onboard, auth, home, search, vouchers, favorite, issuers, issuer, category, verifyEmail, editProfile, profile, cart }
 
 extension AppPageExtension on APP_PAGE {
   // create path for routes
@@ -26,10 +26,13 @@ extension AppPageExtension on APP_PAGE {
         return "/verify";
 
       case APP_PAGE.issuers:
-        return "/issuers/:title";
+        return "/issuers/:issuerListType/:title/:q?";
 
       case APP_PAGE.issuer:
-        return "/issuer/:issuerId";
+        return "/issuer/:issuerId/:issuerName";
+
+      case APP_PAGE.category:
+        return "/category/:categoryId/:title";
 
       case APP_PAGE.profile:
         return "/profile";
@@ -76,6 +79,9 @@ extension AppPageExtension on APP_PAGE {
       case APP_PAGE.issuer:
         return "Issuer";
 
+      case APP_PAGE.category:
+        return "Category";
+
       case APP_PAGE.profile:
         return "PROFILE";
 
@@ -99,6 +105,8 @@ extension AppPageExtension on APP_PAGE {
         return "Sign In";
       case APP_PAGE.issuers:
         return "Issuers";
+      case APP_PAGE.category:
+        return "Category";
       case APP_PAGE.search:
         return "Search";
       case APP_PAGE.favorite:

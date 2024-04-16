@@ -30,6 +30,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       //App bar
         appBar: const QrooAppBar(
             title1: 'Zawadi',
@@ -128,7 +129,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                             ? const Icon(
                                           Icons.person,
                                           size: 90,
-                                          color: kGrayTextC,
+                                          color: themeExtraDarkGreyColor,
                                         )
                                             : Image.network(
                                           map['profilePic'].toString(),

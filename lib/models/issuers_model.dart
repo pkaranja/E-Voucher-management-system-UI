@@ -1,4 +1,11 @@
 import 'dart:ffi';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:zawadi/global/constants.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
+
+import '../global/rgb_to_radix.dart';
 
 class IssuersModel {
   String id;
@@ -11,16 +18,16 @@ class IssuersModel {
   String logo;
   String? facebook;
   String? instagram;
-  String? primaryColor;
-  String? secondaryColor;
-  String? primaryFontColor;
-  String? secondaryFontColor;
+  Color primaryColor;
+  Color secondaryColor;
+  Color primaryFontColor;
+  Color secondaryFontColor;
   String? description;
   double? minAmount;
   double? maxAmount;
   bool popular;
   bool featured;
-  String status;
+  ActiveStatus status;
 
   IssuersModel({
     required this.id,
@@ -39,10 +46,10 @@ class IssuersModel {
     this.instagram = '',
     this.website = '',
     this.address = '',
-    this.primaryColor = '',
-    this.secondaryColor = '',
-    this.primaryFontColor = '',
-    this.secondaryFontColor = '',
+    this.primaryColor = Colors.black,
+    this.secondaryColor = Colors.white,
+    this.primaryFontColor = Colors.black,
+    this.secondaryFontColor = themeExtraDarkGreyColor,
     this.description = '',
   });
 
@@ -58,15 +65,15 @@ class IssuersModel {
       maxAmount: double.tryParse(json['maxAmount'] ?? 0.0),
       popular: json['popular'],
       featured: json['featured'],
-      status: json['status'],
+      status: parseActiveStatus(json['status']),
       facebook: json['facebook'],
       instagram: json['instagram'],
       website: json['website'],
       address: json['address'] as String,
-      primaryColor: json['primaryColor'],
-      secondaryColor: json['secondaryColor'],
-      primaryFontColor: json['primaryFontColor'],
-      secondaryFontColor: json['secondaryFontColor'],
+      primaryColor: parseColor(json['primaryColor'] ?? '000000'),
+      secondaryColor: parseColor(json['secondaryColor'] ?? 'FFFFFF'),
+      primaryFontColor: parseColor(json['primaryFontColor'] ?? '000000'),
+      secondaryFontColor: parseColor(json['secondaryFontColor'] ?? '9FA6B6'),
       description: json['description'],
     );
   }

@@ -7,31 +7,23 @@ InputDecoration textFieldDecoration(String labelText) {
   return InputDecoration(
     labelText: labelText,
     labelStyle: const TextStyle(
-      color: primaryHighContrast,
-      fontSize: 15,
+      color: themePrimaryColor,
+      fontSize: 16,
       fontWeight: FontWeight.w600,
     ),
     enabledBorder: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
+      borderRadius: BorderRadius.all(Radius.circular(15)),
       borderSide: BorderSide(
         width: 1,
-        color: primaryDark,
+        color: themeSecondaryColor,
       ),
     ),
     focusedBorder: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
+      borderRadius: BorderRadius.all(Radius.circular(15)),
       borderSide: BorderSide(
         width: 1,
-        color: primaryColor,
+        color: themePrimaryColor,
       ),
     ),
-  );
-}
-
-textFieldTextStyle() {
-  return const TextStyle(
-    color: kTextFieldColor,
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
   );
 }

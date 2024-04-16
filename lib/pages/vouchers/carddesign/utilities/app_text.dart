@@ -11,7 +11,7 @@ class AppText extends Text {
 
   AppText.small(String data,
       {Key? key,
-      this.color = primaryColor,
+      this.color = themePrimaryColor,
       this.fontWeight = FontWeight.normal,
       TextAlign? textAlign = TextAlign.left,
       int? maxLine,
@@ -38,7 +38,7 @@ class AppText extends Text {
   AppText.medium(
     String data, {
     Key? key,
-    this.color = primaryColor,
+    this.color = themePrimaryColor,
     this.fontWeight = FontWeight.w600,
     TextAlign textAlign = TextAlign.left,
     int? maxLine,
@@ -66,7 +66,7 @@ class AppText extends Text {
 
   AppText.large(String data,
       {Key? key,
-      this.color = primaryColor,
+      this.color = themePrimaryColor,
       this.fontWeight = FontWeight.bold,
       TextAlign? textAlign = TextAlign.center,
       int? maxLine,
@@ -92,7 +92,7 @@ class AppText extends Text {
 
   AppText.title(String data,
       {Key? key,
-      this.color = primaryColor,
+      this.color = themePrimaryColor,
       this.fontWeight = FontWeight.bold,
       TextAlign? textAlign = TextAlign.center,
       int? maxLine,

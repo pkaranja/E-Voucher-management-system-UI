@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../models/card_model.dart';
+import '../../../../models/voucher_model.dart';
 import '../utilities/app_text.dart';
 
 class CustomGiftCard extends StatelessWidget {
   final CardModel model;
-  final double width;
+  final double? width;
   final double? height;
   final int? value;
   final bool showLabel;
@@ -14,7 +15,7 @@ class CustomGiftCard extends StatelessWidget {
   const CustomGiftCard({
     Key? key,
     required this.model,
-    this.width = 150,
+    this.width,
     this.height,
     this.value,
     this.showLabel = true,
@@ -31,7 +32,7 @@ class CustomGiftCard extends StatelessWidget {
             Expanded(
               child: Image.asset(
                 model.thumbnailPath,
-                width: width,
+                width: width ?? 300.w,
                 height: height,
                 fit: BoxFit.cover,
               ),

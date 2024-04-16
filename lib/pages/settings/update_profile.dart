@@ -3,13 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
+import 'package:zawadi/global/widgets/date_input_widget.dart';
 import 'dart:io';
 
 import '../../controllers/flutter_toast.dart';
 import '../../controllers/profile_controller.dart';
 import '../../global/styles/app_colors.dart';
+import '../../models/user_model.dart';
 import '../../widgets/button.dart';
 import '../../widgets/date_field.dart';
 import '../../widgets/text_field.dart';
@@ -26,24 +29,14 @@ class UpdateAccountScreen extends StatefulWidget {
 
 class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
   final InputValidators authValidator = InputValidators();
+  final ref = FirebaseDatabase.instance.ref('Users');
+  final user = FirebaseAuth.instance.currentUser!;
+  final _formKey = GlobalKey<FormState>();
+
   bool loading = false;
   bool obscureText = true;
   String imageUrl = " ";
   String? value;
-
-  DropdownMenuItem<String> buildMenuItem(String item) =>
-      DropdownMenuItem(value: item, child: Text(item));
-
-  String? checkValid(value) {
-    if (value.isEmpty) {
-      return 'Please enter correct value';
-    }
-    return null;
-  }
-
-  DatabaseReference ref = FirebaseDatabase.instance.ref().child('Users');
-  final user = FirebaseAuth.instance.currentUser!;
-  final _formKey = GlobalKey<FormState>();
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -57,33 +50,63 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
   final addressFocusNode = FocusNode();
   final dobFocusNode = FocusNode();
 
-  Future update() async {
+
+  Future<void> update() async {
+    DatabaseReference userRef = ref.child(user.uid);
+    DatabaseReference kycRef = userRef.child('kyc');
+
     setState(() {
       loading = true;
     });
     // Show loading dialog
     loadingDialog(context);
 
-    await ref.child(user.uid).update({
+    int age = calculateAge() as int;
+
+    // Prepare data for update
+    Map<String, dynamic> userData = {
       'firstName': firstNameController.text.toString(),
       'lastName': lastNameController.text.toString(),
       'phoneNumber': phoneNumberController.text.toString(),
       'address': addressController.text.toString(),
       'dob': dobController.text.toString(),
-      //'incomeRange': dropdownValue,
-    }).then((value) {
+    };
+
+    Map<String, dynamic> kycData = {
+      'age': age,
+      'location': "",
+      'address': "",
+      'gender': "",
+      'nationality': "",
+      'govt_id': "",
+      'govt_id_expiry_date': "",
+      'govt_type': "",
+      'region': "",
+      'privacy_policy_consent': true,
+      'terms_and_condition_consent': true,
+      'isAutopayOn': false,
+      'phone_number_validated': false,
+    };
+
+    // Perform database update
+    try {
+      await Future.wait([
+        userRef.update(userData),
+        kycRef.set(kycData),
+      ]);
+      // Database update successful
       Navigator.pop(context);
       ToastMessage().toastMessage('Updated!', Colors.green);
-      setState(() {
-        loading = false;
-      });
-    }).onError((error, stackTrace) {
+    } catch (error) {
+      // Error occurred
       ToastMessage().toastMessage(error.toString(), Colors.red);
+    } finally {
       setState(() {
         loading = false;
       });
-    });
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +174,7 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                                               ? const Icon(
                                             Icons.person,
                                             size: 90,
-                                            color: kGrayTextC,
+                                            color: themeExtraDarkGreyColor,
                                           )
                                               : Image.file(
                                               File(provider.image!.path)
@@ -179,7 +202,7 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                                               child: const Icon(
                                                 Icons.edit,
                                                 size: 20,
-                                                color: kGrayTextC,
+                                                color: themeExtraDarkGreyColor,
                                               ),
                                             )),
                                       ),
@@ -239,7 +262,7 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                                   keyboardType: TextInputType.streetAddress,
                                 ),
                                 SBox(constraints),
-                                DynamicInputWidget(
+                                DateInputWidget(
                                   controller: dobController,
                                   hint: "Date of Birth",
                                   obscureText: false,
@@ -288,4 +311,29 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
 
   SizedBox SBox(BoxConstraints constraints) =>
       SizedBox(height: constraints.maxHeight * 0.015);
+}
+
+
+Future<int> calculateAge() async {
+  UserModel userData = ProfileController().getUserData() as UserModel;
+
+  if (userData.dob != null) {
+    if (userData.dob != null) {
+      // Parse the date of birth string into a DateTime object
+      DateTime dob = DateFormat('yyyy-MM-dd').parse(userData.dob);
+      // Calculate the age
+      DateTime now = DateTime.now();
+      int age = now.year - dob.year;
+      if (now.month < dob.month || (now.month == dob.month && now.day < dob.day)) {
+        age--; // Adjust age if birthday hasn't occurred yet this year
+      }
+
+      return age;
+    } else {
+      print('Date of birth not found.');
+    }
+  } else {
+    print('User data incomplete.');
+  }
+  return 0;
 }
