@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zawadi/global/app_state.dart';
 import 'package:zawadi/global/router.dart';
-import 'package:zawadi/global/permissions_handler.dart';
+import 'package:zawadi/global/handlers/permissions_handler.dart';
 import 'package:zawadi/global/auth_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:zawadi/global/styles/app_colors.dart';

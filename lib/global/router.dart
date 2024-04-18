@@ -1,9 +1,12 @@
 // Packages
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:go_router/go_router.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:zawadi/global/constants.dart';
+import 'package:zawadi/global/handlers/error_types.dart';
 import 'package:zawadi/pages/base/base_screen.dart';
 import 'package:zawadi/pages/cart/cart_tab.dart';
 import 'package:zawadi/pages/issuers/issuers_screen.dart';
@@ -16,8 +19,10 @@ import 'package:zawadi/global/app_state.dart';
 import 'package:zawadi/pages/settings/update_profile.dart';
 import 'package:zawadi/pages/settings/user_profile.dart';
 
+import '../controllers/profile_controller.dart';
 import '../pages/auth/login_screen.dart';
 import '../pages/auth/verify_screen.dart';
+import '../pages/global/errors/error_screen.dart';
 import '../pages/issuers/issuer_screen.dart';
 
 class AppRouter {
@@ -26,26 +31,54 @@ class AppRouter {
     required this.prefs,
   });
 
+  FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+  late String baseUrl = remoteConfig.getString('api_base');
+
   AppStateProvider appStateProvider;
   late SharedPreferences prefs;
   get router => _router;
 
   Future<bool> checkUserData() async {
     final user = FirebaseAuth.instance.currentUser;
-    bool emailVerified = prefs.getBool('isEmailVerified') ?? false;
-    bool profileComplete = prefs.getBool('complete') ?? false;
 
-    if(user != null && profileComplete != false && emailVerified != false ) {
-      DatabaseReference ref = FirebaseDatabase.instance.reference().child('Users');
+    if ( user != null ){
+      // Get updated profile data
+      final userProfileData = await ProfileController().getUserProfile();
 
-      final snapshot = await ref.child(user.uid).get();
-      // Return boolean based on snapshot existence
-      return snapshot.exists;
-    } else {
-      // If no user is authenticated, return false
-      return false;
+      if( userProfileData.complete != false && userProfileData.isEmailVerified != false ) {
+        //return true if all user checks are valid
+        return true;
+      }
     }
+    // If no user is authenticated, return false
+    return false;
   }
+
+  //Check internet connection
+  Future<bool> checkInternetConnection() async {
+    return await InternetConnection().hasInternetAccess;
+  }
+
+  //Check API server connection
+  Future<bool> checkApiServerAvailability() async {
+    final connection = InternetConnection.createInstance(
+      customCheckOptions: [
+        InternetCheckOption(uri: Uri.parse('http://$baseUrl')),
+      ],
+    );
+
+    return await connection.hasInternetAccess;
+  }
+
+
+  final listener = InternetConnection().onStatusChange.listen((InternetStatus status) {
+    switch (status) {
+      case InternetStatus.connected:
+      // The internet is now connected
+      case InternetStatus.disconnected:
+      // The internet is now disconnected
+    }
+  });
 
   late final GoRouter _router = GoRouter(
     refreshListenable: appStateProvider,
@@ -56,6 +89,12 @@ class AppRouter {
         name: APP_PAGE.home.routeName,
         builder: (context, state) => const BaseScreen(),
       ),
+
+      // Error page
+      GoRoute(
+          path: APP_PAGE.error.routePath,
+          name: APP_PAGE.error.routeName,
+          builder: (context, state) => const ErrorScreen( ErrorType.location )),
 
       // Add the onboarding Screen
       GoRoute(
@@ -163,6 +202,24 @@ class AppRouter {
 
       // Check if user is loggedin or not based on userLog Status
       bool isLoggedIn = FirebaseAuth.instance.currentUser != null ? true : false;
+
+      bool isInternetConnected = await checkInternetConnection();
+
+      bool isApiServerAlive = await checkApiServerAvailability();
+
+      print("Is internet connected $isInternetConnected");
+
+      print("Is API connected $isInternetConnected");
+
+      // No connection so route to error page
+      if (isInternetConnected) {
+        return state.namedLocation(APP_PAGE.error.routeName);
+      }
+
+      // API Server down so route to error page
+      if (isApiServerAlive) {
+        return state.namedLocation(APP_PAGE.error.routeName);
+      }
 
       if (toOnboard) {
         // return null if the current location is already OnboardScreen to prevent looping

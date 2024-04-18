@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
@@ -18,7 +19,6 @@ import '../../global/styles/app_colors.dart';
 import '../../global/widgets/app_bar.dart';
 import '../../models/user_model.dart';
 import '../../widgets/button.dart';
-import '../../widgets/date_field.dart';
 import '../../widgets/text_field.dart';
 import '../../global/input_validators.dart';
 import '../../global/widgets/text_input_widget.dart';
@@ -82,13 +82,13 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
   }
 
   //Update profile data
-  Future<void> update() async {
+  Future<void> update(BuildContext currentContext) async {
     DatabaseReference userRef = ref.child(user.uid);
     setState(() {
       loading = true;
     });
     // Show loading dialog
-    loadingDialog(context);
+    loadingDialog(currentContext);
     int age = calculateAge(dateOfBirthController.text.toString());
 
     // Prepare data for update
@@ -103,13 +103,19 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
 
     // Perform database update
     try {
-      await Future.wait([
-        userRef.update(userData),
-        ApiRequests().updateProfile(userData, user.uid )
-      ]);
-      // Database update successful
-      Navigator.pop(context);
-      ToastMessage().toastMessage('Updated!', Colors.green);
+        // Update user data in Firebase Realtime Database
+        await userRef.update(userData);
+
+        // Update user profile via API request
+        await ApiRequests().updateProfile(userData, user.uid );
+
+        // Get updated profile data
+        await ProfileController().getUserProfile();
+
+        // Database update successful
+        Navigator.pop(context);
+        GoRouter.of(context).go("/");
+        ToastMessage().toastMessage('Updated!', Colors.green);
     } catch (error) {
       // Error occurred
       ToastMessage().toastMessage(error.toString(), Colors.red);
@@ -279,15 +285,12 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
 
                               SizedBox( height: constraints.maxHeight * 0.04,),
 
-                              TButton(
-                                btnColor: Theme
-                                    .of(context)
-                                    .primaryColor,
+                              TButton( btnColor: Theme.of(context).primaryColor,
                                 btnText: 'Continue',
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
-                                    update();
+                                    update(context);
                                   }
                                 }, constraints: constraints,
                                 ),

@@ -1,4 +1,6 @@
-enum APP_PAGE { onboard, auth, home, search, vouchers, favorite, issuers, issuer, category, verifyEmail, editProfile, profile, cart }
+enum APP_PAGE {
+  onboard, auth, home, search, vouchers, favorite, error,
+  issuers, issuer, category, verifyEmail, editProfile, profile, cart }
 
 extension AppPageExtension on APP_PAGE {
   // create path for routes
@@ -43,6 +45,8 @@ extension AppPageExtension on APP_PAGE {
       case APP_PAGE.cart:
         return "/cart";
 
+      case APP_PAGE.error:
+        return "/error";
 
       default:
         return "/";
@@ -91,6 +95,9 @@ extension AppPageExtension on APP_PAGE {
       case APP_PAGE.cart:
         return "CART";
 
+      case APP_PAGE.error:
+        return "ERROR";
+
       default:
         return "HOME";
     }
@@ -115,6 +122,8 @@ extension AppPageExtension on APP_PAGE {
         return "Your Profile";
       case APP_PAGE.cart:
         return "Cart";
+      case APP_PAGE.error:
+        return "Error";
       default:
         return "Home";
     }

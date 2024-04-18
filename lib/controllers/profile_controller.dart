@@ -9,7 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../global/error_handler.dart';
+import '../global/handlers/error_handler.dart';
 import '../models/profile_model.dart';
 import '../models/user_model.dart';
 
@@ -104,7 +104,7 @@ class ProfileController with ChangeNotifier {
       if (userDataEvent.snapshot.value != null) {
         ProfileModel profileModel = ProfileModel.fromSnapshot(userDataEvent.snapshot);
         profileModel.isEmailVerified = user.emailVerified;
-        profileModel.profilePic = user.photoURL;
+        profileModel.profilePic = user.photoURL ?? '';
         profileModel.firebaseId = userUid;
 
         // Fetch user data from API concurrently

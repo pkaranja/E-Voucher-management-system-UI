@@ -1,50 +1,115 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:zawadi/controllers/apiRequests.dart';
+import 'package:zawadi/pages/global/await.dart';
+import 'package:zawadi/pages/global/errors/error_screen.dart';
 import 'app.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'global/handlers/error_types.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // Show loading screen while initializing Firebase
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: AwaitScreen(),
+  ));
 
-  await initializeRemoteConfig();
+  // Check internet connection before proceeding
+  var connectivityResult = await InternetConnection().hasInternetAccess;
+  if (!connectivityResult) {
+    runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ErrorScreen(ErrorType.network),
+    ));
+    return;
+  }
 
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  try {
+    //initialize shared preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  await FirebaseAppCheck.instance.activate(
-    androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
-    appleProvider: AppleProvider.debug,
-  );
+    //initialize firebase
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
 
-  runApp(
-    ProviderScope(
-      child: MyApp(prefs: prefs)
-    ),
-  );
+    // Initialize other services
+    await initializeServices();
+
+    runApp(
+      ProviderScope(
+          child: MyApp(prefs: prefs)
+      ),
+    );
+  } catch (error) {
+    // If initialization fails, show an error screen
+    print('Error initializing app: $error');
+    runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ErrorScreen(ErrorType.initialization),
+    ));
+  }
 }
 
-Future<void> initializeRemoteConfig() async {
+
+//Initialize required services
+Future<void> initializeServices() async {
   try {
+    //handle crashlytics errors
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  } catch (error) {
+    // Handle errors
+    rethrow;
+  }
+
+  try{
+    //initialize firebase analytics
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+  } catch (error) {
+    rethrow;
+  }
+
+  try{
+    // Initialize Remote Config
     FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 10),
       minimumFetchInterval: const Duration(seconds: 10),
-      //minimumFetchInterval: const Duration(hours: 1),
     ));
     await remoteConfig.fetchAndActivate();
-  } catch (e) {
-    if (kDebugMode) {
-      print('Error initializing Firebase Remote Config: $e');
+  } catch (error) {
+    rethrow;
+  }
+
+  try{
+    //initialize firebase app check
+    await FirebaseAppCheck.instance.activate(
+      androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider
+          .playIntegrity,
+      appleProvider: AppleProvider.debug,
+    );
+  } catch (error) {
+    // Handle errors
+    rethrow;
+  }
+
+  try{
+    // Check API availability connection before proceeding
+    bool apiAvailable = await ApiRequests().apiHealthCheck();
+    if ( !apiAvailable ){
+      throw('API DOWN','System API not reachable');
     }
+  } catch (error) {
+    rethrow;
   }
 }

@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
-import 'package:zawadi/global/error_handler.dart';
+import 'package:zawadi/global/handlers/error_handler.dart';
 
 import '../global/build_search_body.dart';
 import '../models/profile_model.dart';
@@ -15,18 +17,61 @@ import '../models/user_model.dart';
 import '../pages/auth/utils/utils.dart';
 
 class ApiRequests {
-  FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-  int retries = 0;
-  bool loadRemoteDataSucceed = false;
+  late final FirebaseRemoteConfig remoteConfig;
+  late int retries;
+  late bool loadRemoteDataSucceed;
+  late int maxRetries;
+  late int networkRetryDelay;
+  late String baseUrl;
+  late Map<String, String> headers;
+  late final HttpClient _client;
 
-  late final int maxRetries = remoteConfig.getInt('maxRetries');
-  late final int networkRetryDelay = remoteConfig.getInt('networkRetryDelay');
-  late final String baseUrl = remoteConfig.getString('api_base');
+  ApiRequests() {
+    // Initialize common properties
+    remoteConfig = FirebaseRemoteConfig.instance;
+    retries = 0;
+    loadRemoteDataSucceed = false;
 
-  //Default Headers
-  //TODO: use the api auth file
-  final headers = {'Content-Type': 'application/json', };
+    // Initialize properties from remote config
+    maxRetries = remoteConfig.getInt('maxRetries');
+    networkRetryDelay = remoteConfig.getInt('networkRetryDelay');
+    baseUrl = remoteConfig.getString('api_base');
 
+    // Default Headers
+    // TODO: use the api auth file
+    headers = {'Content-Type': 'application/json'};
+
+    // Create the HTTP client
+    _client = _createHttpClient();
+  }
+
+  HttpClient _createHttpClient() {
+    final SecurityContext securityContext = SecurityContext();
+    HttpClient client = HttpClient(context: securityContext);
+    client.connectionTimeout = const Duration(seconds: 5);
+    return client;
+  }
+
+  //API Health
+  Future<bool> apiHealthCheck() async {
+    bool apiHealth = false;
+    var url = Uri.http(baseUrl, '/health');
+
+    try {
+      var request = await _client.getUrl(url);
+      var response = await request.close();
+
+      if (response.statusCode == 200) {
+        apiHealth = true;
+        loadRemoteDataSucceed = true;
+      } else {
+        handleError(apiHealthCheck, 'API Health Fail with CODE ${response.statusCode}');
+      }
+    } catch (e) {
+      handleError(e, 'API Health Failure $e');
+    }
+    return apiHealth;
+  }
 
   //Fetch Profile
   Future<Map<String, dynamic>> fetchProfile(String firebaseUserId) async {
@@ -37,8 +82,11 @@ class ApiRequests {
 
       if (response.statusCode == 200) {
         return json.decode(response.body);
-      } else {
-        handleError(fetchProfile, 'Error fetching profile from API with CODE $response.statusCode');
+      }else if (response.statusCode == 404) {
+        // User not found
+        throw Exception('User not found: ${response.statusCode}');
+      }else {
+        handleError(fetchProfile, 'Error fetching profile from API with CODE ${response.statusCode}');
         throw Exception('Failed to fetch profile: ${response.statusCode}');
       }
     } catch (e) {
@@ -48,7 +96,7 @@ class ApiRequests {
   }
 
   //Update Profile
-  Future<Map<String, dynamic>> updateProfile(Map<String, dynamic> userData, String firebaseUid) async {
+  Future<String> updateProfile(Map<String, dynamic> userData, String firebaseUid) async {
     var url = Uri.http(baseUrl, '/api/users');
 
     DateTime dateTime = DateFormat("d MMMM yyyy").parse(userData["dateOfBirth"]);
@@ -79,18 +127,14 @@ class ApiRequests {
     profileModel.isAutopayOn = false;
     profileModel.phoneNumberValidated = false;
 
-    print(profileModel.toJsonObject());
-
     try {
       final body = profileModel.toJsonObject();
       var response = await http.post(url, headers: headers, body: body);
 
-      print(response.body);
-
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return json.decode(response.body);
       } else {
-        handleError(fetchProfile, 'Error fetching profile from API with CODE $response.statusCode');
+        handleError(fetchProfile, 'Error fetching profile from API with CODE  ${response.statusCode}');
         throw Exception('Failed to fetch profile: ${response.statusCode}');
       }
     } catch (e) {
@@ -112,7 +156,7 @@ class ApiRequests {
         categoryResponseData = json.decode(response.body);
         loadRemoteDataSucceed = true;
       } else {
-        handleError(fetchCategories, 'Error fetching categories from API with CODE $response.statusCode');
+        handleError(fetchCategories, 'Error fetching categories from API with CODE ${response.statusCode}');
       }
     } catch (e) {
       handleError(e, 'Error fetching categories');
@@ -170,4 +214,5 @@ class ApiRequests {
       throw Exception('Failed to fetch issuers');
     }
   }
+
 }

@@ -5,7 +5,7 @@ import 'package:zawadi/global/constants.dart';
 import 'package:zawadi/global/widgets/issuer_vertical_card_grid.dart';
 
 import '../../controllers/apiRequests.dart';
-import '../../global/error_handler.dart';
+import '../../global/handlers/error_handler.dart';
 import '../../global/widgets/app_bar.dart';
 import '../../models/issuers_model.dart';
 

@@ -89,9 +89,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     'firstName': firstName,
                     'lastName': lastName,
                     'phoneNumber': '',
-                    'dob': '',
                     'profilePic': '',
-                    'kyc': ''
                   });
 
           Navigator.pushReplacement(context,

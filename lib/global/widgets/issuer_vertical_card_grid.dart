@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zawadi/global/error_handler.dart';
+import 'package:zawadi/global/handlers/error_handler.dart';
 
 import '../../models/issuers_model.dart';
 import '../../pages/vouchers/carddesign/providers/filtered_cards_provider.dart';

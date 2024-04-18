@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zawadi/global/constants.dart';
 
 import '../../controllers/apiRequests.dart';
-import '../../global/error_handler.dart';
+import '../../global/handlers/error_handler.dart';
 import '../../global/router_utils.dart';
 import '../../global/widgets/app_bar.dart';
 import '../../global/widgets/category_card.dart';
