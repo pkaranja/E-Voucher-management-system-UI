@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:zawadi/global/app_state.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 
 import 'dart:math';
 import 'data/data.dart';
@@ -25,10 +26,10 @@ void onSubmitDone(AppStateProvider stateProvider, BuildContext context) {
 
 class _OnBoardScreenState extends State<OnBoardScreen> {
   List<Color> myColors = [
-    Colors.indigoAccent.shade100,
-    Colors.teal.shade100,
-    Colors.blueGrey.shade200,
-    Colors.greenAccent.shade200
+    themePrimaryColor,
+    themeSecondaryColor,
+    themePrimaryDarkColor,
+    themeSecondaryDarkColor,
   ];
 
   late PageController pageController;
@@ -335,10 +336,9 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                         }
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
+                        padding: const EdgeInsets.symmetric( horizontal: 20, vertical: 20),
                         decoration: const BoxDecoration(
-                          color: Colors.purple,
+                          color: themePrimaryColor,
                           borderRadius: BorderRadius.all(
                             Radius.circular(15),
                           ),

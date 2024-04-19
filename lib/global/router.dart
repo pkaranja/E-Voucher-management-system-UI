@@ -31,9 +31,6 @@ class AppRouter {
     required this.prefs,
   });
 
-  FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-  late String baseUrl = remoteConfig.getString('api_base');
-
   AppStateProvider appStateProvider;
   late SharedPreferences prefs;
   get router => _router;
@@ -54,32 +51,6 @@ class AppRouter {
     return false;
   }
 
-  //Check internet connection
-  Future<bool> checkInternetConnection() async {
-    return await InternetConnection().hasInternetAccess;
-  }
-
-  //Check API server connection
-  Future<bool> checkApiServerAvailability() async {
-    final connection = InternetConnection.createInstance(
-      customCheckOptions: [
-        InternetCheckOption(uri: Uri.parse('http://$baseUrl')),
-      ],
-    );
-
-    return await connection.hasInternetAccess;
-  }
-
-
-  final listener = InternetConnection().onStatusChange.listen((InternetStatus status) {
-    switch (status) {
-      case InternetStatus.connected:
-      // The internet is now connected
-      case InternetStatus.disconnected:
-      // The internet is now disconnected
-    }
-  });
-
   late final GoRouter _router = GoRouter(
     refreshListenable: appStateProvider,
     initialLocation: '/',
@@ -94,7 +65,7 @@ class AppRouter {
       GoRoute(
           path: APP_PAGE.error.routePath,
           name: APP_PAGE.error.routeName,
-          builder: (context, state) => const ErrorScreen( ErrorType.location )),
+          builder: (context, state) => const ErrorScreen( ErrorType.general )),
 
       // Add the onboarding Screen
       GoRoute(
@@ -202,24 +173,6 @@ class AppRouter {
 
       // Check if user is loggedin or not based on userLog Status
       bool isLoggedIn = FirebaseAuth.instance.currentUser != null ? true : false;
-
-      bool isInternetConnected = await checkInternetConnection();
-
-      bool isApiServerAlive = await checkApiServerAvailability();
-
-      print("Is internet connected $isInternetConnected");
-
-      print("Is API connected $isInternetConnected");
-
-      // No connection so route to error page
-      if (isInternetConnected) {
-        return state.namedLocation(APP_PAGE.error.routeName);
-      }
-
-      // API Server down so route to error page
-      if (isApiServerAlive) {
-        return state.namedLocation(APP_PAGE.error.routeName);
-      }
 
       if (toOnboard) {
         // return null if the current location is already OnboardScreen to prevent looping

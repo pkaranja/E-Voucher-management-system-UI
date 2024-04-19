@@ -3,21 +3,22 @@ import '../models/item.dart';
 
 List<Item> items = [
   Item(
-      title: 'Explore local & national events',
+      title: 'Welcome to \nZawadi',
       lottie: lotties[0],
-      description: "Find concerts, sports, theater, and more with our easy-to-use event discovery tools. Whether you're looking for something to do tonight or planning ahead, we've got you covered."),
+      description: "Get ready to gift joy! Zawadi brings you a world of possibilities to share the perfect present with your loved ones. Let's get started!"),
   Item(
-      title: 'Book tickets in seconds',
+      title: 'Explore Gift Card Providers',
       lottie: lotties[1],
-      description: 'Say goodbye to long queues and complicated booking processes. With our streamlined ticketing system, you can secure your spot at your favorite events in just a few taps.'),
+      description: 'Select from a range of trusted gift card providers. Whether it\'s for fashion, dining, or entertainment, find the perfect fit for your loved one from our selection of top brands.'),
   Item(
-      title: 'Curated recommendations just for you',
+      title: 'Instant \nRedemption',
       lottie: lotties[2],
-      description: 'Receive personalized event recommendations based on your interests and past bookings. Never miss out on an event you\'ll love, and enjoy exclusive deals and discounts.'),
+      description: 'Gifts that bring instant smiles! Set up instant redemption to ensure your recipients can enjoy their presents right away. Let\'s make gifting effortless!'),
+
 ];
 
 List<String> lotties = [
-  'assets/lotties/ticket_scan_purple.json',
-  'assets/lotties/tickets_fast.json',
-  'assets/lotties/personalized_events.json',
+  'assets/lotties/giftbox.json',
+  'assets/lotties/peruse.json',
+  'assets/lotties/delivery.json',
 ];

@@ -55,7 +55,7 @@ class ApiRequests {
   //API Health
   Future<bool> apiHealthCheck() async {
     bool apiHealth = false;
-    var url = Uri.http(baseUrl, '/health');
+    var url = Uri.http(baseUrl, '/actuator/health');
 
     try {
       var request = await _client.getUrl(url);

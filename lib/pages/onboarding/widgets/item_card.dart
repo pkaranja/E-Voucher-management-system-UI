@@ -27,9 +27,6 @@ class ItemCard extends StatelessWidget {
               item.lottie,
               fit: BoxFit.contain,
             ),
-            // child: Placeholder(
-            //   color: Colors.black,
-            // ),
           ),
         ),
         const Spacer(),
@@ -45,8 +42,8 @@ class ItemCard extends StatelessWidget {
                   textScaleFactor: 2.3,
                   maxLines: 2,
                   style: const TextStyle(
-                      fontFamily: "Questrial",
-                      fontWeight: FontWeight.w800,
+                      fontFamily: "QrooFont",
+                      fontWeight: FontWeight.bold,
                       height: 1,
                       letterSpacing: 1.1,
                       wordSpacing: 5),
@@ -55,13 +52,11 @@ class ItemCard extends StatelessWidget {
               SizedBox(height: h * 0.01),
               SizedBox(
                   height: h * 0.14,
-                  // child: const Placeholder(),
                   child: Text(
                     item.description,
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      height: 1.5,
-                      color: Colors.black.withOpacity(0.8),
+                    style: const TextStyle(
+                      fontFamily: "QrooFont",
+                      fontSize: 20,
                     ),
                   )),
             ],
