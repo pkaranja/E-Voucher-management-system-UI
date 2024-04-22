@@ -1,15 +1,8 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zawadi/global/constants.dart';
 
 import '../../controllers/apiRequests.dart';
 import '../../global/handlers/error_handler.dart';
@@ -17,15 +10,10 @@ import '../../global/router_utils.dart';
 import '../../global/widgets/app_bar.dart';
 import '../../global/widgets/category_card.dart';
 import '../../global/widgets/issuer_horizontal_card.dart';
-import '../../global/widgets/issuer_vertical_card.dart';
 import '../../global/widgets/issuer_vertical_card_grid.dart';
 import '../../global/widgets/search_bar.dart';
 import '../../models/issuer_category_model.dart';
 import '../../models/issuers_model.dart';
-import '../auth/verify_screen.dart';
-import '../settings/update_profile.dart';
-import '../vouchers/carddesign/providers/filtered_cards_provider.dart';
-import '../vouchers/carddesign/providers/selected_card_provider.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -117,15 +105,11 @@ class _HomeTabState extends State<HomeTab> {
       ),
       body: ListView(
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.all(20.0),
+           Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
             child: Text(
               "Spread happiness, \nGift a loved one today!",
-              style: TextStyle(
-                fontSize: 32.0,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'QrooFont',
-              ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
           Padding(
@@ -165,11 +149,7 @@ class _HomePageWidget extends ConsumerWidget {
             children: [
               Text(
                 "Categories",
-                style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'QrooFont'
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -179,7 +159,12 @@ class _HomePageWidget extends ConsumerWidget {
           SizedBox(
             height: 120.h,
             child: issuerCategories.isEmpty
-                ? const Center( child: CircularProgressIndicator() ) // Show loading indicator if data is not fetched yet
+                ? Center(
+                  child: SpinKitSpinningLines(
+                    color: Theme.of(context).hintColor,
+                    size: 40.h,
+                    ),
+                  ) // Show loading indicator if data is not fetched yet
                 : ListView.separated(
                 physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 scrollDirection: Axis.horizontal,
@@ -197,7 +182,7 @@ class _HomePageWidget extends ConsumerWidget {
           ),
           //End Categories
 
-          SizedBox(height: 27.h),
+          SizedBox(height: 30.h),
 
           //Popular
           Column(
@@ -209,11 +194,7 @@ class _HomePageWidget extends ConsumerWidget {
                 children: [
                   Text(
                     "Popular",
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'QrooFont'
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -224,44 +205,44 @@ class _HomePageWidget extends ConsumerWidget {
                     },
                     child: Text(
                       "view all",
-                      style: GoogleFonts.workSans(
-                        textStyle: TextStyle(
-                          fontSize: 14.sp,
-                          color: Colors.white,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   )
                 ],
               ),
-              SizedBox(height: 10.h),
             ],
           ),
+
+          SizedBox(height: 10.h),
 
           SizedBox(
             height: 165.h,
             child: popularIssuers.isEmpty
-                ? const Center( child: CircularProgressIndicator() )
-                : ListView.separated(
-              padding: EdgeInsets.only(left: 0.w),
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              scrollDirection: Axis.horizontal,
-              itemCount: popularIssuers.length,
-              itemBuilder: (context, index) {
-                final issuer = popularIssuers[index];
-                return IssuerHorizontalCard(issuer: issuer);
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  width: 15.w,
-                );
-              },
+              ? Center(
+                  child: SpinKitSpinningLines(
+                    color: Theme.of(context).hintColor,
+                    size: 40.h,
+                  ),
+                )
+              : ListView.separated(
+                padding: EdgeInsets.only(left: 0.w),
+                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                scrollDirection: Axis.horizontal,
+                itemCount: popularIssuers.length,
+                itemBuilder: (context, index) {
+                  final issuer = popularIssuers[index];
+                  return IssuerHorizontalCard(issuer: issuer);
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    width: 15.w,
+                  );
+                },
+              ),
             ),
-          ),
           //End Popular
 
-          SizedBox(height: 27.h),
+          SizedBox(height: 30.h),
 
           //Explore
           Column(
@@ -273,11 +254,7 @@ class _HomePageWidget extends ConsumerWidget {
                 children: [
                   Text(
                     "Explore",
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'QrooFont'
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ],
               ),

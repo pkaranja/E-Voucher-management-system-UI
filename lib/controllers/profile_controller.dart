@@ -164,33 +164,38 @@ class ProfileController with ChangeNotifier {
     }
   }
 
-  Future<void> getProfileFromPreferences() async {
+  Future<ProfileModel> getProfileFromPreferences() async {
+    ProfileModel profileModel = ProfileModel(isEmailVerified: false, complete: false);
+
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
+      //init profile model
 
-      await prefs.getString('profileId');
-      await prefs.getString('firebaseId');
-      await prefs.getString('fullName');
-      await prefs.getString('firstName');
-      await prefs.getString('lastName');
-      await prefs.getInt('age');
-      await prefs.getString('email');
-      await prefs.getString('address');
-      await prefs.getString('profilePic');
-      await prefs.getString('dateCreated');
-      await prefs.getString('dateOfBirth');
-      await prefs.getString('externalId');
-      await prefs.getInt('giftcardsPurchased');
-      await prefs.getInt('giftcardsReceived');
-      await prefs.getString('lastLogin');
-      await prefs.getString('phoneNumber');
-      await prefs.getString('status');
-      await prefs.getBool('isEmailVerified');
-      await prefs.getBool('complete');
+      profileModel.profileId = await prefs.getString('profileId');
+      profileModel.firebaseId = await prefs.getString('firebaseId');
+      profileModel.fullName = await prefs.getString('fullName');
+      profileModel.firstName = await prefs.getString('firstName');
+      profileModel.lastName = await prefs.getString('lastName');
+      profileModel.age = await prefs.getInt('age');
+      profileModel.email = await prefs.getString('email');
+      profileModel.address = await prefs.getString('address');
+      profileModel.profilePic = await prefs.getString('profilePic');
+      profileModel.dateCreated = await prefs.getString('dateCreated');
+      profileModel.dateOfBirth = await prefs.getString('dateOfBirth');
+      profileModel.externalId = await prefs.getString('externalId');
+      profileModel.giftcardsPurchased = await prefs.getInt('giftcardsPurchased');
+      profileModel.giftcardsReceived = await prefs.getInt('giftcardsReceived');
+      profileModel.lastLogin = await prefs.getString('lastLogin');
+      profileModel.phoneNumber = await prefs.getString('phoneNumber');
+      profileModel.status = await prefs.getString('status');
+      profileModel.isEmailVerified = await prefs.getBool('isEmailVerified') ?? false;
+      profileModel.complete = await prefs.getBool('complete') ?? false;
 
     } catch (e) {
       handleError(e, 'Error saving profile to preferences');
     }
+
+    return profileModel;
   }
 
   Future<UserModel?> getUserData() async {

@@ -4,6 +4,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:zawadi/controllers/apiRequests.dart';
 import 'package:zawadi/pages/global/await.dart';
@@ -22,7 +23,10 @@ void main() async {
   // Show loading screen while initializing Firebase
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: AwaitScreen(),
+    home: ScreenUtilInit(
+      designSize: const Size(390, 844),
+      child: AwaitScreen(),
+    ),
   ));
 
   // Check internet connection before proceeding
@@ -30,7 +34,10 @@ void main() async {
   if (!connectivityResult) {
     runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ErrorScreen(ErrorType.network),
+      home: ScreenUtilInit(
+        designSize: const Size(390, 844),
+        child: ErrorScreen(ErrorType.network),
+      ),
     ));
     return;
   }
@@ -55,7 +62,10 @@ void main() async {
     print('Error initializing app: $error');
     runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ErrorScreen(ErrorType.initialization),
+      home: ScreenUtilInit(
+        designSize: const Size(390, 844),
+        child: ErrorScreen(ErrorType.initialization),
+      )
     ));
   }
 }

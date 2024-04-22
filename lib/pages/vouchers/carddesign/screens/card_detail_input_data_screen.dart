@@ -27,7 +27,6 @@ class CardDetailInputScreen extends StatelessWidget {
           hasBackButton: true
       ),
       body: SingleChildScrollView(
-        //backgroundColor: selectedCard.value?.bgColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -49,17 +48,17 @@ class CardDetailInputScreen extends StatelessWidget {
               ),
             ),
             AppText.title(
-              '\$$giftValue',
-              color: Colors.white,
+              '\Tsh$giftValue',
+              color: Theme.of(context).hintColor,
               fontSize: 30,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(20.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: Theme.of(context).hintColor,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),

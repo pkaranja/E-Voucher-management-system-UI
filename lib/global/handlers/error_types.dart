@@ -52,7 +52,7 @@ extension ErrorTypeExtension on ErrorType {
     String get errorMessage {
       switch (this) {
         case ErrorType.network:
-          return "Could not connect to the network, please try again";
+          return "Could not connect to the network, please try again later";
 
         case ErrorType.camera:
           return "Could not access the camera";

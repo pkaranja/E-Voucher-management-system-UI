@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:zawadi/models/issuers_model.dart';
 
 import '../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
@@ -58,7 +58,7 @@ class IssuerVerticalCard extends ConsumerWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 10, bottom: 40.h),
                     child: Image.asset(
-                      'assets/images/gift_box.png',
+                      'assets/images/logo.png',
                       fit: BoxFit.contain,
                       colorBlendMode: BlendMode.dstATop,
                       width: 100.w,
@@ -69,7 +69,7 @@ class IssuerVerticalCard extends ConsumerWidget {
               ),
             ),
           ],
-        )
+        ),
     );
   }
 }
@@ -115,33 +115,32 @@ class ContainerWithCircle extends ConsumerWidget {
                 ref
                    .read(selectedCardIdProvider.notifier)
                    .setSelectedCardId(2);
-
                 GoRouter.of(context).goNamed(
                     APP_PAGE.issuer.routeName,
                     pathParameters: {'issuerId': id, 'issuerName': name}
                 );
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.0),
-                backgroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10),
+                backgroundColor: themeAlmostWhiteColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.shopping_cart), // Add cart icon
-                  SizedBox(width: 2.0), // Add space between icon and text
+                  SvgPicture.asset(
+                    'assets/svgs/cart.svg',
+                    width: 30,
+                    height: 30,
+                    colorFilter: const ColorFilter.mode(themeAlmostBlackColor, BlendMode.srcIn),
+                  ),
+                  //Icon(Icons.shopping_cart), // Add cart icon
                   Text(
-                    'Buy',
+                    'buy',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFF262626),
-                      fontSize: 14,
-                      fontFamily: 'QrooFont',
-                      fontWeight: FontWeight.normal,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),

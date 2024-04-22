@@ -3,8 +3,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwave_standard/flutterwave.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'package:zawadi/global/styles/theme.dart';
 import 'package:zawadi/global/widgets/text_input_widget.dart';
+import 'package:zawadi/models/profile_model.dart';
 
 import '../../controllers/profile_controller.dart';
 import '../../models/user_model.dart';
@@ -23,12 +26,11 @@ class PaymentFormWidget extends StatefulWidget {
 }
 
 class _PaymentFormWidgetState extends State<PaymentFormWidget> {
-  late BuildContext _context;
-  UserModel? userData;
+  late ProfileModel userProfileData;
 
   final remoteConfig = FirebaseRemoteConfig.instance;
   late final String flutterWaveEncryptionKey = remoteConfig.getString('flutterwave_uat_encryptionKey');
-  late final String flutterwavePublicKey = remoteConfig.getString('flutterwave_uat_publicKey');
+  late final String flutterWavePublicKey = remoteConfig.getString('flutterwave_uat_publicKey');
 
   late GlobalKey<FormState> formKey;
   bool isTestMode = true;
@@ -49,25 +51,35 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
   @override
   void initState() {
       super.initState();
-      _context = widget.initialContext;
       formKey = GlobalKey<FormState>();
 
+      //initiate customer profile
+      initiateProfile();
+
       //Sender
-      customFromNameController = TextEditingController(text: "DJ 10K");
-      voucherMessageController = TextEditingController(text: "This is a good voucher");
+      customFromNameController = TextEditingController();
+      voucherMessageController = TextEditingController();
 
       customFromNameFocusNode = FocusNode();
       voucherMessageFocusNode = FocusNode();
 
       //Recipient
-      recipientNameController = TextEditingController(text: "Roobee Salim");
-      recipientEmailController = TextEditingController(text: "test@test.com");
-      recipientPhoneNumberController = TextEditingController(text: "0715190934");
+      recipientNameController = TextEditingController();
+      recipientEmailController = TextEditingController();
+      recipientPhoneNumberController = TextEditingController();
 
       recipientNameFocusNode = FocusNode();
       recipientEmailFocusNode = FocusNode();
       recipientPhoneNumberFocusNode = FocusNode();
     }
+
+  void initiateProfile() {
+    ProfileController().getProfileFromPreferences().then((profile) {
+      customFromNameController.text = profile.fullName ?? '';
+
+      userProfileData = profile;
+    });
+  }
 
     @override
     void dispose() {
@@ -92,91 +104,78 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return FutureBuilder<UserModel?>(
-        future: ProfileController().getUserData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (snapshot.hasData && snapshot.data != null) {
-            userData = snapshot.data!;
-            return SizedBox(
+    return SizedBox(
+      width: double.infinity,
+      child: Form(
+        key: formKey,
+        child: Column(
+          children: <Widget>[
+            DynamicInputWidget(
+              controller: recipientNameController,
+              obscureText: false,
+              focusNode: recipientNameFocusNode,
+              toggleObscureText: null,
+              validator: formValidator.textValidator,
+              prefIcon: const Icon(Icons.person, size: 18),
+              hint: "Enter recipient full name",
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.name,
+              isNonPasswordField: true,
+            ),
+            const SizedBox(height: 10),
+            DynamicInputWidget(
+              controller: recipientEmailController,
+              obscureText: false,
+              focusNode: recipientEmailFocusNode,
+              toggleObscureText: null,
+              validator: formValidator.emailValidator,
+              prefIcon: const Icon(Icons.alternate_email, size: 18),
+              hint: "Enter recipient e-mail address",
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.emailAddress,
+              isNonPasswordField: true,
+            ),
+            const SizedBox(height: 10),
+            DynamicInputWidget(
+              controller: recipientPhoneNumberController,
+              obscureText: false,
+              focusNode: recipientPhoneNumberFocusNode,
+              toggleObscureText: null,
+              validator: formValidator.textValidator,
+              prefIcon: const Icon(Icons.phone, size: 18),
+              hint: "Enter recipient phone number",
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.phone,
+              isNonPasswordField: true,
+            ),
+            const SizedBox(height: 10),
+            DynamicInputWidget(
+              controller: voucherMessageController,
+              obscureText: false,
+              focusNode: voucherMessageFocusNode,
+              toggleObscureText: null,
+              validator: formValidator.textValidator,
+              prefIcon: const Icon(Icons.message, size: 18),
+              hint: "Enter voucher message",
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.text,
+              isNonPasswordField: true,
+              maxLines: 5,
+            ),
+            Container(
               width: double.infinity,
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: <Widget>[
-                    DynamicInputWidget(
-                      controller: recipientNameController,
-                      obscureText: false,
-                      focusNode: recipientNameFocusNode,
-                      toggleObscureText: null,
-                      validator: formValidator.textValidator,
-                      prefIcon: const Icon(Icons.person, size: 18),
-                      hint: "Enter recipient full name",
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name,
-                      isNonPasswordField: true,
-                    ),
-                    const SizedBox(height: 10),
-                    DynamicInputWidget(
-                      controller: recipientEmailController,
-                      obscureText: false,
-                      focusNode: recipientEmailFocusNode,
-                      toggleObscureText: null,
-                      validator: formValidator.emailValidator,
-                      prefIcon: const Icon(Icons.alternate_email, size: 18),
-                      hint: "Enter recipient e-mail address",
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.emailAddress,
-                      isNonPasswordField: true,
-                    ),
-                    const SizedBox(height: 10),
-                    DynamicInputWidget(
-                      controller: recipientPhoneNumberController,
-                      obscureText: false,
-                      focusNode: recipientPhoneNumberFocusNode,
-                      toggleObscureText: null,
-                      validator: formValidator.textValidator,
-                      prefIcon: const Icon(Icons.phone, size: 18),
-                      hint: "Enter recipient phone number",
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.phone,
-                      isNonPasswordField: true,
-                    ),
-                    const SizedBox(height: 10),
-                    DynamicInputWidget(
-                      controller: voucherMessageController,
-                      obscureText: false,
-                      focusNode: voucherMessageFocusNode,
-                      toggleObscureText: null,
-                      validator: formValidator.textValidator,
-                      prefIcon: const Icon(Icons.message, size: 18),
-                      hint: "Enter voucher message",
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.text,
-                      isNonPasswordField: true,
-                      maxLines: 5,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-                      child: CustomElevatedButton(
-                        text: 'Make payment',
-                        onPressed: _onPressed,
-                        backgroundColor: Colors.black87,
-                        fixedSize: Size(size.width, 50),
-                      ),
-                    )
-                  ],
-                ),
+              height: 50,
+              margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: CustomElevatedButton(
+                text: 'Make payment',
+                onPressed: _onPressed,
+                backgroundColor: Theme.of(context).hintColor,
+                fixedSize: Size(size.width, 50),
               ),
-            );
-          }
-          return ErrorWidget('Something went wrong while processing your request, please try again');
-        }
+            )
+          ],
+        ),
+      )
     );
   }
 
@@ -196,14 +195,14 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
   //Initialize payment
   _handlePaymentInitialization() async {
     final Customer customer = Customer(
-      name: userData!.fullName,
-      email: userData!.email,
-      phoneNumber: userData!.phone,
+      name: userProfileData.fullName,
+      email: userProfileData.email ?? '',
+      phoneNumber: userProfileData.phoneNumber,
     );
 
     final Flutterwave flutterwave = Flutterwave(
       context: context,
-      publicKey: flutterwavePublicKey.trim(),
+      publicKey: flutterWavePublicKey.trim(),
       currency: "TZS",
       redirectUrl: 'https://facebook.com',
       txRef: Uuid().v1(),
@@ -211,7 +210,7 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
       customer: customer,
       paymentOptions: "card, ussd",
       customization: Customization(title: "Test Payment"),
-      isTestMode: this.isTestMode,
+      isTestMode: isTestMode,
     );
     final ChargeResponse response = await flutterwave.charge();
     showLoading(response.toString());
@@ -229,7 +228,7 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
       builder: (BuildContext context) {
         return AlertDialog(
           content: Container(
-            margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
+            margin: const EdgeInsets.fromLTRB(30, 20, 30, 20),
             width: double.infinity,
             height: 50,
             child: Text(message),

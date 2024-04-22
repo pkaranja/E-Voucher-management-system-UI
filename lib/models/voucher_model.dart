@@ -14,6 +14,7 @@ class CardModel {
   final String name;
   final String thumbnailPath;
   final Color bgColor;
+  final Color fontColor;
   final List<CardCategory> categories;
 
   const CardModel({
@@ -22,50 +23,50 @@ class CardModel {
     required this.thumbnailPath,
     required this.categories,
     required this.bgColor,
+    required this.fontColor,
   });
 
   static List<CardModel> sampleCards = [
     const CardModel(
       id: 1,
-      name: 'Birthday',
-      thumbnailPath: 'assets/prints/birthday.jpg',
+      name: 'Dark Blue Theme',
+      thumbnailPath: 'assets/images/cardthemes/dark_blue_box.png',
       categories: [CardCategory.general, CardCategory.birthday],
-      bgColor: Colors.purple,
+      bgColor: Color(0xFF7B8092),
+      fontColor: Color(0xFFEEEFF1),
     ),
     const CardModel(
       id: 2,
-      name: 'Easter',
-      thumbnailPath: 'assets/prints/easter.jpg',
-      categories: [ CardCategory.general ],
-      bgColor: Colors.yellow,
+      name: 'From me to you',
+      thumbnailPath: 'assets/images/cardthemes/green_ribbon.png',
+      categories: [CardCategory.general],
+      bgColor: Color(0xFF025049),
+      fontColor: Color(0xFFF8F1E1),
     ),
     const CardModel(
       id: 3,
-      name: 'Birthday',
-      thumbnailPath: 'assets/prints/black_box.jpg',
+      name: 'Rabbits',
+      thumbnailPath: 'assets/images/cardthemes/rabbits.png',
       categories: [CardCategory.general],
-      bgColor: Colors.blueAccent,
+      bgColor: Color(0xFFF5F4F1),
+      //bgColor: Color(0xFF979797),
+      fontColor: Color(0xFF100F0D)
     ),
     const CardModel(
-      id: 4,
-      name: 'Merry Christmas',
-      thumbnailPath: 'assets/prints/merry_christmas.jpg',
-      categories: [CardCategory.general, CardCategory.christmas],
-      bgColor: Colors.green,
+        id: 4,
+        name: 'Yellow Theme',
+        thumbnailPath: 'assets/images/cardthemes/yellow_box.png',
+        categories: [CardCategory.general],
+        bgColor: Color(0xFFE9CF6F),
+        fontColor: Color(0xFF944C1A)
     ),
     const CardModel(
-      id: 5,
-      name: 'Thanks',
-      thumbnailPath: 'assets/prints/thanks.jpg',
-      categories: [CardCategory.general],
-      bgColor: Colors.black,
-    ),
-    const CardModel(
-      id: 6,
-      name: 'Giving Season',
-      thumbnailPath: 'assets/prints/gift_box.jpg',
-      categories: [CardCategory.general, CardCategory.congratulation],
-      bgColor: Colors.blueGrey,
+        id: 5,
+        name: 'Brown Theme',
+        thumbnailPath: 'assets/images/cardthemes/brown_box.png',
+        categories: [CardCategory.general],
+        bgColor: Color(0xFFF5F7E2),
+        fontColor: Color(0xFF444444)
     ),
   ];
 }

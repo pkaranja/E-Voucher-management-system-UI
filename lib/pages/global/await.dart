@@ -9,30 +9,32 @@ class AwaitScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    final systemBackgroundColor = isDarkMode ?  themeLightGreyColor : themeAlmostBlackColor;
-    final spinnerColor = isDarkMode ? themePrimaryColor : themeAlmostBlackColor;
 
     return Scaffold(
-      backgroundColor: systemBackgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
           child: Center(
             child: Container(
               height: 500,
               width: 135,
               decoration: BoxDecoration(
-                color: systemBackgroundColor,
+                color: Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SpinKitSpinningLines(
-                    color: spinnerColor,
+                    color: Theme.of(context).hintColor,
                     size: 100,
                   ),
                   const SizedBox(height: 30,),
-                  const Text("Loading..."),
+                  Text("Loading",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        color: themePrimaryColor,
+                        fontFamily: 'Blueberry'
+                    ),
+                  ),
                 ],
               ),
             ),

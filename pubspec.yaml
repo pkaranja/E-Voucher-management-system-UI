@@ -122,6 +122,7 @@ flutter:
     - assets/images/
     - assets/images/errors/
     - assets/images/categories/
+    - assets/images/cardthemes/
     - assets/prints/
     - assets/icon/
     - assets/lotties/
@@ -155,3 +156,21 @@ flutter:
     - family: Halter
       fonts:
         - asset: assets/fonts/halter.ttf
+
+
+  # Card custom fonts
+    - family: Parisienne
+      fonts:
+        - asset: assets/fonts/Parisienne-Regular.ttf
+
+    - family: Klein
+      fonts:
+        - asset: assets/fonts/Klein-Regular.ttf
+
+    - family: Frunchy
+      fonts:
+        - asset: assets/fonts/Frunchy-Sage.ttf
+
+    - family: Blueberry
+      fonts:
+        - asset: assets/fonts/Blueberry.ttf

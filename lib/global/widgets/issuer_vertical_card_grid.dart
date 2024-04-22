@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:zawadi/global/handlers/error_handler.dart';
 
 import '../../models/issuers_model.dart';
@@ -21,36 +22,42 @@ class IssuerVerticalCardGrid extends ConsumerWidget {
     ref.watch(selectedCardIdProvider);
 
     return cards.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      data: (cards) => SingleChildScrollView(
-        child: issuersList.isEmpty
-            ? const Center( child: CircularProgressIndicator() )
-            : Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: issuersList.length,
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    height: 220.h,
-                    child: IssuerVerticalCard(issuer: issuersList[index]),
-                  );
-                },
-              ),
-            ),
-            // Separator
-            SizedBox(height: 20.h),
-          ],
+      loading: () => Center(
+        child: SpinKitSpinningLines(
+          color: Theme.of(context).hintColor,
+          size: 40.h,
         ),
       ),
-      error: (e, s) {
+      data: (cards) => SingleChildScrollView(
+        child: issuersList.isEmpty
+            ? Center(
+              child: SpinKitSpinningLines(
+                color: Theme.of(context).hintColor,
+                size: 40.h,
+              ),
+            )
+            : Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: issuersList.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        IssuerVerticalCard(issuer: issuersList[index]),
+                        SizedBox(height: 20.h), // Add space between items
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        error: (e, s) {
         handleError(e, s.toString());
-        return Center(child: AppText.medium('Failed to fetch gift vouchers'));
-        },
-
+        return Center(child: AppText.medium('Failed to load gift vouchers'));
+      },
     );
   }
 }

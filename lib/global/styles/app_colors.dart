@@ -19,7 +19,8 @@ const kDarkGreenBackC = Color(0xff027273);
 const kDarkGreenNavIconC = Color.fromARGB(255, 0, 91, 93);
 
 
-const themePrimaryColor = Color(0xFFDA5726);
+//const themePrimaryColor = Color(0xFFDA5726);
+const themePrimaryColor = Color(0xFFAA8261);
 const themePrimaryLightColor = Color(0xFFE17A51);
 const themePrimaryDarkColor = Color(0xFFAE471E);
 
@@ -35,3 +36,9 @@ const themeExtraDarkGreyColor = Color(0xff9FA6B6);
 const themeWhiteColor = Colors.white;
 const themeBlackColor = Colors.black;
 const themeAlmostBlackColor = Color(0xFF121212);
+const themeAlmostWhiteColor = Color(0xFFFCFCFC);
+
+const themeWarningColor = Colors.deepOrangeAccent;
+const themeDangerColor = Colors.red;
+const themeSuccessColor =  Colors.green;
+const themeInfoColor = Colors.amber;

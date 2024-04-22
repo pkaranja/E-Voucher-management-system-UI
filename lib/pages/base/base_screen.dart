@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/pages/home/home_tab.dart';
+import 'package:zawadi/pages/vouchers/purchased_vouchers_screen.dart';
+import 'package:zawadi/pages/vouchers/received_vouchers_screen.dart';
 import 'package:zawadi/pages/vouchers/vouchers_screen.dart';
 import 'package:zawadi/pages/settings/user_profile.dart';
 
@@ -34,9 +36,10 @@ class _BaseScreenState extends State<BaseScreen> {
           controller: pageController,
           children: const [
             HomeTab(),
-            VouchersScreen(),
+            ReceivedVouchersScreen(),
+            PurchasedVouchersScreen(),
             UserProfileScreen(),
-            SettingsScreen(),
+            //SettingsScreen(),
           ],
         ),
         bottomNavigationBar: NavigationBarTheme(
@@ -104,15 +107,26 @@ class _BaseScreenState extends State<BaseScreen> {
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset(
-                    'assets/svgs/settings.svg',
+                    'assets/svgs/profile.svg',
                     width: 30,
                     height: 30,
                     colorFilter: ColorFilter.mode(Theme
                         .of(context)
                         .hintColor, BlendMode.srcIn),
                   ),
-                  label: 'Settings',
+                  label: 'Profile',
                 ),
+                // NavigationDestination(
+                //   icon: SvgPicture.asset(
+                //     'assets/svgs/settings.svg',
+                //     width: 30,
+                //     height: 30,
+                //     colorFilter: ColorFilter.mode(Theme
+                //         .of(context)
+                //         .hintColor, BlendMode.srcIn),
+                //   ),
+                //   label: 'Settings',
+                // ),
               ],
             )
         ),

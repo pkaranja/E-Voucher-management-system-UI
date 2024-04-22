@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/global/styles/theme.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
@@ -30,12 +32,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
       //App bar
         appBar: const QrooAppBar(
             title1: 'Zawadi',
             title2: ' Digital',
-            hasBackButton: true
+            hasBackButton: false
         ),
 
         //Content
@@ -83,13 +84,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
-                                      'Profile',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontSize: 28,
-                                          fontWeight: FontWeight.w400),
-                                    ),
                                     IconButton(
                                         onPressed: () {
                                           Navigator.of(context).push(
@@ -166,7 +160,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     constraints: constraints,
                                     title: 'Date of Birth',
                                     iconName: Icons.person,
-                                    titleValue: map['dob']),
+                                    titleValue: map['dateOfBirth']),
                                 SizedBox(
                                   height: constraints.maxHeight * 0.01,
                                 ),
@@ -223,9 +217,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             );
           }
         } else {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: kGreenColor,
+          return Center(
+            child: SpinKitSpinningLines(
+              color: Theme.of(context).hintColor,
+              size: 40.h,
             ),
           );
         }

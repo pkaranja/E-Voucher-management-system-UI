@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/text_formatter.dart';
 
 import '../styles/app_colors.dart';
-import '../styles/text_field_style.dart';
 
 class DynamicInputWidget extends StatelessWidget {
   const DynamicInputWidget(
@@ -16,6 +16,8 @@ class DynamicInputWidget extends StatelessWidget {
       required this.hint,
       this.keyboardType,
       this.maxLines,
+      this.onChanged,
+      this.inputFormatters,
       Key? key})
       : super(key: key);
 
@@ -23,7 +25,7 @@ class DynamicInputWidget extends StatelessWidget {
   final bool isNonPasswordField;
   // Controller for the text field
   final TextEditingController controller;
-  // Function to toggle Text obscuractio on password text field
+  // Function to toggle Text obscuraction on password text field
   final VoidCallback? toggleObscureText;
   // to obscure text or not bool
   final bool obscureText;
@@ -38,6 +40,11 @@ class DynamicInputWidget extends StatelessWidget {
   final String hint;
   final TextInputType? keyboardType;
   final int? maxLines;
+
+  //handle on input value changed
+  final void Function(String)? onChanged;
+  //handle input formatters limits
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +77,8 @@ class DynamicInputWidget extends StatelessWidget {
       validator: validator,
       keyboardType: keyboardType,
       maxLines: maxLines ?? 1,
+      onChanged: onChanged,
+      inputFormatters: inputFormatters,
     );
   }
 }

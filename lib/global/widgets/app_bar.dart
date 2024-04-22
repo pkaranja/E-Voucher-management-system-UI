@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zawadi/pages/settings/user_profile.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 import '../../config/custom_colors.dart';
 import '../router_utils.dart';
 
@@ -40,27 +40,39 @@ class _QrooAppBarState extends State<QrooAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.background,
-      title: Text.rich(
-        TextSpan(
-            style: const TextStyle(
-              fontSize: 34,
-              fontFamily: 'Teko',
+      title: Row(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.h),
+            child: Image.asset(
+              'assets/images/logo.png', // Path to your logo image
+              height: 40, // Adjust the height as needed
             ),
-            children: [
-              TextSpan(
-                text: widget.title1,
-                style: TextStyle(
-                  color: CustomColors.customSwatchColor,
+          ),
+          SizedBox(width: 10.w),
+          Text.rich(
+            TextSpan(
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: themePrimaryColor,
+                    fontFamily: 'Blueberry'
                 ),
-              ),
-              TextSpan(
-                text: widget.title2,
-                style: const TextStyle(
-                  color: Colors.grey,
-                ),
-              ),
-            ]
-        ),
+                children: [
+                  TextSpan(
+                    text: widget.title1,
+                    style: const TextStyle(
+                      color: themePrimaryColor,
+                    ),
+                  ),
+                  // TextSpan(
+                  //   text: widget.title2,
+                  //   style: const TextStyle(
+                  //     color: Colors.grey,
+                  //   ),
+                  // ),
+                ]
+            ),
+          ),
+        ],
       ),
       automaticallyImplyLeading: false,
       leading: widget.hasBackButton ? IconButton(

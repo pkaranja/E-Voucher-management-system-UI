@@ -33,11 +33,12 @@ class CustomChips extends StatelessWidget {
               : themePrimaryDarkColor,
         ),
         child: Center(
-          child: AppText.small(
+          child: Text(
             label,
-            color: isSelected ? Colors.white : focusColor ?? kGreenColor,
-            fontWeight: FontWeight.bold,
-          ),
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              color: isSelected ? Colors.white : focusColor ?? kGreenColor,
+            ),
+          )
         ),
       ),
     );

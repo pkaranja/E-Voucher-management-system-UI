@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
-
+import '../../global/input_validators.dart';
 import '../../global/widgets/app_bar.dart';
+import '../../global/widgets/text_input_widget.dart';
 import '../../models/voucher_model.dart';
 import '../../widgets/error_message_widget.dart';
 import '../vouchers/carddesign/providers/selected_card_provider.dart';
@@ -32,35 +36,35 @@ class IssuerScreen extends ConsumerWidget {
         hasBackButton: true,
       ),
       body: !isUUID(issuerId)
-          ? const ErrorMessage(
-          message: 'Something went wrong with your request, try again later!',)
-          : ListView(
-            children: <Widget>[
+        ? const ErrorMessage( message: 'Something went wrong with your request, try again later!',)
+        : Column(
+            children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  issuerName,
-                  style: const TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'QrooFont',
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    //TODO: Discuss section title
+                    //issuerName,
+                    'Design your card',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: selectedCard.value?.fontColor, // Change color here
+                    ),
                   ),
                 ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _SelectedCard( backgroundColor: selectedCard.value?.bgColor ),
-                  Hero(
-                    tag: "BottomSheet",
-                    child: _GiftCardValue(
-                      model: selectedCard.value,
-                    ),
-                  ),
-                ],
+              Expanded(
+                flex: 6,
+                child: _SelectedCard( backgroundColor: selectedCard.value?.bgColor, fontColor: selectedCard.value?.fontColor ),
+              ),
+              Expanded(
+                flex: 4,
+                child: SingleChildScrollView(
+                  child:_GiftCardDetails(model: selectedCard.value, ),
+                ),
               ),
             ],
-      ),
+          ),
     );
   }
 }
@@ -79,9 +83,9 @@ class IssuerScreen extends ConsumerWidget {
 
 
 class _SelectedCard extends ConsumerWidget {
-  const _SelectedCard({ Key? key, this.backgroundColor }) : super(key: key);
-
+  const _SelectedCard({ Key? key, this.backgroundColor, this.fontColor }) : super(key: key);
   final Color? backgroundColor;
+  final Color? fontColor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -91,27 +95,31 @@ class _SelectedCard extends ConsumerWidget {
     final selectedGiftAmount = ref.watch(selectedGiftAmountProvider) ?? 10000;
 
     return Container(
-      color: backgroundColor,
-      height: size.height * 0.5,
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(vertical: 10.h),
       child: selectedCard.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => Center(
+          child: SpinKitSpinningLines(
+            color: fontColor ?? Theme.of(context).hintColor,
+            size: 40.h,
+          ),
+        ),
         data: (card) => Row(
           children: [
             IconButton(
               onPressed: () => selectedCardNotifier.prevCard(),
               icon: const Icon(Icons.arrow_back),
+              color: fontColor,
             ),
             Expanded(
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 5.0,
+                      color: fontColor ?? Theme.of(context).hintColor,
+                      blurRadius: 10.0,
                       spreadRadius: 2,
-                      offset: Offset(2, 2),
+                      offset: const Offset(2, 2),
                     ),
                   ],
                 ),
@@ -126,7 +134,10 @@ class _SelectedCard extends ConsumerWidget {
             ),
             IconButton(
               onPressed: () => selectedCardNotifier.nextCard(),
-              icon: const Icon(Icons.arrow_forward_sharp),
+              icon: Icon(
+                  Icons.arrow_forward_sharp,
+                  color: fontColor ?? Theme.of(context).hintColor,
+              ),
             ),
           ],
         ),
@@ -136,13 +147,23 @@ class _SelectedCard extends ConsumerWidget {
   }
 }
 
-class _GiftCardValue extends ConsumerWidget {
+class _GiftCardDetails extends ConsumerWidget {
   final CardModel? model;
 
-  const _GiftCardValue({
+  _GiftCardDetails({
     Key? key,
     required this.model,
   }) : super(key: key);
+
+  //Form init
+  final InputValidators formValidator = InputValidators();
+  final TextEditingController giftCardTitleController = TextEditingController();
+  final TextEditingController giftCardAmountController = TextEditingController();
+  final TextEditingController giftCardMessageController = TextEditingController();
+  final FocusNode giftCardTitleFocusNode = FocusNode();
+  final FocusNode giftCardAmountFocusNode = FocusNode();
+  final FocusNode giftCardMessageFocusNode = FocusNode();
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -151,45 +172,100 @@ class _GiftCardValue extends ConsumerWidget {
     final isAmountSelected = selectedAmount != null;
     final selectedCard = model;
 
+    void _handleAmountChange(String value) {
+      int parsedValue = int.tryParse(value) ?? 0;
+      int inputValue = parsedValue <= 50000 ? parsedValue : 50000;
+
+      ref
+          .read(selectedGiftAmountProvider.notifier)
+          .setSelectedAmount(inputValue);
+    }
+
+    void _handleTitleChange(String value) {
+
+    }
+
+    void _handleMessageChange(String value) {
+
+    }
+
     return Container(
-      padding: const EdgeInsets.only(
-        bottom: 10.0,
-        left: 20.0,
-        right: 20.0,
-      ),
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.background,
+      padding: const EdgeInsets.only( left: 20.0, right: 20.0, ),
       width: double.infinity,
-      height: size.height * 0.25,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const SizedBox(height: 10),
-          const Text("Select Amount"),
-          SizedBox(
-            height: 50,
-            child: ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              children: [
-                ...[50, 100, 200, 500, 1000].map(
-                      (value) {
-                    return CustomChips(
-                      label: '\$$value',
-                      focusColor: Colors.black87,
-                      isSelected: selectedAmount == value,
-                      onTap: () {
-                        ref
-                            .read(selectedGiftAmountProvider.notifier)
-                            .setSelectedAmount(value);
-                      },
-                    );
-                  },
-                ).toList(),
-                const SizedBox(width: 24),
-              ],
-            ),
+          SizedBox(height: 10.h),
+          DynamicInputWidget(
+            controller: giftCardTitleController,
+            obscureText: false,
+            focusNode: giftCardTitleFocusNode,
+            toggleObscureText: null,
+            validator: formValidator.textValidator,
+            prefIcon: const Icon(Icons.phone, size: 18),
+            hint: "Enter gift card title",
+            textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.text,
+            isNonPasswordField: true,
           ),
+          SizedBox(height: 10.h),
+          DynamicInputWidget(
+            controller: giftCardAmountController,
+            obscureText: false,
+            focusNode: giftCardAmountFocusNode,
+            toggleObscureText: null,
+            validator: formValidator.textValidator,
+            prefIcon: const Icon(Icons.monetization_on_outlined, size: 18),
+            hint: "Enter gift card amount",
+            textInputAction: TextInputAction.done,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(5)],
+            isNonPasswordField: true,
+            onChanged: _handleAmountChange,
+          ),
+          SizedBox(height: 10.h),
+          // Text("Select amount", style: Theme.of(context).textTheme.titleMedium,),
+          // SizedBox(
+          //   height: 50,
+          //   child: ListView(
+          //     shrinkWrap: true,
+          //     scrollDirection: Axis.horizontal,
+          //     children: [
+          //       ...[50000, 100000, 200000, 500000, 1000000].map(
+          //             (value) {
+          //           return CustomChips(
+          //             label: '\Tsh$value',
+          //             focusColor: Theme.of(context).hintColor,
+          //             isSelected: selectedAmount == value,
+          //             onTap: () {
+          //               ref
+          //                   .read(selectedGiftAmountProvider.notifier)
+          //                   .setSelectedAmount(value);
+          //             },
+          //           );
+          //         },
+          //       ).toList(),
+          //       const SizedBox(width: 24),
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(height: 10.h),
+          DynamicInputWidget(
+            controller: giftCardMessageController,
+            obscureText: false,
+            focusNode: giftCardMessageFocusNode,
+            toggleObscureText: null,
+            validator: formValidator.textValidator,
+            prefIcon: const Icon(Icons.message, size: 18),
+            hint: "Enter gift card message",
+            textInputAction: TextInputAction.done,
+            keyboardType: TextInputType.text,
+            isNonPasswordField: true,
+            maxLines: 3,
+          ),
+          SizedBox(height: 20.h),
           CustomElevatedButton(
             text: 'Continue',
             backgroundColor: isAmountSelected ? themePrimaryDarkColor : Colors.grey,

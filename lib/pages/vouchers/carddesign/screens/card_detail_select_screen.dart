@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../models/voucher_model.dart';
@@ -22,22 +23,15 @@ class CardDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedCard = ref.watch(selectedCardProvider);
 
-    return Scaffold(
-      //backgroundColor: selectedCard.value?.bgColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return Column(
         children: [
-          const _SelectedCard(),
-          Hero(
-            tag: "BottomSheet",
-            child: _GiftCardValue(
-              model: selectedCard.value,
-            ),
+          Expanded(
+            child: Text("Top"),
           ),
+          Text("Bottom"),
         ],
-      ),
-    );
-  }
+      );
+    }
 }
 
 class _SelectedCard extends ConsumerWidget {
@@ -53,7 +47,7 @@ class _SelectedCard extends ConsumerWidget {
     final selectedGiftAmount = ref.watch(selectedGiftAmountProvider);
 
     return Container(
-      height: size.height * 0.9,
+      height: 100.h,
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: selectedCard.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -120,7 +114,7 @@ class _GiftCardValue extends ConsumerWidget {
       ),
       color: Colors.white,
       width: double.infinity,
-      height: size.height * 0.25,
+      height: size.height * 0.4,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
