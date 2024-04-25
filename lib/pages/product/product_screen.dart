@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zawadi/config/custom_colors.dart';
 import 'package:zawadi/models/item_model.dart';
 import 'package:zawadi/global/widgets/quantity_widget.dart';
 import 'package:zawadi/services/utils_services.dart';
@@ -21,7 +20,6 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColors.customSwatchColor,
       body: Stack(
         children: [
           //Content

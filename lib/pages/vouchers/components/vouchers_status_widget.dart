@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zawadi/config/custom_colors.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 
 class OrderStatusWidget extends StatelessWidget {
   final String status;
@@ -109,10 +109,10 @@ class _StatusDot extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: CustomColors.customSwatchColor,
+              color: themeGreyColor,
             ),
             color: isActive
-                ? backgroundColor ?? CustomColors.customSwatchColor
+                ? backgroundColor ?? themePrimaryColor
                 : Colors.transparent,
           ),
           child: isActive

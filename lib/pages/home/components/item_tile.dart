@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zawadi/config/custom_colors.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/models/item_model.dart';
 import 'package:zawadi/pages/product/product_screen.dart';
 import 'package:zawadi/services/utils_services.dart';
@@ -77,7 +77,7 @@ class ItemTile extends StatelessWidget {
               height: 40,
               width: 35,
               decoration: BoxDecoration(
-                color: CustomColors.customSwatchColor,
+                color: themePrimaryColor,
                 borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(16),
                     topRight: Radius.circular(12)),

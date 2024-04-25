@@ -1,19 +1,10 @@
 import 'dart:convert';
-import 'dart:async';
-import 'dart:io';
-
-import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 import 'package:zawadi/global/handlers/error_handler.dart';
-
 import '../global/build_search_body.dart';
 import '../models/profile_model.dart';
-import '../models/user_model.dart';
-import '../models/user_model.dart';
 import '../pages/auth/utils/utils.dart';
 
 class ApiRequests {
@@ -24,7 +15,7 @@ class ApiRequests {
   late int networkRetryDelay;
   late String baseUrl;
   late Map<String, String> headers;
-  late final HttpClient _client;
+  late final http.Client _client;
 
   ApiRequests() {
     // Initialize common properties
@@ -45,11 +36,8 @@ class ApiRequests {
     _client = _createHttpClient();
   }
 
-  HttpClient _createHttpClient() {
-    final SecurityContext securityContext = SecurityContext();
-    HttpClient client = HttpClient(context: securityContext);
-    client.connectionTimeout = const Duration(seconds: 5);
-    return client;
+  http.Client _createHttpClient() {
+    return http.Client();
   }
 
   //API Health
@@ -58,8 +46,7 @@ class ApiRequests {
     var url = Uri.http(baseUrl, '/actuator/health');
 
     try {
-      var request = await _client.getUrl(url);
-      var response = await request.close();
+      var response = await _client.get(url);
 
       if (response.statusCode == 200) {
         apiHealth = true;
@@ -78,14 +65,14 @@ class ApiRequests {
     var url = Uri.http(baseUrl, '/api/users/getByFirebaseId/$firebaseUserId');
 
     try {
-      final response = await http.get(url);
+      final response = await _client.get(url);
 
       if (response.statusCode == 200) {
         return json.decode(response.body);
-      }else if (response.statusCode == 404) {
+      } else if (response.statusCode == 404) {
         // User not found
         throw Exception('User not found: ${response.statusCode}');
-      }else {
+      } else {
         handleError(fetchProfile, 'Error fetching profile from API with CODE ${response.statusCode}');
         throw Exception('Failed to fetch profile: ${response.statusCode}');
       }
@@ -129,7 +116,7 @@ class ApiRequests {
 
     try {
       final body = profileModel.toJsonObject();
-      var response = await http.post(url, headers: headers, body: body);
+      var response = await _client.post(url, headers: headers, body: body);
 
       if (response.statusCode == 201) {
         return json.decode(response.body);
@@ -143,14 +130,13 @@ class ApiRequests {
     }
   }
 
-
   //Fetch Categories
   Future<List<dynamic>> fetchCategories() async {
     List<dynamic> categoryResponseData = [];
     var url = Uri.http(baseUrl, '/api/categories');
 
     try {
-      var response = await http.get(url);
+      var response = await _client.get(url);
 
       if (response.statusCode == 200) {
         categoryResponseData = json.decode(response.body);
@@ -179,9 +165,9 @@ class ApiRequests {
 
     Uri url;
 
-    if ( categoryId != 0 && categoryId != null  ) {
+    if (categoryId != 0 && categoryId != null) {
       url = Uri.parse('http://$baseUrl/api/categories/$categoryId/issuers');
-    }else{
+    } else {
       url = Uri.parse('http://$baseUrl/api/issuers');
     }
 
@@ -198,7 +184,7 @@ class ApiRequests {
         size: size,
       );
 
-      var response = await http.post(url, headers: headers, body: body);
+      var response = await _client.post(url, headers: headers, body: body);
 
       if (response.statusCode == 200) {
         Map<String, dynamic> issuersResponseData = json.decode(response.body);
@@ -214,5 +200,4 @@ class ApiRequests {
       throw Exception('Failed to fetch issuers');
     }
   }
-
 }

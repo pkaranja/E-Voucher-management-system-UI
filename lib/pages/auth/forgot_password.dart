@@ -1,6 +1,6 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zawadi/controllers/flutter_toast.dart';
+import 'package:zawadi/core/helpers/flutter_toast.dart';
 import 'package:zawadi/global/input_validators.dart';
 import 'package:zawadi/global/widgets/text_input_widget.dart';
 

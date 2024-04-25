@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zawadi/config/custom_colors.dart';
-import 'package:zawadi/global/widgets/custom_text_field.dart';
-import 'package:zawadi/config/app_data.dart' as app_data;
-
 import '../../global/widgets/app_bar.dart';
 
 class SettingsScreen extends StatefulWidget {

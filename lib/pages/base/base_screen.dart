@@ -5,9 +5,10 @@ import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/pages/home/home_tab.dart';
 import 'package:zawadi/pages/vouchers/purchased_vouchers_screen.dart';
 import 'package:zawadi/pages/vouchers/received_vouchers_screen.dart';
-import 'package:zawadi/pages/vouchers/vouchers_screen.dart';
 import 'package:zawadi/pages/settings/user_profile.dart';
 
+import '../../features/categories/view/category_screen.dart';
+import '../../features/issuers/view/issuer_screen.dart';
 import '../settings/settings.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -36,9 +37,11 @@ class _BaseScreenState extends State<BaseScreen> {
           controller: pageController,
           children: const [
             HomeTab(),
+            IssuersListScreen(),
             ReceivedVouchersScreen(),
-            PurchasedVouchersScreen(),
-            UserProfileScreen(),
+            //PurchasedVouchersScreen(),
+            ListScreen(),
+            //UserProfileScreen(),
             //SettingsScreen(),
           ],
         ),

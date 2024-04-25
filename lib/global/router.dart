@@ -1,7 +1,7 @@
 // Packages
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zawadi/global/constants.dart';
+import 'package:zawadi/core/config/constants.dart';
 import 'package:zawadi/global/handlers/error_types.dart';
 import 'package:zawadi/pages/base/base_screen.dart';
 import 'package:zawadi/pages/cart/cart_tab.dart';

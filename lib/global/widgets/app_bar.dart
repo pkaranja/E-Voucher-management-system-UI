@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
-import '../../config/custom_colors.dart';
+import '../../core/config/constants.dart';
 import '../router_utils.dart';
 
 class QrooAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Size prefSize;
-  final String title1;
-  final String title2;
+  final String? title1;
+  final String? title2;
   // A bool to check whether its a subpage or not.
   final bool isSubPage;
   // Shopping cart data available.
@@ -22,8 +22,8 @@ class QrooAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   const QrooAppBar(
       {
-        required this.title1,
-        this.title2 = "",
+        this.title1,
+        this.title2,
         this.isSubPage = false,
         this.hasShoppingCartData = false,
         this.hasNotifications = false,
@@ -36,18 +36,20 @@ class QrooAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _QrooAppBarState extends State<QrooAppBar> {
+
   @override
   Widget build(BuildContext context) {
+
+    String appTitle1 = widget.title1 ?? Constants.primaryTitle ?? "";
+    String appTitle2 = widget.title2 ?? Constants.secondaryTitle ?? "";
+
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.background,
       title: Row(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.h),
-            child: Image.asset(
-              'assets/images/logo.png', // Path to your logo image
-              height: 40, // Adjust the height as needed
-            ),
+            child: Image.asset( 'assets/images/logo.png',  height: 40 ),
           ),
           SizedBox(width: 10.w),
           Text.rich(
@@ -58,17 +60,15 @@ class _QrooAppBarState extends State<QrooAppBar> {
                 ),
                 children: [
                   TextSpan(
-                    text: widget.title1,
+                    text: appTitle1,
                     style: const TextStyle(
                       color: themePrimaryColor,
                     ),
                   ),
-                  // TextSpan(
-                  //   text: widget.title2,
-                  //   style: const TextStyle(
-                  //     color: Colors.grey,
-                  //   ),
-                  // ),
+                  TextSpan(
+                    text: appTitle2,
+                    style: const TextStyle( color: Colors.grey, ),
+                  ),
                 ]
             ),
           ),

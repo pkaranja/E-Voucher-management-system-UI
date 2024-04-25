@@ -6,7 +6,7 @@ import 'package:zawadi/global/input_validators.dart';
 import 'package:zawadi/pages/auth/verify_screen.dart';
 import 'package:zawadi/global/widgets/text_input_widget.dart';
 
-import '../../controllers/flutter_toast.dart';
+import '../../core/helpers/flutter_toast.dart';
 import '../../global/styles/app_colors.dart';
 import '../../global/widgets/logo.dart';
 import '../../widgets/button.dart';

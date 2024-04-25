@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zawadi/config/custom_colors.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/models/cart_item_model.dart';
 import 'package:zawadi/global/widgets/quantity_widget.dart';
 import 'package:zawadi/services/utils_services.dart';
@@ -25,7 +25,7 @@ class _CartTileState extends State<CartTile> {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-      color: CustomColors.customSwatchColor,
+      color: themePrimaryColor,
       child: ListTile(
         // Image
         leading: Image.asset(

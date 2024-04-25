@@ -8,7 +8,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:zawadi/pages/settings/update_profile.dart';
 
-import '../../controllers/flutter_toast.dart';
+import '../../core/helpers/flutter_toast.dart';
 import '../../controllers/profile_controller.dart';
 import '../../global/styles/app_colors.dart';
 import '../../models/user_model.dart';

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zawadi/config/custom_colors.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/models/cart_item_model.dart';
 import 'package:zawadi/pages/cart/components/cart_tile.dart';
 import 'package:zawadi/services/utils_services.dart';
-import 'package:zawadi/config/app_data.dart' as app_data;
 
 import '../../global/widgets/app_bar.dart';
 
@@ -19,16 +18,16 @@ class _CartTabState extends State<CartTab> {
 
   void removeItemFromCart(CartEventModel cartItem) {
     setState(() {
-      app_data.cartItems.remove(cartItem);
+      //app_data.cartItems.remove(cartItem);
     });
   }
 
   double cartTotalPrice() {
     double total = 0.0;
 
-    for (var item in app_data.cartItems) {
-      total += item.totalPrice();
-    }
+    // for (var item in app_data.cartItems) {
+    //   total += item.totalPrice();
+    // }
 
     return total;
   }
@@ -46,17 +45,17 @@ class _CartTabState extends State<CartTab> {
       //Content
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: app_data.cartItems.length,
-              itemBuilder: (_, index) {
-                return CartTile(
-                  cartItem: app_data.cartItems[index],
-                  remove: removeItemFromCart,
-                );
-              },
-            ),
-          ),
+          //Expanded(
+            // child: ListView.builder(
+            //   itemCount: app_data.cartItems.length,
+            //   itemBuilder: (_, index) {
+            //     return CartTile(
+            //       cartItem: app_data.cartItems[index],
+            //       remove: removeItemFromCart,
+            //     );
+            //   },
+            // ),
+          //),
           Container(
             padding: const EdgeInsets.all(16),
             height: 180,
@@ -104,7 +103,7 @@ class _CartTabState extends State<CartTab> {
                     },
                     style: ElevatedButton.styleFrom(
                         elevation: 1,
-                        backgroundColor: CustomColors.customSwatchColor),
+                        backgroundColor: themePrimaryColor),
                     child: const Text(
                       'Buy Now',
                       style: TextStyle(
@@ -136,7 +135,7 @@ class _CartTabState extends State<CartTab> {
             title: Text(
               'Confirmation',
               style: TextStyle(
-                color: CustomColors.customSwatchColor,
+                color: themePrimaryColor,
                 fontFamily: 'Questrial',
                 fontWeight: FontWeight.bold,
               ),
@@ -170,7 +169,7 @@ class _CartTabState extends State<CartTab> {
                   //return true
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: CustomColors.customSwatchColor,
+                  backgroundColor: themePrimaryColor,
                 ),
                 child: const Text(
                   'Yes, I Want Now!!',

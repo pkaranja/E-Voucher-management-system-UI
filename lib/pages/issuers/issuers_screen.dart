@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zawadi/global/constants.dart';
+import 'package:zawadi/core/config/constants.dart';
 import 'package:zawadi/global/widgets/issuer_vertical_card_grid.dart';
 
 import '../../controllers/apiRequests.dart';

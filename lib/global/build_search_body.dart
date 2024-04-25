@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:zawadi/global/constants.dart';
-
 String buildRequestBody({
   String? filterKey,
   String? filterOperator,

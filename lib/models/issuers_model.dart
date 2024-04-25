@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:zawadi/global/constants.dart';
+import 'package:zawadi/core/config/constants.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
 
 import '../global/rgb_to_radix.dart';

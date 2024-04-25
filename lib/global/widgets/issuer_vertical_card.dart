@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zawadi/models/issuers_model.dart';
-
+import '../../features/issuers/data/model/issuer_model.dart';
+import '../../models/issuers_model.dart';
 import '../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
 import '../router_utils.dart';
 import '../styles/app_colors.dart';
@@ -13,7 +13,8 @@ import '../styles/app_colors.dart';
 class IssuerVerticalCard extends ConsumerWidget {
 
   const IssuerVerticalCard({
-    Key? key, required this.issuer
+    Key? key,
+    required this.issuer
   }) : super(key: key);
 
   final IssuersModel issuer;
@@ -29,10 +30,7 @@ class IssuerVerticalCard extends ConsumerWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [
-              issuer.primaryColor,
-              issuer.secondaryColor
-            ],
+            colors: [ issuer.primaryColor, issuer.secondaryColor ],
           ),
         ),
         alignment: Alignment.bottomRight,

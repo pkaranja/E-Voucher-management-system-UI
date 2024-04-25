@@ -1,4 +1,4 @@
-import 'constants.dart';
+import '../core/config/constants.dart';
 
 final Map<IssuerListType, Map<String, dynamic>> requestParams = {
   IssuerListType.CATEGORY: {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zawadi/config/custom_colors.dart';
+import 'package:zawadi/global/styles/app_colors.dart';
 
 class CategoryTile extends StatelessWidget {
   const CategoryTile(
@@ -20,7 +20,7 @@ class CategoryTile extends StatelessWidget {
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 14),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.grey : CustomColors.customSwatchColor,
+          color: isSelected ? Colors.grey : themePrimaryColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(

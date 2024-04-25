@@ -13,7 +13,7 @@ import 'package:zawadi/controllers/apiRequests.dart';
 import 'package:zawadi/global/widgets/date_input_widget.dart';
 import 'dart:io';
 
-import '../../controllers/flutter_toast.dart';
+import '../../core/helpers/flutter_toast.dart';
 import '../../controllers/profile_controller.dart';
 import '../../global/styles/app_colors.dart';
 import '../../global/widgets/app_bar.dart';

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../controllers/apiRequests.dart';
+import '../../features/categories/data/model/category_model.dart';
 import '../../global/handlers/error_handler.dart';
 import '../../global/router_utils.dart';
 import '../../global/widgets/app_bar.dart';
@@ -12,7 +13,6 @@ import '../../global/widgets/category_card.dart';
 import '../../global/widgets/issuer_horizontal_card.dart';
 import '../../global/widgets/issuer_vertical_card_grid.dart';
 import '../../global/widgets/search_bar.dart';
-import '../../models/issuer_category_model.dart';
 import '../../models/issuers_model.dart';
 
 class HomeTab extends StatefulWidget {
@@ -26,7 +26,7 @@ class _HomeTabState extends State<HomeTab> {
 
   List<IssuersModel> issuersExplore = [];
   List<IssuersModel> popularIssuers = [];
-  List<IssuerCategoryModel> issuerCategories = [];
+  List<CategoryModel> issuerCategories = [];
 
   String selectedCategory = 'Featured';
   final ApiRequests apiRequests = ApiRequests();
@@ -87,7 +87,7 @@ class _HomeTabState extends State<HomeTab> {
         final activeCategories = categoryResponseData.where((
             category) => category['status'] == 'ACTIVE');
         issuerCategories.addAll(activeCategories.map((category) =>
-            IssuerCategoryModel.fromJson(category)));
+            CategoryModel.fromJson(category)));
       });
     } catch (error) {
       handleError(error, "Could not fetch categories");
@@ -132,7 +132,7 @@ class _HomeTabState extends State<HomeTab> {
 class _HomePageWidget extends ConsumerWidget {
   const _HomePageWidget( this.issuerCategories, this.popularIssuers, this.exploreIssuers, {Key? key}) : super(key: key);
 
-  final List<IssuerCategoryModel> issuerCategories;
+  final List<CategoryModel> issuerCategories;
   final List<IssuersModel> popularIssuers;
   final List<IssuersModel> exploreIssuers;
 
