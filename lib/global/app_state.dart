@@ -6,7 +6,7 @@ class AppStateProvider with ChangeNotifier {
   bool? _isLoggedIn;
   bool get isLoggedIn => _isLoggedIn as bool;
 
-// lets define a method to check and manipulate onboard status
+  // lets define a method to check and manipulate onboard status
   void hasOnboarded() async {
     // Get the SharedPreferences instance
     SharedPreferences prefs = await SharedPreferences.getInstance();

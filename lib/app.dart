@@ -5,15 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zawadi/features/issuers/provider/issuer_provider.dart';
 import 'package:zawadi/global/app_state.dart';
 import 'package:zawadi/global/router.dart';
 import 'package:zawadi/global/handlers/permissions_handler.dart';
 import 'package:zawadi/global/auth_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
-
-import 'core/helpers/network_detector.dart';
+import 'core/helpers/network_state.dart';
 import 'global/styles/theme.dart';
 
 class MyApp extends StatefulWidget {
@@ -62,6 +60,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => AppStateProvider()),
         ChangeNotifierProvider(create: (context) => AppPermissionProvider()),
         ChangeNotifierProvider(create: (context) => AuthStateProvider()),
+        ChangeNotifierProvider(create: (context) => NetworkStateProvider()),
 
         ProxyProvider<AppStateProvider, AppRouter>(
             update: (context, appStateProvider, _) => AppRouter(

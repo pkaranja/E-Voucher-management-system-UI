@@ -1,11 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import '../../../core/config/constants.dart';
 import '../../../core/helpers/app_exception.dart';
-import '../../../core/helpers/network_detector.dart';
+import '../../../core/helpers/network_state.dart';
 import '../../../core/http/api_provider.dart';
 import '../data/model/category_model.dart';
 import '../data/source/category_datasource.dart';
@@ -14,22 +11,12 @@ import '../data/source/category_remote_datasource.dart';
 import 'category_repository.dart';
 
 final categoryDatasourceProvider = Provider<CategoryDatasource>( (ref)  {
-    var connectivity = ref.watch(connectivityStatusProvider);
-    var connectivityResult = InternetConnection().hasInternetAccess;
-    debugPrint(connectivity.toString());
-    print(connectivityResult);
+  final api = ref.read(apiProvider(Endpoints().baseUrl));
+  final isDeviceConnected = ref.watch(networkStateProvider).isDeviceConnected;
 
-    if (connectivity == ConnectivityStatus.isConnected) {
-      //use api data
-      FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-      //String baseUrl = dotenv.env['API_BASE_URL'] ?? remoteConfig.getString('api_base');
-      //String baseUrl = dotenv.get('API_BASE_URL');
-      String baseUrl = 'http//${dotenv.get('API_BASE_URL')}';
-
-      final api = ref.read(apiProvider(baseUrl));
+    if (isDeviceConnected) {
       return CategoryRemoteDatasource(api);
-    }else{
-      //use local data
+    }else {
       return CategoryLocalDatasource();
     }
   },

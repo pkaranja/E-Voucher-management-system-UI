@@ -9,7 +9,6 @@ import '../provider/issuer_provider.dart';
 
 class IssuersListScreen extends ConsumerStatefulWidget {
   const IssuersListScreen({Key? key, this.title,}) : super(key: key);
-
   final String? title;
 
   @override
@@ -17,19 +16,26 @@ class IssuersListScreen extends ConsumerStatefulWidget {
 }
 
 class _IssuersListScreenState extends ConsumerState<IssuersListScreen> {
+  List<IssuerModel> issuers = [];
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
     Future.microtask(() { ref.read(issuerProvider.notifier).getAll(); });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final issuers = ref.watch(issuerProvider).issuers;
     bool isLoading = ref.watch(issuerProvider).isLoading;
 
+    print("DATA RECEIVED$issuers");
+    print("DATA LOADED$isLoading");
+
     return Scaffold(
-      appBar: const QrooAppBar( hasBackButton: true, ),
+      appBar: const QrooAppBar( hasBackButton: true ),
 
       body: ListView(
         children: <Widget>[
@@ -66,7 +72,6 @@ class IssuersListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return RefreshIndicator(
       onRefresh: () => ref.read(issuerProvider.notifier).getAll(),
       child: isLoading

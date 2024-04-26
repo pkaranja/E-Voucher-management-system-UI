@@ -38,7 +38,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       home: ScreenUtilInit(
         designSize: const Size(390, 844),
-        child: ErrorScreen(ErrorType.network),
+        child: ProviderScope( child: ErrorScreen(ErrorType.network) ),
       ),
     ));
     return;
@@ -66,7 +66,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       home: ScreenUtilInit(
         designSize: const Size(390, 844),
-        child: ErrorScreen(ErrorType.initialization),
+        child: ProviderScope( child: ErrorScreen(ErrorType.initialization) ),
       )
     ));
   }

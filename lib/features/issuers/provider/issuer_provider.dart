@@ -4,9 +4,10 @@ import '../repository/issuer_repository.dart';
 import '../repository/issuer_repository_impl.dart';
 
 final issuerProvider = StateNotifierProvider<IssuerNotifier, IssuerState>((ref) {
-  final repository = ref.read(issuerRepositoryProvider);
+  final repository = ref.watch(issuerRepositoryProvider);
   return IssuerNotifier(repository);
 });
+
 
 class IssuerNotifier extends StateNotifier<IssuerState> {
   IssuerNotifier(this.repository) : super(IssuerState());
@@ -15,9 +16,8 @@ class IssuerNotifier extends StateNotifier<IssuerState> {
   Future<void> getAll() async { state = state.copyWith(isLoading: true, issuers: []);
     final response = await repository.getAll();
     response.fold(
-          (l) => state = state.copyWith(isLoading: false, issuers: []),
-          (r) { state = state.copyWith(isLoading: false, issuers: r);
-      },
+        (l) => state = state.copyWith(isLoading: false, issuers: []),
+        (r) => state = state.copyWith(isLoading: false, issuers: r),
     );
   }
 
