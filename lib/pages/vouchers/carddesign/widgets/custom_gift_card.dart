@@ -2,26 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
 
-import '../../../../global/utils.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../../models/voucher_model.dart';
-import '../utilities/app_text.dart';
 
 class CustomGiftCard extends StatelessWidget {
-  final CardModel model;
+  final GiftcardThemeModel model;
   final double? width;
   final double? height;
-  final int? value;
+  final int? amount;
   final bool showLabel;
   final bool showValue;
+  final String title;
+  final String message;
 
   const CustomGiftCard({
     Key? key,
     required this.model,
     this.width,
     this.height,
-    this.value,
+    this.amount,
     this.showLabel = true,
     this.showValue = false,
+    required this.title,
+    required this.message
   }) : super(key: key);
 
   @override
@@ -76,7 +79,7 @@ class CustomGiftCard extends StatelessWidget {
             bottom: 210.h,
             child: Center(
               child: Text(
-                'Gift Title Here',
+                title,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: model.fontColor,
                   fontFamily: 'Parisienne',
@@ -92,7 +95,7 @@ class CustomGiftCard extends StatelessWidget {
             child: Padding(
               padding: EdgeInsetsDirectional.symmetric(vertical: 10.h, horizontal: 20.w),
               child: Text(
-                'This is a sample gift card message, please create your own personalized message below!',
+                message,
                 textAlign: TextAlign.justify,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: model.fontColor,
@@ -110,7 +113,7 @@ class CustomGiftCard extends StatelessWidget {
             right: 10.w,
             bottom: 0,
             child: Text(
-              Utils.formatMoney(value!),
+              Utils.formatMoney(amount!),
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: model.fontColor,
                 fontFamily: 'Frunchy'

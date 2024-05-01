@@ -8,8 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../global/handlers/error_handler.dart';
+import '../core/handlers/error_handler.dart';
 import '../models/profile_model.dart';
 import '../models/user_model.dart';
 

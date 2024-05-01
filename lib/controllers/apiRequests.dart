@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:intl/intl.dart';
-import 'package:zawadi/global/handlers/error_handler.dart';
+import '../core/handlers/error_handler.dart';
+import '../features/authentication/utils/utils.dart';
 import '../global/build_search_body.dart';
 import '../models/profile_model.dart';
-import '../pages/auth/utils/utils.dart';
 
 class ApiRequests {
   late final FirebaseRemoteConfig remoteConfig;

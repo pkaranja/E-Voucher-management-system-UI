@@ -1,28 +1,21 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-
 import 'package:provider/provider.dart';
 import 'package:zawadi/controllers/apiRequests.dart';
-import 'package:zawadi/global/widgets/date_input_widget.dart';
 import 'dart:io';
-
 import '../../core/helpers/flutter_toast.dart';
 import '../../controllers/profile_controller.dart';
+import '../../core/presentation/widgets/app_bar_widget.dart';
+import '../../core/presentation/widgets/date_input_widget.dart';
+import '../../core/presentation/widgets/text_input_widget.dart';
+import '../../features/authentication/utils/utils.dart';
 import '../../global/styles/app_colors.dart';
-import '../../global/widgets/app_bar.dart';
-import '../../models/user_model.dart';
-import '../../widgets/button.dart';
-import '../../widgets/text_field.dart';
-import '../../global/input_validators.dart';
-import '../../global/widgets/text_input_widget.dart';
-import '../auth/utils/utils.dart';
+import '../../core/presentation/widgets/loading_button_widget.dart';
+import '../../core/helpers/input_validators.dart';
 
 class UpdateAccountScreen extends StatefulWidget {
   const UpdateAccountScreen({super.key});
@@ -135,12 +128,7 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
           child: Consumer<ProfileController>(
               builder: (context, provider, child) {
                 return Scaffold(
-                  appBar: const QrooAppBar(
-                    title1: 'Zawadi',
-                    title2: ' Digital',
-                    hasBackButton: false,
-                    hasNotifications: false,
-                  ),
+                  appBar: const QrooAppBar(),
                   body: LayoutBuilder(
                     builder: (BuildContext context, BoxConstraints constraints) {
                       return Padding(
@@ -213,7 +201,7 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                                 hint: "First Name",
                                 obscureText: false,
                                 focusNode: firstNameFocusNode,
-                                toggleObscureText: null,
+                                suffixClickAction: null,
                                 validator: authValidator.textValidator,
                                 prefIcon: const Icon(Icons.person, size: 20),
                                 textInputAction: TextInputAction.next,
@@ -228,7 +216,7 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                                 hint: "Last Name",
                                 obscureText: false,
                                 focusNode: lastNameFocusNode,
-                                toggleObscureText: null,
+                                suffixClickAction: null,
                                 validator: authValidator.textValidator,
                                 prefIcon: const Icon(Icons.person, size: 20),
                                 textInputAction: TextInputAction.next,
@@ -243,7 +231,7 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                                 hint: "Phone Number",
                                 obscureText: false,
                                 focusNode: phoneNumberFocusNode,
-                                toggleObscureText: null,
+                                suffixClickAction: null,
                                 validator: authValidator.phoneNumberValidator,
                                 prefIcon: const Icon(Icons.phone, size: 20),
                                 textInputAction: TextInputAction.next,
@@ -258,7 +246,7 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                                 hint: "Address",
                                 obscureText: false,
                                 focusNode: addressFocusNode,
-                                toggleObscureText: null,
+                                suffixClickAction: null,
                                 validator: null,
                                 prefIcon: const Icon(
                                     Icons.maps_home_work_outlined, size: 20),

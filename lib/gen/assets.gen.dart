@@ -178,6 +178,9 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/discover.svg
   String get discover => 'assets/svgs/discover.svg';
 
+  /// File path: assets/svgs/document_error.svg
+  String get documentError => 'assets/svgs/document_error.svg';
+
   /// File path: assets/svgs/explore.svg
   String get explore => 'assets/svgs/explore.svg';
 
@@ -222,6 +225,7 @@ class $AssetsSvgsGen {
         color,
         danger,
         discover,
+        documentError,
         explore,
         gift1,
         gift,

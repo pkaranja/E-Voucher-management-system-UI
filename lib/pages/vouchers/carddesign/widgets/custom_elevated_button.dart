@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../utilities/app_text.dart';
-
 class CustomElevatedButton extends StatelessWidget {
   final String text;
   final Color backgroundColor;
@@ -25,7 +23,7 @@ class CustomElevatedButton extends StatelessWidget {
         backgroundColor: backgroundColor,
         shape: const StadiumBorder(),
       ),
-      child: AppText.medium(text, color: Colors.white),
+      child: Text(text),
     );
   }
 }

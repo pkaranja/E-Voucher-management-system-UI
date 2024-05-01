@@ -1,0 +1,172 @@
+import 'package:dartz/dartz.dart';
+import 'package:zawadi/features/gift_cards/data/enums/filter_type.dart';
+import '../../../../core/config/constants.dart';
+import '../../../../core/helpers/app_exception.dart';
+import '../../../../core/helpers/data/pagination/pagination_dto.dart';
+import '../../../../core/http/api_provider.dart';
+import '../dto/giftcard_dto.dart';
+import '../model/giftcard_model.dart';
+import 'giftcard_datasource.dart';
+import 'giftcard_local_datasource.dart';
+
+class GiftcardRemoteDatasource extends GiftcardDatasource {
+  GiftcardRemoteDatasource(this._api);
+  final ApiProvider _api;
+
+  @override
+  Future<Either<AppException, GiftcardModel>> createOne({ required GiftcardModel request, }) async {
+    final response = await _api.post( Endpoints.giftCardsPath, { 'data': request.toRequest(), }, );
+
+    return response.when(
+      success: (success) async {
+        final responseDto = GiftcardDetailDTO.fromJson(
+          success as Map<String, dynamic>,
+        );
+
+        final GiftcardModel giftcard = responseDto.content.toModel();
+        return Right(giftcard);
+      },
+      error: (error) {
+        return Left(error);
+      },
+    );
+  }
+
+  @override
+  Future<Either<AppException, GiftcardModel>> deleteOne( {required String id}) async {
+    late GiftcardModel giftcard;
+    final findGiftcard = await getOne(id: id);
+    findGiftcard.fold((l) {}, (r) {
+      giftcard = r;
+    });
+
+    final response = await _api.delete( "${Endpoints.giftCardsPath}/$id", );
+
+    return response.when(
+      success: (success) async {
+        return Right(giftcard);
+      },
+      error: (error) {
+        return Left(error);
+      },
+    );
+  }
+
+  @override
+  Future<Either<AppException, List<GiftcardModel>>> getAll(String? filter) async {
+    final response = await _api.post(Endpoints.giftCardsPath, {
+      'data': {
+        "filters": [],
+        "sorts": [],
+        "page": 0,
+        "size": 10
+      }
+    });
+
+    return response.when(
+      success: (success) async {
+        final List<dynamic> content = success['content'];
+        final List<GiftcardModel> giftcards = content.map((giftcard) => GiftcardModel.fromJson(giftcard)).toList();
+
+        //TODO: Implement local datasource
+        return Right(giftcards);
+      },
+      error: (error) {
+        return Left(error);
+      },
+    );
+  }
+
+  @override
+  Future<Either<AppException, List<GiftcardModel>>> getReceived(String? filter, FilterType? filterType) async {
+    final response = await _api.post(Endpoints.giftCardsPath, {
+      'data': {
+        "filters": [],
+        "sorts": [],
+        "page": 0,
+        "size": 10
+      }
+    });
+
+    return response.when(
+      success: (success) async {
+        final List<dynamic> content = success['content'];
+        final List<GiftcardModel> giftcards = content.map((giftcard) => GiftcardModel.fromJson(giftcard)).toList();
+
+        //TODO: Implement local datasource
+        return Right(giftcards);
+      },
+      error: (error) {
+        return Left(error);
+      },
+    );
+  }
+
+  @override
+  Future<Either<AppException, List<GiftcardModel>>> getPurchased(String? filter, FilterType? filterType) async {
+    final response = await _api.post(Endpoints.giftCardsPath, {
+      'data': {
+        "filters": [],
+        "sorts": [],
+        "page": 0,
+        "size": 10
+      }
+    });
+
+    return response.when(
+      success: (success) async {
+        final List<dynamic> content = success['content'];
+        final List<GiftcardModel> giftcards = content.map((giftcard) => GiftcardModel.fromJson(giftcard)).toList();
+
+        //TODO: Implement local datasource
+        return Right(giftcards);
+      },
+      error: (error) {
+        return Left(error);
+      },
+    );
+  }
+
+
+  @override
+  Future<Either<AppException, GiftcardModel>> getOne({ required String id, }) async {
+    final response = await _api.get( "${Endpoints.giftCardsPath}/$id", );
+
+    return response.when(
+      success: (success) async {
+        final responseDto = GiftcardDetailDTO.fromJson(
+          success as Map<String, dynamic>,
+        );
+
+        final GiftcardModel giftcard = responseDto.content.toModel();
+        return Right(giftcard);
+      },
+      error: (error) {
+        return Left(error);
+      },
+    );
+  }
+
+  @override
+  Future<Either<AppException, GiftcardModel>> updateOne( {required String id, required GiftcardModel request}) async {
+    final response = await _api.put( "${Endpoints.giftCardsPath}/$id",
+      {
+        'data': request.toRequest(),
+      },
+    );
+
+    return response.when(
+      success: (success) async {
+        final responseDto = GiftcardDetailDTO.fromJson(
+          success as Map<String, dynamic>,
+        );
+
+        final GiftcardModel giftcard = responseDto.content.toModel();
+        return Right(giftcard);
+      },
+      error: (error) {
+        return Left(error);
+      },
+    );
+  }
+}

@@ -127,6 +127,7 @@ class AppTheme {
         fontFamily: 'QrooFont',
         color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
       ),
+
       titleLarge: TextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.bold,
@@ -145,6 +146,7 @@ class AppTheme {
         fontFamily: 'QrooFont',
         color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
       ),
+
       bodyLarge: TextStyle(
         fontSize: 16.sp,
         color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
@@ -155,21 +157,30 @@ class AppTheme {
         color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
         fontFamily: 'QrooFont',
       ),
+      bodySmall: TextStyle(
+        fontSize: 12.sp,
+        color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
+        fontFamily: 'QrooFont',
+      ),
+
       labelLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.bold,
         color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
         fontFamily: 'QrooFont',
       ),
-      bodySmall: TextStyle(
-        fontSize: 12.sp,
-        color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
-        fontFamily: 'QrooFont',
-      ),
+
       labelSmall: TextStyle(
         fontSize: 10.sp,
         color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
         fontFamily: 'QrooFont',
+        fontWeight: FontWeight.bold
+      ),
+      labelMedium: TextStyle(
+          fontSize: 13.sp,
+          color: isDarkMode ? themeAlmostWhiteColor : themeAlmostBlackColor,
+          fontFamily: 'QrooFont',
+          fontWeight: FontWeight.bold
       ),
     );
   }

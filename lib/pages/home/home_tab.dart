@@ -3,106 +3,44 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zawadi/features/categories/provider/category_provider.dart';
+import '../../core/presentation/widgets/app_bar_widget.dart';
+import '../../core/utils/router_utils.dart';
+import '../../features/issuers/provider/issuer_provider.dart';
+import '../../features/categories/presentation/widgets/category_card.dart';
+import '../../features/issuers/presentation/widgets/issuer_horizontal_card.dart';
+import '../../features/issuers/presentation/widgets/issuer_vertical_card.dart';
 
-import '../../controllers/apiRequests.dart';
-import '../../features/categories/data/model/category_model.dart';
-import '../../global/handlers/error_handler.dart';
-import '../../global/router_utils.dart';
-import '../../global/widgets/app_bar.dart';
-import '../../global/widgets/category_card.dart';
-import '../../global/widgets/issuer_horizontal_card.dart';
-import '../../global/widgets/issuer_vertical_card_grid.dart';
-import '../../global/widgets/search_bar.dart';
-import '../../models/issuers_model.dart';
-
-class HomeTab extends StatefulWidget {
+class HomeTab extends ConsumerStatefulWidget {
   const HomeTab({super.key});
 
   @override
-  State<HomeTab> createState() => _HomeTabState();
+  ConsumerState<HomeTab> createState() => _HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
-
-  List<IssuersModel> issuersExplore = [];
-  List<IssuersModel> popularIssuers = [];
-  List<CategoryModel> issuerCategories = [];
+class _HomeTabState extends ConsumerState<HomeTab> {
 
   String selectedCategory = 'Featured';
-  final ApiRequests apiRequests = ApiRequests();
+  bool categoriesLoading = true;
+  bool popularIssuersLoading = true;
+  bool issuersLoading = true;
 
   @override
   void initState() {
     super.initState();
 
-    _fetchCategories();
-    _fetchPopularIssuers();
-    _fetchIssuers();
+    Future.microtask(() { ref.read(categoryProvider.notifier).getAll(); });
+    Future.microtask(() { ref.read(issuerProvider.notifier).getPopular(); });
+    Future.microtask(() { ref.read(issuerProvider.notifier).getAll(); });
   }
 
-
-  Future<void> _fetchPopularIssuers() async {
-    try {
-      var popularIssuersResponseData = await apiRequests.fetchIssuers();
-      setState(() {
-        popularIssuers.clear();
-        final int numberOfElements = popularIssuersResponseData['numberOfElements'];
-        final int pageNumber = popularIssuersResponseData['pageable']['pageNumber'];
-        final int pageSize = popularIssuersResponseData['pageable']['pageSize'];
-        final List<dynamic> issuers = popularIssuersResponseData['content'];
-
-        popularIssuers.addAll(
-            issuers.map((issuer) => IssuersModel.fromJson(issuer)));
-      });
-    } catch (error, stackTrace) {
-      handleError(
-          error, "Could not fetch popular issuers", stackTrace: stackTrace);
-    }
-  }
-
-  Future<void> _fetchIssuers() async {
-    try {
-      var issuersResponseData = await apiRequests.fetchIssuers();
-      setState(() {
-        issuersExplore.clear();
-        final int numberOfElements = issuersResponseData['numberOfElements'];
-        final int pageNumber = issuersResponseData['pageable']['pageNumber'];
-        final int pageSize = issuersResponseData['pageable']['pageSize'];
-        final List<dynamic> issuers = issuersResponseData['content'];
-
-        issuersExplore.addAll(
-            issuers.map((issuer) => IssuersModel.fromJson(issuer)));
-      });
-    } catch (error, stackTrace) {
-      handleError(error, "Could not fetch explore issuers data",
-          stackTrace: stackTrace);
-    }
-  }
-
-  Future<void> _fetchCategories() async {
-    try {
-      var categoryResponseData = await apiRequests.fetchCategories();
-      setState(() {
-        issuerCategories.clear();
-        final activeCategories = categoryResponseData.where((
-            category) => category['status'] == 'ACTIVE');
-        issuerCategories.addAll(activeCategories.map((category) =>
-            CategoryModel.fromJson(category)));
-      });
-    } catch (error) {
-      handleError(error, "Could not fetch categories");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //App bar
-      appBar: const QrooAppBar(
-          title1: 'Zawadi',
-          title2: ' Digital',
-          hasBackButton: false
-      ),
+      appBar: const QrooAppBar(),
+
       body: ListView(
         children: <Widget>[
            Padding(
@@ -112,14 +50,16 @@ class _HomeTabState extends State<HomeTab> {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: CustomSearchBar(),
-          ),
+
+          //TODO: Implement search
+          // Padding(
+          //   padding: const EdgeInsets.all(20.0),
+          //   child: CustomSearchBar(),
+          // ),
 
           SizedBox(height: 10.h),
 
-          _HomePageWidget(issuerCategories, popularIssuers, issuersExplore),
+          const _HomePageWidget(),
         ],
       ),
     );
@@ -130,14 +70,19 @@ class _HomeTabState extends State<HomeTab> {
 
 
 class _HomePageWidget extends ConsumerWidget {
-  const _HomePageWidget( this.issuerCategories, this.popularIssuers, this.exploreIssuers, {Key? key}) : super(key: key);
-
-  final List<CategoryModel> issuerCategories;
-  final List<IssuersModel> popularIssuers;
-  final List<IssuersModel> exploreIssuers;
+  const _HomePageWidget( {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final categories = ref.watch(categoryProvider).categories;
+    bool categoriesLoading = ref.watch(categoryProvider).isLoading;
+
+    final popularIssuers = ref.watch(issuerProvider).issuers;
+    bool popularIssuersLoading = ref.watch(issuerProvider).isLoading;
+
+    final issuers = ref.watch(issuerProvider).issuers;
+    bool issuersLoading = ref.watch(issuerProvider).isLoading;
+
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -156,21 +101,22 @@ class _HomePageWidget extends ConsumerWidget {
 
           SizedBox(height: 10.h),
 
-          SizedBox(
-            height: 120.h,
-            child: issuerCategories.isEmpty
-                ? Center(
-                  child: SpinKitSpinningLines(
-                    color: Theme.of(context).hintColor,
-                    size: 40.h,
-                    ),
-                  ) // Show loading indicator if data is not fetched yet
-                : ListView.separated(
+        //DIO Implementation
+        SizedBox(
+          height: 120.h,
+          child: categoriesLoading
+            ? Center(
+              child: SpinKitSpinningLines(
+                color: Theme.of(context).hintColor,
+                size: 40.h,
+                ),
+              ) // Show loading indicator if data is not fetched yet
+            : ListView.separated(
                 physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 scrollDirection: Axis.horizontal,
-                itemCount: issuerCategories.length,
+                itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  final category = issuerCategories[index];
+                  final category = categories[index];
                   return CategoryCard(category: category);
                 },
                 separatorBuilder: (BuildContext context, int index) {
@@ -203,10 +149,7 @@ class _HomePageWidget extends ConsumerWidget {
                           pathParameters: {'title': 'Popular issuers'}
                       );
                     },
-                    child: Text(
-                      "view all",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    child: Text( "view all", style: Theme.of(context).textTheme.bodySmall, ),
                   )
                 ],
               ),
@@ -215,9 +158,10 @@ class _HomePageWidget extends ConsumerWidget {
 
           SizedBox(height: 10.h),
 
-          SizedBox(
+          //Dio Implementation
+           SizedBox(
             height: 165.h,
-            child: popularIssuers.isEmpty
+            child: popularIssuersLoading
               ? Center(
                   child: SpinKitSpinningLines(
                     color: Theme.of(context).hintColor,
@@ -264,7 +208,33 @@ class _HomePageWidget extends ConsumerWidget {
 
           SizedBox(height: 10.h),
 
-          IssuerVerticalCardGrid(issuersList: exploreIssuers),
+
+          SingleChildScrollView(
+            child: issuersLoading
+                ? Center(
+                  child: SpinKitSpinningLines(
+                    color: Theme.of(context).hintColor,
+                    size: 40.h,
+                  ),
+                )
+                : Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: issuers.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        IssuerVerticalCard(issuer: issuers[index]),
+                        SizedBox(height: 20.h), // Add space between items
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          )
 
         //End Explore
       ]

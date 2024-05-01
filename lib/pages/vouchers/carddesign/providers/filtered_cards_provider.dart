@@ -1,15 +1,15 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../models/voucher_model.dart';
-import '../repositories/card_repository.dart';
+import '../../../../features/gift_cards/repository/giftcard_theme_repository.dart';
 import 'search_query_provider.dart';
 import 'selected_card_category_provider.dart';
 
 part 'filtered_cards_provider.g.dart';
 
 @riverpod
-Future<List<CardModel>> filteredCards(FilteredCardsRef ref) async {
-  final CardRepository cardRepository = ref.watch(cardRepositoryProvider);
+Future<List<GiftcardThemeModel>> filteredCards(FilteredCardsRef ref) async {
+  final GiftcardThemeRepository cardRepository = ref.watch(giftcardThemeRepositoryProvider);
   final selectedCategory = ref.watch(selectedCategoryProvider);
   final searchQuery = ref.watch(searchQueryProvider);
 

@@ -4,7 +4,8 @@ part 'category_db.g.dart';
 @Collection(accessor: 'categories')
 @Name("Category")
 class CategoryDB {
-  Id id = Isar.autoIncrement;
+  Id categoryId =  Isar.autoIncrement;
+  int? id;
   String? name;
   String? icon;
   String? status;

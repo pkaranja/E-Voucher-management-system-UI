@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../models/voucher_model.dart';
-import '../repositories/card_repository.dart';
+import '../../../../features/gift_cards/repository/giftcard_theme_repository.dart';
 
 part 'selected_card_provider.g.dart';
 
@@ -11,8 +11,8 @@ class SelectedCard extends _$SelectedCard {
   int cardId = 0;
 
   @override
-  Future<CardModel> build() async {
-    final cardRepository = ref.watch(cardRepositoryProvider);
+  Future<GiftcardThemeModel> build() async {
+    final cardRepository = ref.watch(giftcardThemeRepositoryProvider);
     cardId = ref.watch(selectedCardIdProvider);
     allCardsCount = (await cardRepository.getAllCards()).length;
 

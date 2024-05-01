@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../global/widgets/app_bar.dart';
+
+import '../../core/presentation/widgets/app_bar_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -13,11 +14,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const QrooAppBar(
-          title1: 'Zawadi',
-          title2: ' Digital',
-          hasBackButton: false
-      ),
+      appBar: const QrooAppBar(),
       body: SingleChildScrollView(
           child: Column(
             children: [

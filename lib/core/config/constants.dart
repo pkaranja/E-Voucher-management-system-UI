@@ -6,6 +6,7 @@ enum FieldType { BOOLEAN, CHAR, DATE, DOUBLE, INTEGER, LONG, STRING, ACTIVESTATU
 enum FilterOperator { EQUAL, NOT_EQUAL, LIKE, IN, BETWEEN }
 enum ActiveStatus { ACTIVE, INACTIVE }
 enum IssuerListType { CATEGORY, SEARCH, POPULAR, FEATURED, PURCHASED, RECEIVED }
+enum GiftcardState { PENDING, ACTIVE, REDEEMED, EXPIRED, CANCELLED, REFUNDED }
 
 class Constants {
   static String apiKey = dotenv.env['ZAWADI_API_KEY'] ?? '';

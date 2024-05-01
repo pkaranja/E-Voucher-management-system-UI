@@ -1,19 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwave_standard/flutterwave.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import 'package:zawadi/global/styles/theme.dart';
-import 'package:zawadi/global/widgets/text_input_widget.dart';
 import 'package:zawadi/models/profile_model.dart';
 
 import '../../controllers/profile_controller.dart';
-import '../../models/user_model.dart';
 import '../../pages/vouchers/carddesign/widgets/custom_elevated_button.dart';
-import '../input_validators.dart';
-
 
 class PaymentFormWidget extends StatefulWidget {
   final BuildContext initialContext;
@@ -34,19 +27,6 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
 
   late GlobalKey<FormState> formKey;
   bool isTestMode = true;
-  final InputValidators formValidator = InputValidators();
-
-  late final TextEditingController recipientEmailController;
-  late final TextEditingController recipientPhoneNumberController;
-  late final TextEditingController customFromNameController;
-  late final TextEditingController recipientNameController;
-  late final TextEditingController voucherMessageController;
-
-  late final FocusNode recipientEmailFocusNode;
-  late final FocusNode recipientPhoneNumberFocusNode;
-  late final FocusNode customFromNameFocusNode;
-  late final FocusNode recipientNameFocusNode;
-  late final FocusNode  voucherMessageFocusNode;
 
   @override
   void initState() {
@@ -55,47 +35,16 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
 
       //initiate customer profile
       initiateProfile();
-
-      //Sender
-      customFromNameController = TextEditingController();
-      voucherMessageController = TextEditingController();
-
-      customFromNameFocusNode = FocusNode();
-      voucherMessageFocusNode = FocusNode();
-
-      //Recipient
-      recipientNameController = TextEditingController();
-      recipientEmailController = TextEditingController();
-      recipientPhoneNumberController = TextEditingController();
-
-      recipientNameFocusNode = FocusNode();
-      recipientEmailFocusNode = FocusNode();
-      recipientPhoneNumberFocusNode = FocusNode();
     }
 
   void initiateProfile() {
     ProfileController().getProfileFromPreferences().then((profile) {
-      customFromNameController.text = profile.fullName ?? '';
-
       userProfileData = profile;
     });
   }
 
     @override
     void dispose() {
-
-      recipientEmailController.dispose();
-      recipientPhoneNumberController.dispose();
-      customFromNameController.dispose();
-      recipientNameController.dispose();
-      voucherMessageController.dispose();
-
-      customFromNameFocusNode.dispose();
-      recipientNameFocusNode.dispose();
-      voucherMessageFocusNode.dispose();
-      recipientEmailFocusNode.dispose();
-      recipientPhoneNumberFocusNode.dispose();
-
       super.dispose();
     }
 
@@ -110,58 +59,6 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
         key: formKey,
         child: Column(
           children: <Widget>[
-            DynamicInputWidget(
-              controller: recipientNameController,
-              obscureText: false,
-              focusNode: recipientNameFocusNode,
-              toggleObscureText: null,
-              validator: formValidator.textValidator,
-              prefIcon: const Icon(Icons.person, size: 18),
-              hint: "Enter recipient full name",
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.name,
-              isNonPasswordField: true,
-            ),
-            const SizedBox(height: 10),
-            DynamicInputWidget(
-              controller: recipientEmailController,
-              obscureText: false,
-              focusNode: recipientEmailFocusNode,
-              toggleObscureText: null,
-              validator: formValidator.emailValidator,
-              prefIcon: const Icon(Icons.alternate_email, size: 18),
-              hint: "Enter recipient e-mail address",
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.emailAddress,
-              isNonPasswordField: true,
-            ),
-            const SizedBox(height: 10),
-            DynamicInputWidget(
-              controller: recipientPhoneNumberController,
-              obscureText: false,
-              focusNode: recipientPhoneNumberFocusNode,
-              toggleObscureText: null,
-              validator: formValidator.textValidator,
-              prefIcon: const Icon(Icons.phone, size: 18),
-              hint: "Enter recipient phone number",
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.phone,
-              isNonPasswordField: true,
-            ),
-            const SizedBox(height: 10),
-            DynamicInputWidget(
-              controller: voucherMessageController,
-              obscureText: false,
-              focusNode: voucherMessageFocusNode,
-              toggleObscureText: null,
-              validator: formValidator.textValidator,
-              prefIcon: const Icon(Icons.message, size: 18),
-              hint: "Enter voucher message",
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.text,
-              isNonPasswordField: true,
-              maxLines: 5,
-            ),
             Container(
               width: double.infinity,
               height: 50,

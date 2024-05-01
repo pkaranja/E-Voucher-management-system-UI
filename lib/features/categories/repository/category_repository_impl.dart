@@ -14,11 +14,14 @@ final categoryDatasourceProvider = Provider<CategoryDatasource>( (ref)  {
   final api = ref.read(apiProvider(Endpoints().baseUrl));
   final isDeviceConnected = ref.watch(networkStateProvider).isDeviceConnected;
 
-    if (isDeviceConnected) {
-      return CategoryRemoteDatasource(api);
-    }else {
-      return CategoryLocalDatasource();
-    }
+  //TODO: Implement local datasource
+    // if (isDeviceConnected) {
+    //   return CategoryRemoteDatasource(api);
+    // }else {
+    //   return CategoryLocalDatasource();
+    // }
+
+    return CategoryRemoteDatasource(api);
   },
 );
 

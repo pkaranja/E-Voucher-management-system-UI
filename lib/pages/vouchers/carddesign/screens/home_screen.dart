@@ -5,11 +5,8 @@ import '../providers/filtered_cards_provider.dart';
 import '../providers/search_query_provider.dart';
 import '../providers/selected_card_category_provider.dart';
 import '../providers/selected_card_provider.dart';
-import '../utilities/app_text.dart';
-import '../utilities/constant.dart';
 import '../widgets/custom_chip_widget.dart';
 import '../widgets/custom_gift_card.dart';
-import 'card_detail_select_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,7 +20,7 @@ class HomeScreen extends StatelessWidget {
         centerTitle: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 10.0),
-          child: AppText.title('Gift Card'),
+          child: Text('Gift Card'),
         ),
       ),
       //bottomNavigationBar: const CustomNavBar(index: 0),
@@ -86,7 +83,7 @@ class _CategoryFilters extends ConsumerWidget {
             ...CardCategory.values
                 .map(
                   (category) => CustomChips(
-                    label: category.capitalName(),
+                    label: category.toString(),
                     isSelected: category == selectedCategory,
                     onTap: () {
                       ref
@@ -127,30 +124,17 @@ class _CardGrid extends ConsumerWidget {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
-                ref
-                    .read(selectedCardIdProvider.notifier)
-                    .setSelectedCardId(cards[index].id);
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return CardDetailScreen(
-                        cardId: cards[index].id,
-                      );
-                    },
-                  ),
-                );
               },
               child: CustomGiftCard(
                 model: cards[index],
-                width: size.width * 0.425,
+                width: size.width * 0.425, title: '', message: '',
               ),
             );
           },
         ),
       ),
-      error: (e, s) => Center(child: AppText.medium('Failed to fetch card')),
+      error: (e, s) => Center(child: Text('Failed to fetch card')),
     );
   }
 }

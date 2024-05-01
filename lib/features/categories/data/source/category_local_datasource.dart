@@ -45,7 +45,7 @@ class CategoryLocalDatasource extends CategoryDatasource {
     try {
       final response = await isarDB.categories.where().findAll();
       final categories = response.map((category) => CategoryModel(
-        id: category.id,
+        id: category.id!,
         name: category.name!,
         icon: category.icon!,
         status: category.status!,
@@ -59,11 +59,13 @@ class CategoryLocalDatasource extends CategoryDatasource {
     }
   }
 
+  //No delete allowed
   @override
   Future<Either<AppException, CategoryModel>> deleteOne({required int id}) {
     // TODO: implement deleteOne
     throw UnimplementedError();
   }
+
 
   @override
   Future<Either<AppException, CategoryModel>> getOne({required int id}) {

@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zawadi/global/router_utils.dart';
+
+import '../core/utils/router_utils.dart';
 
 // Make an enum to toggle progress indicator
 enum ProcessingState {

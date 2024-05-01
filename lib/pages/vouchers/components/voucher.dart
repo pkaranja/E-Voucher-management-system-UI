@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../models/voucher_model.dart';
 
 class CustomVoucher extends StatelessWidget {
-  final CardModel model;
+  final GiftcardThemeModel model;
   final double width;
   final double? height;
   final int? value;

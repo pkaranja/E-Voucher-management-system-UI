@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../core/handlers/error_types.dart';
 import '../../../core/helpers/network_state.dart';
-import '../../../global/handlers/error_types.dart';
 import '../../../global/styles/app_colors.dart';
 import '../../../main.dart';
 

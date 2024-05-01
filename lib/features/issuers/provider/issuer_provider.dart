@@ -4,7 +4,7 @@ import '../repository/issuer_repository.dart';
 import '../repository/issuer_repository_impl.dart';
 
 final issuerProvider = StateNotifierProvider<IssuerNotifier, IssuerState>((ref) {
-  final repository = ref.watch(issuerRepositoryProvider);
+  final repository = ref.read(issuerRepositoryProvider);
   return IssuerNotifier(repository);
 });
 
@@ -18,6 +18,22 @@ class IssuerNotifier extends StateNotifier<IssuerState> {
     response.fold(
         (l) => state = state.copyWith(isLoading: false, issuers: []),
         (r) => state = state.copyWith(isLoading: false, issuers: r),
+    );
+  }
+
+  Future<void> getPopular() async { state = state.copyWith(isLoading: true, issuers: []);
+    final response = await repository.getAll();
+      response.fold(
+            (l) => state = state.copyWith(isLoading: false, issuers: []),
+            (r) => state = state.copyWith(isLoading: false, issuers: r),
+      );
+  }
+
+  Future<void> getFeatured() async { state = state.copyWith(isLoading: true, issuers: []);
+    final response = await repository.getAll();
+    response.fold(
+          (l) => state = state.copyWith(isLoading: false, issuers: []),
+          (r) => state = state.copyWith(isLoading: false, issuers: r),
     );
   }
 

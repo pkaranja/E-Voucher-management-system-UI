@@ -3,17 +3,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/global/styles/theme.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
-import 'package:zawadi/pages/auth/forgot_password.dart';
 import 'package:zawadi/pages/settings/update_profile.dart';
-
 import 'package:zawadi/widgets/profile_tab.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
-import '../../global/widgets/app_bar.dart';
-import '../../widgets/button.dart';
+import '../../core/presentation/widgets/app_bar_widget.dart';
+import '../../features/authentication/forgot_password.dart';
+import '../../core/presentation/widgets/loading_button_widget.dart';
 import '../../widgets/error_message_widget.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
@@ -33,11 +32,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       //App bar
-        appBar: const QrooAppBar(
-            title1: 'Zawadi',
-            title2: ' Digital',
-            hasBackButton: false
-        ),
+        appBar: const QrooAppBar( hasBackButton: false ),
 
         //Content
       body: StreamBuilder(

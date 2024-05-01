@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:zawadi/core/config/constants.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
 
-import '../global/rgb_to_radix.dart';
+import '../core/utils/rgb_to_radix.dart';
 
 class IssuersModel {
   String id;

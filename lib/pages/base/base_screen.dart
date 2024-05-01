@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:zawadi/features/settings/presentation/screens/settings_screen.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/pages/home/home_tab.dart';
-import 'package:zawadi/pages/vouchers/purchased_vouchers_screen.dart';
-import 'package:zawadi/pages/vouchers/received_vouchers_screen.dart';
+import 'package:zawadi/features/gift_cards/presentation/screens/purchased_giftcards_screen.dart';
+import 'package:zawadi/features/gift_cards/presentation/screens/received_giftcards_screen.dart';
 import 'package:zawadi/pages/settings/user_profile.dart';
-
-import '../../features/categories/view/category_screen.dart';
-import '../../features/issuers/view/issuer_screen.dart';
-import '../settings/settings.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -37,12 +33,10 @@ class _BaseScreenState extends State<BaseScreen> {
           controller: pageController,
           children: const [
             HomeTab(),
-            IssuersListScreen(),
-            ReceivedVouchersScreen(),
-            //PurchasedVouchersScreen(),
-            ListScreen(),
+            ReceivedGiftcardsScreen(),
+            PurchasedGiftcardsScreeen(),
+            SettingsScreen(),
             //UserProfileScreen(),
-            //SettingsScreen(),
           ],
         ),
         bottomNavigationBar: NavigationBarTheme(
@@ -110,25 +104,25 @@ class _BaseScreenState extends State<BaseScreen> {
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset(
-                    'assets/svgs/profile.svg',
+                    'assets/svgs/settings.svg',
                     width: 30,
                     height: 30,
                     colorFilter: ColorFilter.mode(Theme
                         .of(context)
                         .hintColor, BlendMode.srcIn),
                   ),
-                  label: 'Profile',
+                  label: 'Settings',
                 ),
                 // NavigationDestination(
                 //   icon: SvgPicture.asset(
-                //     'assets/svgs/settings.svg',
+                //     'assets/svgs/profile.svg',
                 //     width: 30,
                 //     height: 30,
                 //     colorFilter: ColorFilter.mode(Theme
                 //         .of(context)
                 //         .hintColor, BlendMode.srcIn),
                 //   ),
-                //   label: 'Settings',
+                //   label: 'Profile',
                 // ),
               ],
             )

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/models/cart_item_model.dart';
-import 'package:zawadi/pages/cart/components/cart_tile.dart';
-import 'package:zawadi/services/utils_services.dart';
+import 'package:zawadi/core/helpers/data_formatter.dart';
 
-import '../../global/widgets/app_bar.dart';
+import '../../core/presentation/widgets/app_bar_widget.dart';
 
 class CartTab extends StatefulWidget {
   const CartTab({super.key});
@@ -14,7 +13,7 @@ class CartTab extends StatefulWidget {
 }
 
 class _CartTabState extends State<CartTab> {
-  final UtilsServices utilsServices = UtilsServices();
+  final DataFormatter utilsServices = DataFormatter();
 
   void removeItemFromCart(CartEventModel cartItem) {
     setState(() {
@@ -36,11 +35,7 @@ class _CartTabState extends State<CartTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       //App bar
-      appBar: const QrooAppBar(
-        title1: 'Zawadi',
-        title2: ' Digital',
-        hasBackButton: true
-      ),
+      appBar: const QrooAppBar( hasBackButton: true ),
 
       //Content
       body: Column(

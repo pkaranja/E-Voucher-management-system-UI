@@ -67,10 +67,11 @@ class IssuerRemoteDatasource extends IssuerDatasource {
         final List<dynamic> content = success['content'];
         final List<IssuerModel> issuers = content.map((issuer) => IssuerModel.fromJson(issuer)).toList();
 
-        IssuerLocalDatasource localDatasource = IssuerLocalDatasource();
-        for (var issuer in issuers) {
-          localDatasource.createOne(request: issuer);
-        }
+        //TODO: Implement local datasource
+        // IssuerLocalDatasource localDatasource = IssuerLocalDatasource();
+        // for (var issuer in issuers) {
+        //   localDatasource.createOne(request: issuer);
+        // }
 
         return Right(issuers);
       },

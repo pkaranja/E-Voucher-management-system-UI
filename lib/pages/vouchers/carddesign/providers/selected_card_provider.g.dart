@@ -6,12 +6,12 @@ part of 'selected_card_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedCardHash() => r'394a80cb091502dad288c9dcad8b4b2d4648c832';
+String _$selectedCardHash() => r'85198bf52e24b2bf64d05d8e787a27d34f68f22d';
 
 /// See also [SelectedCard].
 @ProviderFor(SelectedCard)
 final selectedCardProvider =
-    AutoDisposeAsyncNotifierProvider<SelectedCard, CardModel>.internal(
+    AutoDisposeAsyncNotifierProvider<SelectedCard, GiftcardThemeModel>.internal(
   SelectedCard.new,
   name: r'selectedCardProvider',
   debugGetCreateSourceHash:
@@ -20,7 +20,7 @@ final selectedCardProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SelectedCard = AutoDisposeAsyncNotifier<CardModel>;
+typedef _$SelectedCard = AutoDisposeAsyncNotifier<GiftcardThemeModel>;
 String _$selectedCardIdHash() => r'2ec71341b7c1dcd494209db7970e4423f6bf7700';
 
 /// See also [SelectedCardId].

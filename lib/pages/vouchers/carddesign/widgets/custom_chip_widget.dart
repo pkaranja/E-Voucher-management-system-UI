@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zawadi/global/styles/app_colors.dart';
 
-import '../utilities/app_text.dart';
-
 class CustomChips extends StatelessWidget {
   final String label;
   final bool isSelected;

@@ -27,18 +27,23 @@ const CategoryDBSchema = CollectionSchema(
       name: r'icon',
       type: IsarType.string,
     ),
-    r'name': PropertySchema(
+    r'id': PropertySchema(
       id: 2,
+      name: r'id',
+      type: IsarType.long,
+    ),
+    r'name': PropertySchema(
+      id: 3,
       name: r'name',
       type: IsarType.string,
     ),
     r'order': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'order',
       type: IsarType.long,
     ),
     r'status': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'status',
       type: IsarType.string,
     )
@@ -47,7 +52,7 @@ const CategoryDBSchema = CollectionSchema(
   serialize: _categoryDBSerialize,
   deserialize: _categoryDBDeserialize,
   deserializeProp: _categoryDBDeserializeProp,
-  idName: r'id',
+  idName: r'categoryId',
   indexes: {},
   links: {},
   embeddedSchemas: {},
@@ -98,9 +103,10 @@ void _categoryDBSerialize(
 ) {
   writer.writeString(offsets[0], object.backgroundColor);
   writer.writeString(offsets[1], object.icon);
-  writer.writeString(offsets[2], object.name);
-  writer.writeLong(offsets[3], object.order);
-  writer.writeString(offsets[4], object.status);
+  writer.writeLong(offsets[2], object.id);
+  writer.writeString(offsets[3], object.name);
+  writer.writeLong(offsets[4], object.order);
+  writer.writeString(offsets[5], object.status);
 }
 
 CategoryDB _categoryDBDeserialize(
@@ -111,11 +117,12 @@ CategoryDB _categoryDBDeserialize(
 ) {
   final object = CategoryDB();
   object.backgroundColor = reader.readStringOrNull(offsets[0]);
+  object.categoryId = id;
   object.icon = reader.readStringOrNull(offsets[1]);
-  object.id = id;
-  object.name = reader.readStringOrNull(offsets[2]);
-  object.order = reader.readLongOrNull(offsets[3]);
-  object.status = reader.readStringOrNull(offsets[4]);
+  object.id = reader.readLongOrNull(offsets[2]);
+  object.name = reader.readStringOrNull(offsets[3]);
+  object.order = reader.readLongOrNull(offsets[4]);
+  object.status = reader.readStringOrNull(offsets[5]);
   return object;
 }
 
@@ -131,10 +138,12 @@ P _categoryDBDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
-    case 3:
       return (reader.readLongOrNull(offset)) as P;
+    case 3:
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
+      return (reader.readLongOrNull(offset)) as P;
+    case 5:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -142,7 +151,7 @@ P _categoryDBDeserializeProp<P>(
 }
 
 Id _categoryDBGetId(CategoryDB object) {
-  return object.id;
+  return object.categoryId;
 }
 
 List<IsarLinkBase<dynamic>> _categoryDBGetLinks(CategoryDB object) {
@@ -150,12 +159,12 @@ List<IsarLinkBase<dynamic>> _categoryDBGetLinks(CategoryDB object) {
 }
 
 void _categoryDBAttach(IsarCollection<dynamic> col, Id id, CategoryDB object) {
-  object.id = id;
+  object.categoryId = id;
 }
 
 extension CategoryDBQueryWhereSort
     on QueryBuilder<CategoryDB, CategoryDB, QWhere> {
-  QueryBuilder<CategoryDB, CategoryDB, QAfterWhere> anyId() {
+  QueryBuilder<CategoryDB, CategoryDB, QAfterWhere> anyCategoryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
@@ -164,66 +173,70 @@ extension CategoryDBQueryWhereSort
 
 extension CategoryDBQueryWhere
     on QueryBuilder<CategoryDB, CategoryDB, QWhereClause> {
-  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> idEqualTo(Id id) {
+  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> categoryIdEqualTo(
+      Id categoryId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
+        lower: categoryId,
+        upper: categoryId,
       ));
     });
   }
 
-  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> categoryIdNotEqualTo(
+      Id categoryId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
+              IdWhereClause.lessThan(upper: categoryId, includeUpper: false),
             )
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
+              IdWhereClause.greaterThan(lower: categoryId, includeLower: false),
             );
       } else {
         return query
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
+              IdWhereClause.greaterThan(lower: categoryId, includeLower: false),
             )
             .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
+              IdWhereClause.lessThan(upper: categoryId, includeUpper: false),
             );
       }
     });
   }
 
-  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> categoryIdGreaterThan(
+      Id categoryId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: id, includeLower: include),
+        IdWhereClause.greaterThan(lower: categoryId, includeLower: include),
       );
     });
   }
 
-  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> categoryIdLessThan(
+      Id categoryId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.lessThan(upper: id, includeUpper: include),
+        IdWhereClause.lessThan(upper: categoryId, includeUpper: include),
       );
     });
   }
 
-  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> idBetween(
-    Id lowerId,
-    Id upperId, {
+  QueryBuilder<CategoryDB, CategoryDB, QAfterWhereClause> categoryIdBetween(
+    Id lowerCategoryId,
+    Id upperCategoryId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
+        lower: lowerCategoryId,
         includeLower: includeLower,
-        upper: upperId,
+        upper: upperCategoryId,
         includeUpper: includeUpper,
       ));
     });
@@ -386,6 +399,61 @@ extension CategoryDBQueryFilter
     });
   }
 
+  QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> categoryIdEqualTo(
+      Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'categoryId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition>
+      categoryIdGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'categoryId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition>
+      categoryIdLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'categoryId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> categoryIdBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'categoryId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> iconIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -532,8 +600,24 @@ extension CategoryDBQueryFilter
     });
   }
 
+  QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
   QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> idEqualTo(
-      Id value) {
+      int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -543,7 +627,7 @@ extension CategoryDBQueryFilter
   }
 
   QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> idGreaterThan(
-    Id value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -556,7 +640,7 @@ extension CategoryDBQueryFilter
   }
 
   QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> idLessThan(
-    Id value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -569,8 +653,8 @@ extension CategoryDBQueryFilter
   }
 
   QueryBuilder<CategoryDB, CategoryDB, QAfterFilterCondition> idBetween(
-    Id lower,
-    Id upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -982,6 +1066,18 @@ extension CategoryDBQuerySortBy
     });
   }
 
+  QueryBuilder<CategoryDB, CategoryDB, QAfterSortBy> sortById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CategoryDB, CategoryDB, QAfterSortBy> sortByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
   QueryBuilder<CategoryDB, CategoryDB, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -1031,6 +1127,18 @@ extension CategoryDBQuerySortThenBy
       thenByBackgroundColorDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'backgroundColor', Sort.desc);
+    });
+  }
+
+  QueryBuilder<CategoryDB, CategoryDB, QAfterSortBy> thenByCategoryId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'categoryId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CategoryDB, CategoryDB, QAfterSortBy> thenByCategoryIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'categoryId', Sort.desc);
     });
   }
 
@@ -1112,6 +1220,12 @@ extension CategoryDBQueryWhereDistinct
     });
   }
 
+  QueryBuilder<CategoryDB, CategoryDB, QDistinct> distinctById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'id');
+    });
+  }
+
   QueryBuilder<CategoryDB, CategoryDB, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1135,9 +1249,9 @@ extension CategoryDBQueryWhereDistinct
 
 extension CategoryDBQueryProperty
     on QueryBuilder<CategoryDB, CategoryDB, QQueryProperty> {
-  QueryBuilder<CategoryDB, int, QQueryOperations> idProperty() {
+  QueryBuilder<CategoryDB, int, QQueryOperations> categoryIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'id');
+      return query.addPropertyName(r'categoryId');
     });
   }
 
@@ -1151,6 +1265,12 @@ extension CategoryDBQueryProperty
   QueryBuilder<CategoryDB, String?, QQueryOperations> iconProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'icon');
+    });
+  }
+
+  QueryBuilder<CategoryDB, int?, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
     });
   }
 

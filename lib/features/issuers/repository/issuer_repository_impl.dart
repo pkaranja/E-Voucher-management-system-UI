@@ -15,13 +15,17 @@ final issuerDatasourceProvider = Provider<IssuerDatasource>((ref) {
   final api = ref.read(apiProvider(Endpoints().baseUrl));
   final isDeviceConnected = ref.watch(networkStateProvider).isDeviceConnected;
 
-  if (isDeviceConnected) {
-    print("FETCH FROM REMOTE DATASOURCE");
-    return IssuerRemoteDatasource(api);
-  }else {
-    print("FETCH FROM LOCAL DATASOURCE");
-    return IssuerLocalDatasource();
-  }
+  //TODO: Implement local data sources
+  return IssuerRemoteDatasource(api);
+
+  // if (isDeviceConnected) {
+  //   print("FETCH FROM REMOTE DATASOURCE");
+  //   return IssuerRemoteDatasource(api);
+  // }else {
+  //   print("FETCH FROM LOCAL DATASOURCE");
+  //   return IssuerLocalDatasource();
+  // }
+
 });
 
 final issuerRepositoryProvider = Provider<IssuerRepository>((ref) {

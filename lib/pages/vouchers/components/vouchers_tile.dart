@@ -3,7 +3,7 @@ import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/models/cart_item_model.dart';
 import 'package:zawadi/models/orders_model.dart';
 import 'package:zawadi/pages/vouchers/components/vouchers_status_widget.dart';
-import 'package:zawadi/services/utils_services.dart';
+import 'package:zawadi/core/helpers/data_formatter.dart';
 
 class VouchersTile extends StatelessWidget {
   final OrderModel order;
@@ -13,7 +13,7 @@ class VouchersTile extends StatelessWidget {
     required this.order,
   });
 
-  final UtilsServices utilsServices = UtilsServices();
+  final DataFormatter utilsServices = DataFormatter();
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +135,7 @@ class _OrderItemWidget extends StatelessWidget {
     required this.orderItem,
   });
 
-  final UtilsServices utilsServices;
+  final DataFormatter utilsServices;
 
   final CartEventModel orderItem;
 
