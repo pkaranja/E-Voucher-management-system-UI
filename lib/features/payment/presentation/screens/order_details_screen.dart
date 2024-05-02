@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:zawadi/core/presentation/widgets/app_bar_widget.dart';
+import 'package:zawadi/core/styles/app_colors.dart';
 
 import '../../../gift_cards/data/model/giftcard_theme_model.dart';
 import '../../../gift_cards/presentation/widgets/custom_gift_card.dart';
 import '../../../gift_cards/provider/selected_card_provider.dart';
 import '../../../gift_cards/provider/temporary_giftcard_provider.dart';
-import '../../data/model/order_items_model.dart';
 import '../widgets/order_details_widget.dart';
 
 class OrderDetailsScreen extends ConsumerStatefulWidget {
@@ -20,27 +20,30 @@ class OrderDetailsScreen extends ConsumerStatefulWidget {
 class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final selectedCard = ref.watch(selectedCardProvider);
     final temporaryGiftcard = ref.watch(temporaryGiftcardProvider);
 
-
-
     return Scaffold(
       appBar: const QrooAppBar(hasBackButton: true),
-      bottomSheet: OrderDetailsBox(items: orderItems,),
+      bottomSheet: const OrderDetailsWidget(),
       body: Container(
         // Set height to 50% of the screen height
         //TODO: find a better way to do this
-        height: size.height * 0.5,
+        height: size.height * 0.6,
         color: selectedCard.value?.bgColor,
         padding: const EdgeInsets.all(20.0),
         child: Container(
           decoration: const BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
+                color: themeAlmostBlackColor,
                 blurRadius: 5.0,
                 spreadRadius: 2,
                 offset: Offset(2, 2),

@@ -6,7 +6,7 @@ part of 'filtered_cards_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filteredCardsHash() => r'3a14f76250ea8b32cca1aedcb272297e7465ca0d';
+String _$filteredCardsHash() => r'a4301558568b7c6692541108d38a32f204fba001';
 
 /// See also [filteredCards].
 @ProviderFor(filteredCards)

@@ -50,10 +50,12 @@ void main() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     //initialize firebase
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+    await Firebase.initializeApp(
+      name: 'zawadi-tz',
+      options: DefaultFirebaseOptions.currentPlatform,);
 
     // Initialize other services
-    await initializeServices();
+    await initializeServices(prefs);
 
     runApp(
       ProviderScope(
@@ -64,19 +66,17 @@ void main() async {
     // If initialization fails, show an error screen
     print('Error initializing app: $error');
     runApp(const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ScreenUtilInit(
-        designSize: const Size(390, 844),
-        child: ProviderScope( child: ErrorScreen(ErrorType.initialization) ),
-      )
+        debugShowCheckedModeBanner: false,
+        home: ScreenUtilInit(
+          designSize: const Size(390, 844),
+          child: ProviderScope( child: ErrorScreen(ErrorType.initialization) ),
+        )
     ));
   }
 }
 
-
 //Initialize required services
-Future<void> initializeServices() async {
-
+Future<void> initializeServices(SharedPreferences prefs) async {
   try {
     //Load ENV files
     await dotenv.load(fileName: '.env');
@@ -92,7 +92,6 @@ Future<void> initializeServices() async {
     // Handle errors
     rethrow;
   }
-
 
   try {
     //handle crashlytics errors
@@ -187,5 +186,4 @@ Future<void> initializeServices() async {
   } catch (error) {
     rethrow;
   }
-
 }

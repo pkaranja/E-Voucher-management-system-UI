@@ -19,7 +19,7 @@ const kDarkGreenBackC = Color(0xff027273);
 const kDarkGreenNavIconC = Color.fromARGB(255, 0, 91, 93);
 
 
-const themeLightScaffold = Color(0xFFFCFCFC);
+const themeLightScaffold = Color(0xFFF4F5F4);
 const themeDarkScaffold = Color(0xFF262020);
 
 //const themePrimaryColor = Color(0xFFDA5726);

@@ -45,20 +45,23 @@ class GiftcardLocalDatasource extends GiftcardDatasource {
   Future<Either<AppException, GiftcardModel>> createOne( {required GiftcardModel request}) async {
     try {
       final newGiftcard = GiftcardDB()
-        ..id = request.id
-        ..code = request.code
-        ..cvv = request.cvv
-        ..dateCreated = request.dateCreated
+        ..id = request.id ?? ''
+        ..code = request.code ?? ''
+        ..cvv = request.cvv ?? 0
+        ..dateCreated = request.dateCreated ?? DateTime.now()
         ..expirationDate = request.expirationDate
-        ..lastUpdated = request.lastUpdated
+        ..lastUpdated = request.lastUpdated ?? DateTime.now()
         ..title = request.title
         ..message = request.message
-        ..themeId = request.themeId
-        ..recipient = request.recipient
+        ..theme = request.theme
+        ..recipient = request.recipient ?? ''
+        ..recipientName = request.recipientName ?? ''
+        ..recipientPhoneNumber = request.recipientPhoneNumber
         ..value = request.value
-        ..purchaserId = request.purchaserId
-        ..transactionId = request.transactionId
-        ..issuerId = request.issuerId
+        ..purchaser = request.purchaser
+        ..purchaserName = request.purchaserName
+        ..transaction = request.transaction ?? ''
+        ..issuer = request.issuer
         ..status = request.status;
 
       await isarDB.writeTxn(() async {
@@ -75,13 +78,16 @@ class GiftcardLocalDatasource extends GiftcardDatasource {
           lastUpdated: request.lastUpdated,
           title: request.title,
           message: request.message,
-          themeId: request.themeId,
+          theme: request.theme,
           recipient: request.recipient,
+          recipientName: request.recipientName,
+          recipientPhoneNumber: request.recipientPhoneNumber,
           value: request.value,
-          purchaserId: request.purchaserId,
-          transactionId: request.transactionId,
-          issuerId: request.issuerId,
-          status: request.status
+          purchaser: request.purchaser,
+          purchaserName: request.purchaserName,
+          transaction: request.transaction,
+          issuer: request.issuer,
+          status: request.status,
         ),
       );
     } on DioException catch (ex) {
@@ -99,19 +105,22 @@ class GiftcardLocalDatasource extends GiftcardDatasource {
       final response = await isarDB.giftcards.where().sortByDateCreatedDesc().findAll();
       final giftcards = response.map((giftcard) => GiftcardModel(
         id: giftcard.id,
-        code: giftcard.code ?? '',
-        cvv: giftcard.cvv ?? 0,
+        code: giftcard.code,
+        cvv: giftcard.cvv,
         dateCreated: giftcard.dateCreated,
         expirationDate: giftcard.expirationDate,
         lastUpdated: giftcard.lastUpdated,
         title: giftcard.title,
         message: giftcard.message,
-        themeId: giftcard.themeId,
-        recipient: giftcard.recipient ?? '',
+        theme: giftcard.theme,
+        recipient: giftcard.recipient,
+        recipientName: giftcard.recipientName,
+        recipientPhoneNumber: giftcard.recipientPhoneNumber,
         value: giftcard.value,
-        purchaserId: giftcard.purchaserId,
-        transactionId: giftcard.transactionId ?? '',
-        issuerId: giftcard.issuerId,
+        purchaser: giftcard.purchaser,
+        purchaserName: giftcard.purchaserName,
+        transaction: giftcard.transaction,
+        issuer: giftcard.issuer,
         status: giftcard.status,
       )).toList();
 
@@ -136,31 +145,34 @@ class GiftcardLocalDatasource extends GiftcardDatasource {
             response = await isarDB.giftcards.filter().titleContains(filter).sortByDateCreatedDesc().findAll();
             break;
           case FilterType.byPurchaserId:
-            response = await isarDB.giftcards.filter().recipientEqualTo(userProfile!.profileId).sortByDateCreatedDesc().findAll();
+            response = await isarDB.giftcards.filter().recipientEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
             break;
           default:
-            response = await isarDB.giftcards.filter().recipientEqualTo(userProfile!.profileId).sortByDateCreatedDesc().findAll();
+            response = await isarDB.giftcards.filter().recipientEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
             break;
         }
       } else {
-        response = await isarDB.giftcards.filter().recipientEqualTo(userProfile!.profileId).sortByDateCreatedDesc().findAll();
+        response = await isarDB.giftcards.filter().recipientEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
       }
 
       final giftcards = response.map((giftcard) => GiftcardModel(
         id: giftcard.id,
-        code: giftcard.code ?? '',
-        cvv: giftcard.cvv ?? 0,
+        code: giftcard.code,
+        cvv: giftcard.cvv,
         dateCreated: giftcard.dateCreated,
         expirationDate: giftcard.expirationDate,
         lastUpdated: giftcard.lastUpdated,
         title: giftcard.title,
         message: giftcard.message,
-        themeId: giftcard.themeId,
-        recipient: giftcard.recipient ?? '',
+        theme: giftcard.theme,
+        recipient: giftcard.recipient,
+        recipientName: giftcard.recipientName,
+        recipientPhoneNumber: giftcard.recipientPhoneNumber,
         value: giftcard.value,
-        purchaserId: giftcard.purchaserId,
-        transactionId: giftcard.transactionId ?? '',
-        issuerId: giftcard.issuerId,
+        purchaser: giftcard.purchaser,
+        purchaserName: giftcard.purchaserName,
+        transaction: giftcard.transaction,
+        issuer: giftcard.issuer,
         status: giftcard.status,
       )).toList();
 
@@ -186,31 +198,34 @@ class GiftcardLocalDatasource extends GiftcardDatasource {
             response = await isarDB.giftcards.filter().titleContains(filter).sortByDateCreatedDesc().findAll();
             break;
           case FilterType.byPurchaserId:
-            response = await isarDB.giftcards.filter().purchaserIdEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
+            response = await isarDB.giftcards.filter().purchaserEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
             break;
           default:
-            response = await isarDB.giftcards.filter().purchaserIdEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
+            response = await isarDB.giftcards.filter().purchaserEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
             break;
         }
       } else {
-        response = await isarDB.giftcards.filter().purchaserIdEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
+        response = await isarDB.giftcards.filter().purchaserEqualTo(userProfile!.profileId!).sortByDateCreatedDesc().findAll();
       }
 
       final giftcards = response.map((giftcard) => GiftcardModel(
         id: giftcard.id,
-        code: giftcard.code ?? '',
-        cvv: giftcard.cvv ?? 0,
+        code: giftcard.code,
+        cvv: giftcard.cvv,
         dateCreated: giftcard.dateCreated,
         expirationDate: giftcard.expirationDate,
         lastUpdated: giftcard.lastUpdated,
         title: giftcard.title,
         message: giftcard.message,
-        themeId: giftcard.themeId,
-        recipient: giftcard.recipient ?? '',
+        theme: giftcard.theme,
+        recipient: giftcard.recipient,
+        recipientName: giftcard.recipientName,
+        recipientPhoneNumber: giftcard.recipientPhoneNumber,
         value: giftcard.value,
-        purchaserId: giftcard.purchaserId,
-        transactionId: giftcard.transactionId ?? '',
-        issuerId: giftcard.issuerId,
+        purchaser: giftcard.purchaser,
+        purchaserName: giftcard.purchaserName,
+        transaction: giftcard.transaction,
+        issuer: giftcard.issuer,
         status: giftcard.status,
       )).toList();
 

@@ -695,15 +695,18 @@ mixin _$AttributeDTO {
   DateTime get dateCreated => throw _privateConstructorUsedError;
   DateTime get expirationDate => throw _privateConstructorUsedError;
   DateTime get lastUpdated => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  String get purchaserId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  int get themeId => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
+  int get theme => throw _privateConstructorUsedError;
   String get recipient => throw _privateConstructorUsedError;
+  String get recipientName => throw _privateConstructorUsedError;
+  String get recipientPhoneNumber => throw _privateConstructorUsedError;
   int get value => throw _privateConstructorUsedError;
+  String get purchaser => throw _privateConstructorUsedError;
+  String get purchaserName => throw _privateConstructorUsedError;
+  String get transaction => throw _privateConstructorUsedError;
+  String get issuer => throw _privateConstructorUsedError;
   GiftcardState get status => throw _privateConstructorUsedError;
-  String get transactionId => throw _privateConstructorUsedError;
-  String get issuerId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -724,15 +727,18 @@ abstract class $AttributeDTOCopyWith<$Res> {
       DateTime dateCreated,
       DateTime expirationDate,
       DateTime lastUpdated,
-      String message,
-      String purchaserId,
       String title,
-      int themeId,
+      String message,
+      int theme,
       String recipient,
+      String recipientName,
+      String recipientPhoneNumber,
       int value,
-      GiftcardState status,
-      String transactionId,
-      String issuerId});
+      String purchaser,
+      String purchaserName,
+      String transaction,
+      String issuer,
+      GiftcardState status});
 }
 
 /// @nodoc
@@ -754,15 +760,18 @@ class _$AttributeDTOCopyWithImpl<$Res, $Val extends AttributeDTO>
     Object? dateCreated = null,
     Object? expirationDate = null,
     Object? lastUpdated = null,
-    Object? message = null,
-    Object? purchaserId = null,
     Object? title = null,
-    Object? themeId = null,
+    Object? message = null,
+    Object? theme = null,
     Object? recipient = null,
+    Object? recipientName = null,
+    Object? recipientPhoneNumber = null,
     Object? value = null,
+    Object? purchaser = null,
+    Object? purchaserName = null,
+    Object? transaction = null,
+    Object? issuer = null,
     Object? status = null,
-    Object? transactionId = null,
-    Object? issuerId = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -789,42 +798,54 @@ class _$AttributeDTOCopyWithImpl<$Res, $Val extends AttributeDTO>
           ? _value.lastUpdated
           : lastUpdated // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      purchaserId: null == purchaserId
-          ? _value.purchaserId
-          : purchaserId // ignore: cast_nullable_to_non_nullable
-              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      themeId: null == themeId
-          ? _value.themeId
-          : themeId // ignore: cast_nullable_to_non_nullable
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      theme: null == theme
+          ? _value.theme
+          : theme // ignore: cast_nullable_to_non_nullable
               as int,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as String,
+      recipientName: null == recipientName
+          ? _value.recipientName
+          : recipientName // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipientPhoneNumber: null == recipientPhoneNumber
+          ? _value.recipientPhoneNumber
+          : recipientPhoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as int,
+      purchaser: null == purchaser
+          ? _value.purchaser
+          : purchaser // ignore: cast_nullable_to_non_nullable
+              as String,
+      purchaserName: null == purchaserName
+          ? _value.purchaserName
+          : purchaserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      transaction: null == transaction
+          ? _value.transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
+              as String,
+      issuer: null == issuer
+          ? _value.issuer
+          : issuer // ignore: cast_nullable_to_non_nullable
+              as String,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as GiftcardState,
-      transactionId: null == transactionId
-          ? _value.transactionId
-          : transactionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      issuerId: null == issuerId
-          ? _value.issuerId
-          : issuerId // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -844,15 +865,18 @@ abstract class _$$AttributeDTOImplCopyWith<$Res>
       DateTime dateCreated,
       DateTime expirationDate,
       DateTime lastUpdated,
-      String message,
-      String purchaserId,
       String title,
-      int themeId,
+      String message,
+      int theme,
       String recipient,
+      String recipientName,
+      String recipientPhoneNumber,
       int value,
-      GiftcardState status,
-      String transactionId,
-      String issuerId});
+      String purchaser,
+      String purchaserName,
+      String transaction,
+      String issuer,
+      GiftcardState status});
 }
 
 /// @nodoc
@@ -872,15 +896,18 @@ class __$$AttributeDTOImplCopyWithImpl<$Res>
     Object? dateCreated = null,
     Object? expirationDate = null,
     Object? lastUpdated = null,
-    Object? message = null,
-    Object? purchaserId = null,
     Object? title = null,
-    Object? themeId = null,
+    Object? message = null,
+    Object? theme = null,
     Object? recipient = null,
+    Object? recipientName = null,
+    Object? recipientPhoneNumber = null,
     Object? value = null,
+    Object? purchaser = null,
+    Object? purchaserName = null,
+    Object? transaction = null,
+    Object? issuer = null,
     Object? status = null,
-    Object? transactionId = null,
-    Object? issuerId = null,
   }) {
     return _then(_$AttributeDTOImpl(
       id: null == id
@@ -907,42 +934,54 @@ class __$$AttributeDTOImplCopyWithImpl<$Res>
           ? _value.lastUpdated
           : lastUpdated // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      purchaserId: null == purchaserId
-          ? _value.purchaserId
-          : purchaserId // ignore: cast_nullable_to_non_nullable
-              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      themeId: null == themeId
-          ? _value.themeId
-          : themeId // ignore: cast_nullable_to_non_nullable
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      theme: null == theme
+          ? _value.theme
+          : theme // ignore: cast_nullable_to_non_nullable
               as int,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as String,
+      recipientName: null == recipientName
+          ? _value.recipientName
+          : recipientName // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipientPhoneNumber: null == recipientPhoneNumber
+          ? _value.recipientPhoneNumber
+          : recipientPhoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as int,
+      purchaser: null == purchaser
+          ? _value.purchaser
+          : purchaser // ignore: cast_nullable_to_non_nullable
+              as String,
+      purchaserName: null == purchaserName
+          ? _value.purchaserName
+          : purchaserName // ignore: cast_nullable_to_non_nullable
+              as String,
+      transaction: null == transaction
+          ? _value.transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
+              as String,
+      issuer: null == issuer
+          ? _value.issuer
+          : issuer // ignore: cast_nullable_to_non_nullable
+              as String,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as GiftcardState,
-      transactionId: null == transactionId
-          ? _value.transactionId
-          : transactionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      issuerId: null == issuerId
-          ? _value.issuerId
-          : issuerId // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -957,15 +996,18 @@ class _$AttributeDTOImpl implements _AttributeDTO {
       required this.dateCreated,
       required this.expirationDate,
       required this.lastUpdated,
-      required this.message,
-      required this.purchaserId,
       required this.title,
-      required this.themeId,
+      required this.message,
+      required this.theme,
       required this.recipient,
+      required this.recipientName,
+      required this.recipientPhoneNumber,
       required this.value,
-      required this.status,
-      required this.transactionId,
-      required this.issuerId});
+      required this.purchaser,
+      required this.purchaserName,
+      required this.transaction,
+      required this.issuer,
+      required this.status});
 
   factory _$AttributeDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$AttributeDTOImplFromJson(json);
@@ -983,27 +1025,33 @@ class _$AttributeDTOImpl implements _AttributeDTO {
   @override
   final DateTime lastUpdated;
   @override
-  final String message;
-  @override
-  final String purchaserId;
-  @override
   final String title;
   @override
-  final int themeId;
+  final String message;
+  @override
+  final int theme;
   @override
   final String recipient;
   @override
+  final String recipientName;
+  @override
+  final String recipientPhoneNumber;
+  @override
   final int value;
   @override
+  final String purchaser;
+  @override
+  final String purchaserName;
+  @override
+  final String transaction;
+  @override
+  final String issuer;
+  @override
   final GiftcardState status;
-  @override
-  final String transactionId;
-  @override
-  final String issuerId;
 
   @override
   String toString() {
-    return 'AttributeDTO(id: $id, code: $code, cvv: $cvv, dateCreated: $dateCreated, expirationDate: $expirationDate, lastUpdated: $lastUpdated, message: $message, purchaserId: $purchaserId, title: $title, themeId: $themeId, recipient: $recipient, value: $value, status: $status, transactionId: $transactionId, issuerId: $issuerId)';
+    return 'AttributeDTO(id: $id, code: $code, cvv: $cvv, dateCreated: $dateCreated, expirationDate: $expirationDate, lastUpdated: $lastUpdated, title: $title, message: $message, theme: $theme, recipient: $recipient, recipientName: $recipientName, recipientPhoneNumber: $recipientPhoneNumber, value: $value, purchaser: $purchaser, purchaserName: $purchaserName, transaction: $transaction, issuer: $issuer, status: $status)';
   }
 
   @override
@@ -1020,19 +1068,24 @@ class _$AttributeDTOImpl implements _AttributeDTO {
                 other.expirationDate == expirationDate) &&
             (identical(other.lastUpdated, lastUpdated) ||
                 other.lastUpdated == lastUpdated) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.purchaserId, purchaserId) ||
-                other.purchaserId == purchaserId) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.themeId, themeId) || other.themeId == themeId) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient) &&
+            (identical(other.recipientName, recipientName) ||
+                other.recipientName == recipientName) &&
+            (identical(other.recipientPhoneNumber, recipientPhoneNumber) ||
+                other.recipientPhoneNumber == recipientPhoneNumber) &&
             (identical(other.value, value) || other.value == value) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.transactionId, transactionId) ||
-                other.transactionId == transactionId) &&
-            (identical(other.issuerId, issuerId) ||
-                other.issuerId == issuerId));
+            (identical(other.purchaser, purchaser) ||
+                other.purchaser == purchaser) &&
+            (identical(other.purchaserName, purchaserName) ||
+                other.purchaserName == purchaserName) &&
+            (identical(other.transaction, transaction) ||
+                other.transaction == transaction) &&
+            (identical(other.issuer, issuer) || other.issuer == issuer) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
@@ -1045,15 +1098,18 @@ class _$AttributeDTOImpl implements _AttributeDTO {
       dateCreated,
       expirationDate,
       lastUpdated,
-      message,
-      purchaserId,
       title,
-      themeId,
+      message,
+      theme,
       recipient,
+      recipientName,
+      recipientPhoneNumber,
       value,
-      status,
-      transactionId,
-      issuerId);
+      purchaser,
+      purchaserName,
+      transaction,
+      issuer,
+      status);
 
   @JsonKey(ignore: true)
   @override
@@ -1077,15 +1133,18 @@ abstract class _AttributeDTO implements AttributeDTO {
       required final DateTime dateCreated,
       required final DateTime expirationDate,
       required final DateTime lastUpdated,
-      required final String message,
-      required final String purchaserId,
       required final String title,
-      required final int themeId,
+      required final String message,
+      required final int theme,
       required final String recipient,
+      required final String recipientName,
+      required final String recipientPhoneNumber,
       required final int value,
-      required final GiftcardState status,
-      required final String transactionId,
-      required final String issuerId}) = _$AttributeDTOImpl;
+      required final String purchaser,
+      required final String purchaserName,
+      required final String transaction,
+      required final String issuer,
+      required final GiftcardState status}) = _$AttributeDTOImpl;
 
   factory _AttributeDTO.fromJson(Map<String, dynamic> json) =
       _$AttributeDTOImpl.fromJson;
@@ -1103,23 +1162,29 @@ abstract class _AttributeDTO implements AttributeDTO {
   @override
   DateTime get lastUpdated;
   @override
-  String get message;
-  @override
-  String get purchaserId;
-  @override
   String get title;
   @override
-  int get themeId;
+  String get message;
+  @override
+  int get theme;
   @override
   String get recipient;
   @override
+  String get recipientName;
+  @override
+  String get recipientPhoneNumber;
+  @override
   int get value;
   @override
+  String get purchaser;
+  @override
+  String get purchaserName;
+  @override
+  String get transaction;
+  @override
+  String get issuer;
+  @override
   GiftcardState get status;
-  @override
-  String get transactionId;
-  @override
-  String get issuerId;
   @override
   @JsonKey(ignore: true)
   _$$AttributeDTOImplCopyWith<_$AttributeDTOImpl> get copyWith =>

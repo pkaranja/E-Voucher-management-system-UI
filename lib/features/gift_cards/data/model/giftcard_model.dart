@@ -1,7 +1,7 @@
-import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import '../../../../core/config/constants.dart';
+
 part 'giftcard_model.freezed.dart';
 part 'giftcard_model.g.dart';
 
@@ -10,20 +10,23 @@ class GiftcardModel with _$GiftcardModel {
   GiftcardModel._();
 
   factory GiftcardModel({
-    required String id,
-    required String code,
-    required int cvv,
-    required DateTime dateCreated,
+    String? id,
+    String? code,
+    int? cvv,
+    DateTime? dateCreated,
     required DateTime expirationDate,
-    required DateTime lastUpdated,
+    DateTime? lastUpdated,
     required String title,
     required String message,
-    required int themeId,
-    required String recipient,
+    required int theme,
+    String? recipient,
+    String? recipientName,
+    required String recipientPhoneNumber,
     required int value,
-    required String purchaserId,
-    required String transactionId,
-    required String issuerId,
+    required String purchaser,
+    required String purchaserName,
+    String? transaction,
+    required String issuer,
     required GiftcardState status,
   }) = _GiftcardModel;
 
@@ -40,12 +43,15 @@ class GiftcardModel with _$GiftcardModel {
       "lastUpdated": lastUpdated,
       "title": title,
       "message": message,
-      "themeId": themeId,
+      "theme": theme,
       "recipient": recipient,
+      "recipientName": recipientName,
+      "recipientPhoneNumber": recipientPhoneNumber,
       "value": value,
-      "purchaserId": purchaserId,
-      "transactionId": transactionId,
-      "issuerId": issuerId,
+      "purchaser": purchaser,
+      "purchaserName": purchaserName,
+      "transaction": transaction,
+      "issuer": issuer,
       "status": status,
     };
   }

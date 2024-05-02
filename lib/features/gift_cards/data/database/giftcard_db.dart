@@ -9,19 +9,22 @@ part 'giftcard_db.g.dart';
 class GiftcardDB {
   Id giftcardId = Isar.autoIncrement;
   late String id;
-  String? code;
-  int? cvv;
+  late String code;
+  late int cvv;
   late DateTime dateCreated;
   late DateTime expirationDate;
   late DateTime lastUpdated;
   late String title;
   late String message;
-  late int themeId;
-  String? recipient;
+  late int theme;
+  late String recipient;
+  late String recipientName;
+  late String recipientPhoneNumber;
   late int value;
-  late String purchaserId;
-  String? transactionId;
-  late String issuerId;
+  late String purchaser;
+  late String purchaserName;
+  late String transaction;
+  late String issuer;
   @enumerated
   @Default(GiftcardState.PENDING)
   late GiftcardState status;

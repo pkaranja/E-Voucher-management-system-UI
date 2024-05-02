@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import '../../../gen/assets.gen.dart';
 import '../../config/constants.dart';
 import '../../styles/app_colors.dart';
 import '../../utils/router_utils.dart';
@@ -71,7 +73,12 @@ class _QrooAppBarState extends State<QrooAppBar> {
       ),
       automaticallyImplyLeading: false,
       leading: widget.hasBackButton ? IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: SvgPicture.asset(
+          Assets.svgs.arrowleft,
+          width: 30,
+          height: 30,
+          colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+        ),
         onPressed: () {
           if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop();
@@ -83,7 +90,10 @@ class _QrooAppBarState extends State<QrooAppBar> {
       actions: [
         widget.hasNotifications ? IconButton(
           onPressed: () => GoRouter.of(context).goNamed(APP_PAGE.notifications.routeName),
-          icon: const Icon(Icons.notifications_active),
+          icon: SvgPicture.asset(
+            Assets.svgs.notification,
+            colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
+          ),
         ) : const Icon(null),
 
         widget.hasShoppingCartData ? Stack(

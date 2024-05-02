@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/features/gift_cards/data/model/giftcard_model.dart';
 import 'package:zawadi/features/gift_cards/data/model/temporary_card_model.dart';
@@ -124,9 +125,12 @@ class GiftcardsListWidget extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => ref.read(giftcardProvider.notifier).getPurchased(),
       child: isLoading
-          ? const Center(
-        child: CircularProgressIndicator(),
-      )
+          ? Center(
+              child: SpinKitSpinningLines(
+                color: Theme.of(context).hintColor,
+                size: 40.h,
+              ),
+            )
         : ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
@@ -187,16 +191,16 @@ class GiftcardsListWidget extends StatelessWidget {
                   Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
                   onTap: () {
                     SelectedCardModel giftcardDetails = SelectedCardModel(
-                      themeId: giftcards[index].themeId,
+                      themeId: giftcards[index].theme,
                       amount: giftcards[index].value,
                       title: giftcards[index].title,
                       message: giftcards[index].message,
-                      issuerId: giftcards[index].issuerId,
+                      issuerId: giftcards[index].issuer,
                       //recipient: giftcards[index].recipient,
                     );
 
                     ref.read(temporaryGiftcardProvider.notifier).setTemporaryGiftcard(giftcardDetails);
-                    ref.read(selectedCardIdProvider.notifier).setSelectedCardId(giftcards[index].themeId);
+                    ref.read(selectedCardIdProvider.notifier).setSelectedCardId(giftcards[index].theme);
 
                     if (kDebugMode) {
                       print(giftcardDetails);
@@ -204,7 +208,7 @@ class GiftcardsListWidget extends StatelessWidget {
 
                     GoRouter.of(context).goNamed(
                         APP_PAGE.issuer.routeName,
-                        pathParameters: {'issuerId': giftcards[index].issuerId }
+                        pathParameters: {'issuerId': giftcards[index].issuer }
                     );
                   },
                 ),

@@ -9,9 +9,13 @@ enum IssuerListType { CATEGORY, SEARCH, POPULAR, FEATURED, PURCHASED, RECEIVED }
 enum GiftcardState { PENDING, ACTIVE, REDEEMED, EXPIRED, CANCELLED, REFUNDED }
 
 class Constants {
-  static String apiKey = dotenv.env['ZAWADI_API_KEY'] ?? '';
-  static String? primaryTitle = dotenv.env['PRIMARY_TITLE'] ?? '';
-  static String? secondaryTitle = dotenv.env['SECONDARY_TITLE'] ?? '';
+  static final bool testMode = dotenv.env['TEST_MODE']?.toLowerCase() == 'true';
+  static final String apiKey = (dotenv.env['ZAWADI_API_KEY'] ?? '' ).trim();
+  static final String? primaryTitle = (dotenv.env['PRIMARY_TITLE'] ?? '').trim();
+  static final String? secondaryTitle = (dotenv.env['SECONDARY_TITLE'] ?? '').trim();
+  static final int? platformFee = int.parse( FirebaseRemoteConfig.instance.getString('platform_fee').trim() );
+  static final String? flutterWaveEncryptionKey = FirebaseRemoteConfig.instance.getString('flutterwave_uat_encryptionKey').trim();
+  static final String? flutterWavePublicKey = FirebaseRemoteConfig.instance.getString('flutterwave_uat_publicKey').trim();
 }
 
 class Endpoints {

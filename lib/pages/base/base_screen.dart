@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:zawadi/features/settings/presentation/screens/settings_screen.dart';
+import 'package:zawadi/gen/assets.gen.dart';
 import 'package:zawadi/pages/home/home_tab.dart';
 import 'package:zawadi/features/gift_cards/presentation/screens/purchased_giftcards_screen.dart';
 import 'package:zawadi/features/gift_cards/presentation/screens/received_giftcards_screen.dart';
@@ -67,7 +68,7 @@ class _BaseScreenState extends State<BaseScreen> {
               destinations: [
                 NavigationDestination(
                   icon: SvgPicture.asset(
-                    'assets/svgs/explore.svg',
+                    Assets.svgs.explore,
                     width: 30,
                     height: 30,
                     colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
@@ -76,7 +77,7 @@ class _BaseScreenState extends State<BaseScreen> {
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset(
-                    'assets/svgs/gift.svg',
+                    Assets.svgs.gift,
                     width: 28,
                     height: 28,
                     colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
@@ -85,7 +86,7 @@ class _BaseScreenState extends State<BaseScreen> {
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset(
-                    'assets/svgs/purchased.svg',
+                    Assets.svgs.purchased,
                     width: 30,
                     height: 30,
                     colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
@@ -94,7 +95,7 @@ class _BaseScreenState extends State<BaseScreen> {
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset(
-                    'assets/svgs/settings.svg',
+                    Assets.svgs.settings,
                     width: 30,
                     height: 30,
                     colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),

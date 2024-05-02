@@ -15,7 +15,6 @@ import 'package:zawadi/pages/settings/update_profile.dart';
 import 'package:zawadi/pages/settings/user_profile.dart';
 import '../../controllers/profile_controller.dart';
 import '../../features/authentication/presentation/screens/login_screen.dart';
-import '../../features/payment/presentation/screens/payment_verification_screen.dart';
 import '../handlers/error_types.dart';
 import '../../features/authentication/presentation/screens/verify_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_page.dart';
@@ -105,10 +104,10 @@ class AppRouter {
           name: APP_PAGE.notifications.routeName,
           builder: (context, state) => const Notifications()),
 
-      GoRoute(
-          path: APP_PAGE.payment.routePath,
-          name: APP_PAGE.payment.routeName,
-          builder: (context, state) => const CheckoutScreen()),
+      // GoRoute(
+      //     path: APP_PAGE.payment.routePath,
+      //     name: APP_PAGE.payment.routeName,
+      //     builder: (context, state) => const CheckoutScreen()),
 
       // Issuers page
       GoRoute(

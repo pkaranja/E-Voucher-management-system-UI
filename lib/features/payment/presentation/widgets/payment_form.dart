@@ -42,10 +42,10 @@ class _PaymentFormWidgetState extends State<PaymentFormWidget> {
     });
   }
 
-    @override
-    void dispose() {
-      super.dispose();
-    }
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
 
     @override

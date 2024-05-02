@@ -39,22 +39,24 @@ class DataDTO with _$DataDTO {
 
   GiftcardModel toModel() {
     return GiftcardModel(
-      id: id,
+      id: attributes.id,
       code: attributes.code,
       cvv: attributes.cvv,
       dateCreated: attributes.dateCreated,
       expirationDate: attributes.expirationDate,
       lastUpdated: attributes.lastUpdated,
-      message: attributes.message,
-      purchaserId: attributes.purchaserId,
       title: attributes.title,
-      themeId: attributes.themeId,
+      message: attributes.message,
+      theme: attributes.theme,
       recipient: attributes.recipient,
+      recipientName: attributes.recipientName,
+      recipientPhoneNumber: attributes.recipientPhoneNumber,
       value: attributes.value,
+      purchaser: attributes.purchaser,
+      purchaserName: attributes.purchaserName,
+      transaction: attributes.transaction,
+      issuer: attributes.issuer,
       status: attributes.status,
-      transactionId: attributes.transactionId,
-      issuerId: attributes.issuerId,
-      //pagination: attributes.pagination
     );
   }
 
@@ -79,15 +81,18 @@ class AttributeDTO with _$AttributeDTO {
     required DateTime dateCreated,
     required DateTime expirationDate,
     required DateTime lastUpdated,
-    required String message,
-    required String purchaserId,
     required String title,
-    required int themeId,
+    required String message,
+    required int theme,
     required String recipient,
+    required String recipientName,
+    required String recipientPhoneNumber,
     required int value,
+    required String purchaser,
+    required String purchaserName,
+    required String transaction,
+    required String issuer,
     required GiftcardState status,
-    required String transactionId,
-    required String issuerId,
     //PaginationDTO? pagination,
   }) = _AttributeDTO;
 

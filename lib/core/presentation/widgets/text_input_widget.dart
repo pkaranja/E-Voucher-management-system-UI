@@ -8,18 +8,19 @@ class DynamicInputWidget extends StatelessWidget {
       {required this.controller,
       required this.obscureText,
       required this.focusNode,
-      required this.suffixClickAction,
       required this.validator,
-      required this.prefIcon,
       required this.textInputAction,
       required this.isNonPasswordField,
       required this.hint,
+      this.prefIcon,
+      this.prefix,
       this.keyboardType,
       this.maxLines,
       this.onChanged,
       this.onTapped,
       this.inputFormatters,
       this.suffixIcon,
+      this.suffixClickAction,
       Key? key})
       : super(key: key);
 
@@ -36,7 +37,8 @@ class DynamicInputWidget extends StatelessWidget {
   // Validator function
   final String? Function(String?)? validator;
   // Prefix icon for input form
-  final Icon prefIcon;
+  final Widget? prefIcon;
+  final Widget? prefix;
   // The keyword action to display
   final TextInputAction textInputAction;
   final String hint;
@@ -48,7 +50,7 @@ class DynamicInputWidget extends StatelessWidget {
   //handle on tapped value changed
   final void Function()? onTapped;
   // Suffix icon for input form
-  final Icon? suffixIcon;
+  final Widget? suffixIcon;
 
   //handle input formatters limits
   final List<TextInputFormatter>? inputFormatters;
@@ -61,6 +63,7 @@ class DynamicInputWidget extends StatelessWidget {
       decoration: InputDecoration(
           hintText: hint,
           prefixIcon: prefIcon,
+          prefix: prefix,
           suffixIcon: IconButton(
             onPressed: suffixClickAction,
             // If is non-password filed like email the suffix icon will be null

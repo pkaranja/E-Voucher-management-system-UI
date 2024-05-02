@@ -172,6 +172,9 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/color.svg
   String get color => 'assets/svgs/color.svg';
 
+  /// File path: assets/svgs/contacts.svg
+  String get contacts => 'assets/svgs/contacts.svg';
+
   /// File path: assets/svgs/danger.svg
   String get danger => 'assets/svgs/danger.svg';
 
@@ -184,20 +187,20 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/explore.svg
   String get explore => 'assets/svgs/explore.svg';
 
-  /// File path: assets/svgs/gift-1.svg
-  String get gift1 => 'assets/svgs/gift-1.svg';
-
   /// File path: assets/svgs/gift.svg
   String get gift => 'assets/svgs/gift.svg';
 
-  /// File path: assets/svgs/home.svg
-  String get home => 'assets/svgs/home.svg';
+  /// File path: assets/svgs/message.svg
+  String get message => 'assets/svgs/message.svg';
 
-  /// File path: assets/svgs/mc.svg
-  String get mc => 'assets/svgs/mc.svg';
+  /// File path: assets/svgs/money.svg
+  String get money => 'assets/svgs/money.svg';
 
-  /// File path: assets/svgs/paypal.svg
-  String get paypal => 'assets/svgs/paypal.svg';
+  /// File path: assets/svgs/narrative.svg
+  String get narrative => 'assets/svgs/narrative.svg';
+
+  /// File path: assets/svgs/notification.svg
+  String get notification => 'assets/svgs/notification.svg';
 
   /// File path: assets/svgs/profile.svg
   String get profile => 'assets/svgs/profile.svg';
@@ -214,6 +217,9 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/settings.svg
   String get settings => 'assets/svgs/settings.svg';
 
+  /// File path: assets/svgs/title.svg
+  String get title => 'assets/svgs/title.svg';
+
   /// List of all assets
   List<String> get values => [
         arrowleft,
@@ -223,20 +229,22 @@ class $AssetsSvgsGen {
         card,
         cart,
         color,
+        contacts,
         danger,
         discover,
         documentError,
         explore,
-        gift1,
         gift,
-        home,
-        mc,
-        paypal,
+        message,
+        money,
+        narrative,
+        notification,
         profile,
         purchased,
         refresh,
         search,
-        settings
+        settings,
+        title
       ];
 }
 

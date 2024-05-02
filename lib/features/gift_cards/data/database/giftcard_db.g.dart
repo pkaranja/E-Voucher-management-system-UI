@@ -42,9 +42,9 @@ const GiftcardDBSchema = CollectionSchema(
       name: r'id',
       type: IsarType.string,
     ),
-    r'issuerId': PropertySchema(
+    r'issuer': PropertySchema(
       id: 5,
-      name: r'issuerId',
+      name: r'issuer',
       type: IsarType.string,
     ),
     r'lastUpdated': PropertySchema(
@@ -57,39 +57,54 @@ const GiftcardDBSchema = CollectionSchema(
       name: r'message',
       type: IsarType.string,
     ),
-    r'purchaserId': PropertySchema(
+    r'purchaser': PropertySchema(
       id: 8,
-      name: r'purchaserId',
+      name: r'purchaser',
+      type: IsarType.string,
+    ),
+    r'purchaserName': PropertySchema(
+      id: 9,
+      name: r'purchaserName',
       type: IsarType.string,
     ),
     r'recipient': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'recipient',
       type: IsarType.string,
     ),
+    r'recipientName': PropertySchema(
+      id: 11,
+      name: r'recipientName',
+      type: IsarType.string,
+    ),
+    r'recipientPhoneNumber': PropertySchema(
+      id: 12,
+      name: r'recipientPhoneNumber',
+      type: IsarType.string,
+    ),
     r'status': PropertySchema(
-      id: 10,
+      id: 13,
       name: r'status',
       type: IsarType.byte,
       enumMap: _GiftcardDBstatusEnumValueMap,
     ),
-    r'themeId': PropertySchema(
-      id: 11,
-      name: r'themeId',
+    r'theme': PropertySchema(
+      id: 14,
+      name: r'theme',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 12,
+      id: 15,
       name: r'title',
       type: IsarType.string,
     ),
-    r'transactionId': PropertySchema(
-      id: 13,
-      name: r'transactionId',
+    r'transaction': PropertySchema(
+      id: 16,
+      name: r'transaction',
       type: IsarType.string,
     ),
     r'value': PropertySchema(
-      id: 14,
+      id: 17,
       name: r'value',
       type: IsarType.long,
     )
@@ -114,29 +129,17 @@ int _giftcardDBEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.code;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.code.length * 3;
   bytesCount += 3 + object.id.length * 3;
-  bytesCount += 3 + object.issuerId.length * 3;
+  bytesCount += 3 + object.issuer.length * 3;
   bytesCount += 3 + object.message.length * 3;
-  bytesCount += 3 + object.purchaserId.length * 3;
-  {
-    final value = object.recipient;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.purchaser.length * 3;
+  bytesCount += 3 + object.purchaserName.length * 3;
+  bytesCount += 3 + object.recipient.length * 3;
+  bytesCount += 3 + object.recipientName.length * 3;
+  bytesCount += 3 + object.recipientPhoneNumber.length * 3;
   bytesCount += 3 + object.title.length * 3;
-  {
-    final value = object.transactionId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.transaction.length * 3;
   return bytesCount;
 }
 
@@ -151,16 +154,19 @@ void _giftcardDBSerialize(
   writer.writeDateTime(offsets[2], object.dateCreated);
   writer.writeDateTime(offsets[3], object.expirationDate);
   writer.writeString(offsets[4], object.id);
-  writer.writeString(offsets[5], object.issuerId);
+  writer.writeString(offsets[5], object.issuer);
   writer.writeDateTime(offsets[6], object.lastUpdated);
   writer.writeString(offsets[7], object.message);
-  writer.writeString(offsets[8], object.purchaserId);
-  writer.writeString(offsets[9], object.recipient);
-  writer.writeByte(offsets[10], object.status.index);
-  writer.writeLong(offsets[11], object.themeId);
-  writer.writeString(offsets[12], object.title);
-  writer.writeString(offsets[13], object.transactionId);
-  writer.writeLong(offsets[14], object.value);
+  writer.writeString(offsets[8], object.purchaser);
+  writer.writeString(offsets[9], object.purchaserName);
+  writer.writeString(offsets[10], object.recipient);
+  writer.writeString(offsets[11], object.recipientName);
+  writer.writeString(offsets[12], object.recipientPhoneNumber);
+  writer.writeByte(offsets[13], object.status.index);
+  writer.writeLong(offsets[14], object.theme);
+  writer.writeString(offsets[15], object.title);
+  writer.writeString(offsets[16], object.transaction);
+  writer.writeLong(offsets[17], object.value);
 }
 
 GiftcardDB _giftcardDBDeserialize(
@@ -170,24 +176,27 @@ GiftcardDB _giftcardDBDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = GiftcardDB();
-  object.code = reader.readStringOrNull(offsets[0]);
-  object.cvv = reader.readLongOrNull(offsets[1]);
+  object.code = reader.readString(offsets[0]);
+  object.cvv = reader.readLong(offsets[1]);
   object.dateCreated = reader.readDateTime(offsets[2]);
   object.expirationDate = reader.readDateTime(offsets[3]);
   object.giftcardId = id;
   object.id = reader.readString(offsets[4]);
-  object.issuerId = reader.readString(offsets[5]);
+  object.issuer = reader.readString(offsets[5]);
   object.lastUpdated = reader.readDateTime(offsets[6]);
   object.message = reader.readString(offsets[7]);
-  object.purchaserId = reader.readString(offsets[8]);
-  object.recipient = reader.readStringOrNull(offsets[9]);
+  object.purchaser = reader.readString(offsets[8]);
+  object.purchaserName = reader.readString(offsets[9]);
+  object.recipient = reader.readString(offsets[10]);
+  object.recipientName = reader.readString(offsets[11]);
+  object.recipientPhoneNumber = reader.readString(offsets[12]);
   object.status =
-      _GiftcardDBstatusValueEnumMap[reader.readByteOrNull(offsets[10])] ??
+      _GiftcardDBstatusValueEnumMap[reader.readByteOrNull(offsets[13])] ??
           GiftcardState.PENDING;
-  object.themeId = reader.readLong(offsets[11]);
-  object.title = reader.readString(offsets[12]);
-  object.transactionId = reader.readStringOrNull(offsets[13]);
-  object.value = reader.readLong(offsets[14]);
+  object.theme = reader.readLong(offsets[14]);
+  object.title = reader.readString(offsets[15]);
+  object.transaction = reader.readString(offsets[16]);
+  object.value = reader.readLong(offsets[17]);
   return object;
 }
 
@@ -199,9 +208,9 @@ P _giftcardDBDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 2:
       return (reader.readDateTime(offset)) as P;
     case 3:
@@ -217,17 +226,23 @@ P _giftcardDBDeserializeProp<P>(
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 10:
-      return (_GiftcardDBstatusValueEnumMap[reader.readByteOrNull(offset)] ??
-          GiftcardState.PENDING) as P;
+      return (reader.readString(offset)) as P;
     case 11:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 12:
       return (reader.readString(offset)) as P;
     case 13:
-      return (reader.readStringOrNull(offset)) as P;
+      return (_GiftcardDBstatusValueEnumMap[reader.readByteOrNull(offset)] ??
+          GiftcardState.PENDING) as P;
     case 14:
+      return (reader.readLong(offset)) as P;
+    case 15:
+      return (reader.readString(offset)) as P;
+    case 16:
+      return (reader.readString(offset)) as P;
+    case 17:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -346,24 +361,8 @@ extension GiftcardDBQueryWhere
 
 extension GiftcardDBQueryFilter
     on QueryBuilder<GiftcardDB, GiftcardDB, QFilterCondition> {
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> codeIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'code',
-      ));
-    });
-  }
-
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> codeIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'code',
-      ));
-    });
-  }
-
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> codeEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -376,7 +375,7 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> codeGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -391,7 +390,7 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> codeLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -406,8 +405,8 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> codeBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -492,24 +491,8 @@ extension GiftcardDBQueryFilter
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> cvvIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'cvv',
-      ));
-    });
-  }
-
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> cvvIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'cvv',
-      ));
-    });
-  }
-
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> cvvEqualTo(
-      int? value) {
+      int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'cvv',
@@ -519,7 +502,7 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> cvvGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -532,7 +515,7 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> cvvLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -545,8 +528,8 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> cvvBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -858,21 +841,20 @@ extension GiftcardDBQueryFilter
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerIdEqualTo(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'issuerId',
+        property: r'issuer',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      issuerIdGreaterThan(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -880,14 +862,14 @@ extension GiftcardDBQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'issuerId',
+        property: r'issuer',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerIdLessThan(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -895,14 +877,14 @@ extension GiftcardDBQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'issuerId',
+        property: r'issuer',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerIdBetween(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -911,7 +893,7 @@ extension GiftcardDBQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'issuerId',
+        property: r'issuer',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -921,72 +903,70 @@ extension GiftcardDBQueryFilter
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      issuerIdStartsWith(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'issuerId',
+        property: r'issuer',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerIdEndsWith(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'issuerId',
+        property: r'issuer',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerIdContains(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'issuerId',
+        property: r'issuer',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerIdMatches(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'issuerId',
+        property: r'issuer',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      issuerIdIsEmpty() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> issuerIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'issuerId',
+        property: r'issuer',
         value: '',
       ));
     });
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      issuerIdIsNotEmpty() {
+      issuerIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'issuerId',
+        property: r'issuer',
         value: '',
       ));
     });
@@ -1180,14 +1160,13 @@ extension GiftcardDBQueryFilter
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdEqualTo(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> purchaserEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'purchaserId',
+        property: r'purchaser',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1195,7 +1174,7 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdGreaterThan(
+      purchaserGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1203,15 +1182,14 @@ extension GiftcardDBQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'purchaserId',
+        property: r'purchaser',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdLessThan(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> purchaserLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1219,15 +1197,14 @@ extension GiftcardDBQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'purchaserId',
+        property: r'purchaser',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdBetween(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> purchaserBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1236,7 +1213,7 @@ extension GiftcardDBQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'purchaserId',
+        property: r'purchaser',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1247,49 +1224,50 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdStartsWith(
+      purchaserStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'purchaserId',
+        property: r'purchaser',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdEndsWith(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> purchaserEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'purchaserId',
+        property: r'purchaser',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> purchaserContains(
+      String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'purchaserId',
+        property: r'purchaser',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> purchaserMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'purchaserId',
+        property: r'purchaser',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1297,45 +1275,163 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdIsEmpty() {
+      purchaserIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'purchaserId',
+        property: r'purchaser',
         value: '',
       ));
     });
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      purchaserIdIsNotEmpty() {
+      purchaserIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'purchaserId',
+        property: r'purchaser',
         value: '',
       ));
     });
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      recipientIsNull() {
+      purchaserNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'recipient',
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'purchaserName',
+        value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      recipientIsNotNull() {
+      purchaserNameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'recipient',
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'purchaserName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      purchaserNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'purchaserName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      purchaserNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'purchaserName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      purchaserNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'purchaserName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      purchaserNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'purchaserName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      purchaserNameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'purchaserName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      purchaserNameMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'purchaserName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      purchaserNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'purchaserName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      purchaserNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'purchaserName',
+        value: '',
       ));
     });
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> recipientEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1349,7 +1445,7 @@ extension GiftcardDBQueryFilter
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
       recipientGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1364,7 +1460,7 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> recipientLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1379,8 +1475,8 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> recipientBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1468,6 +1564,278 @@ extension GiftcardDBQueryFilter
     });
   }
 
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recipientName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'recipientName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'recipientName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'recipientName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'recipientName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'recipientName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'recipientName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'recipientName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recipientName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'recipientName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recipientPhoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'recipientPhoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'recipientPhoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'recipientPhoneNumber',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'recipientPhoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'recipientPhoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'recipientPhoneNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'recipientPhoneNumber',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recipientPhoneNumber',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
+      recipientPhoneNumberIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'recipientPhoneNumber',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> statusEqualTo(
       GiftcardState value) {
     return QueryBuilder.apply(this, (query) {
@@ -1521,44 +1889,43 @@ extension GiftcardDBQueryFilter
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> themeIdEqualTo(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> themeEqualTo(
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'themeId',
+        property: r'theme',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      themeIdGreaterThan(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> themeGreaterThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'themeId',
+        property: r'theme',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> themeIdLessThan(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> themeLessThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'themeId',
+        property: r'theme',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> themeIdBetween(
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition> themeBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1566,7 +1933,7 @@ extension GiftcardDBQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'themeId',
+        property: r'theme',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1707,31 +2074,13 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'transactionId',
-      ));
-    });
-  }
-
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'transactionId',
-      ));
-    });
-  }
-
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdEqualTo(
-    String? value, {
+      transactionEqualTo(
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'transactionId',
+        property: r'transaction',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1739,15 +2088,15 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdGreaterThan(
-    String? value, {
+      transactionGreaterThan(
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'transactionId',
+        property: r'transaction',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1755,15 +2104,15 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdLessThan(
-    String? value, {
+      transactionLessThan(
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'transactionId',
+        property: r'transaction',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1771,16 +2120,16 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdBetween(
-    String? lower,
-    String? upper, {
+      transactionBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'transactionId',
+        property: r'transaction',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1791,13 +2140,13 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdStartsWith(
+      transactionStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'transactionId',
+        property: r'transaction',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1805,13 +2154,13 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdEndsWith(
+      transactionEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'transactionId',
+        property: r'transaction',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1819,10 +2168,10 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdContains(String value, {bool caseSensitive = true}) {
+      transactionContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'transactionId',
+        property: r'transaction',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1830,10 +2179,10 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdMatches(String pattern, {bool caseSensitive = true}) {
+      transactionMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'transactionId',
+        property: r'transaction',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1841,20 +2190,20 @@ extension GiftcardDBQueryFilter
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdIsEmpty() {
+      transactionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'transactionId',
+        property: r'transaction',
         value: '',
       ));
     });
   }
 
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterFilterCondition>
-      transactionIdIsNotEmpty() {
+      transactionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'transactionId',
+        property: r'transaction',
         value: '',
       ));
     });
@@ -1983,15 +2332,15 @@ extension GiftcardDBQuerySortBy
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByIssuerId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByIssuer() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'issuerId', Sort.asc);
+      return query.addSortBy(r'issuer', Sort.asc);
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByIssuerIdDesc() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByIssuerDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'issuerId', Sort.desc);
+      return query.addSortBy(r'issuer', Sort.desc);
     });
   }
 
@@ -2019,15 +2368,27 @@ extension GiftcardDBQuerySortBy
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByPurchaserId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByPurchaser() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'purchaserId', Sort.asc);
+      return query.addSortBy(r'purchaser', Sort.asc);
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByPurchaserIdDesc() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByPurchaserDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'purchaserId', Sort.desc);
+      return query.addSortBy(r'purchaser', Sort.desc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByPurchaserName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'purchaserName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByPurchaserNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'purchaserName', Sort.desc);
     });
   }
 
@@ -2043,6 +2404,32 @@ extension GiftcardDBQuerySortBy
     });
   }
 
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByRecipientName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recipientName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByRecipientNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recipientName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy>
+      sortByRecipientPhoneNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recipientPhoneNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy>
+      sortByRecipientPhoneNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recipientPhoneNumber', Sort.desc);
+    });
+  }
+
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
@@ -2055,15 +2442,15 @@ extension GiftcardDBQuerySortBy
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByThemeId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByTheme() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'themeId', Sort.asc);
+      return query.addSortBy(r'theme', Sort.asc);
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByThemeIdDesc() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByThemeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'themeId', Sort.desc);
+      return query.addSortBy(r'theme', Sort.desc);
     });
   }
 
@@ -2079,15 +2466,15 @@ extension GiftcardDBQuerySortBy
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByTransactionId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByTransaction() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'transactionId', Sort.asc);
+      return query.addSortBy(r'transaction', Sort.asc);
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByTransactionIdDesc() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> sortByTransactionDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'transactionId', Sort.desc);
+      return query.addSortBy(r'transaction', Sort.desc);
     });
   }
 
@@ -2179,15 +2566,15 @@ extension GiftcardDBQuerySortThenBy
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByIssuerId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByIssuer() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'issuerId', Sort.asc);
+      return query.addSortBy(r'issuer', Sort.asc);
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByIssuerIdDesc() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByIssuerDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'issuerId', Sort.desc);
+      return query.addSortBy(r'issuer', Sort.desc);
     });
   }
 
@@ -2215,15 +2602,27 @@ extension GiftcardDBQuerySortThenBy
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByPurchaserId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByPurchaser() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'purchaserId', Sort.asc);
+      return query.addSortBy(r'purchaser', Sort.asc);
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByPurchaserIdDesc() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByPurchaserDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'purchaserId', Sort.desc);
+      return query.addSortBy(r'purchaser', Sort.desc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByPurchaserName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'purchaserName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByPurchaserNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'purchaserName', Sort.desc);
     });
   }
 
@@ -2239,6 +2638,32 @@ extension GiftcardDBQuerySortThenBy
     });
   }
 
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByRecipientName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recipientName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByRecipientNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recipientName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy>
+      thenByRecipientPhoneNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recipientPhoneNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy>
+      thenByRecipientPhoneNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recipientPhoneNumber', Sort.desc);
+    });
+  }
+
   QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
@@ -2251,15 +2676,15 @@ extension GiftcardDBQuerySortThenBy
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByThemeId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByTheme() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'themeId', Sort.asc);
+      return query.addSortBy(r'theme', Sort.asc);
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByThemeIdDesc() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByThemeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'themeId', Sort.desc);
+      return query.addSortBy(r'theme', Sort.desc);
     });
   }
 
@@ -2275,15 +2700,15 @@ extension GiftcardDBQuerySortThenBy
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByTransactionId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByTransaction() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'transactionId', Sort.asc);
+      return query.addSortBy(r'transaction', Sort.asc);
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByTransactionIdDesc() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QAfterSortBy> thenByTransactionDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'transactionId', Sort.desc);
+      return query.addSortBy(r'transaction', Sort.desc);
     });
   }
 
@@ -2334,10 +2759,10 @@ extension GiftcardDBQueryWhereDistinct
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByIssuerId(
+  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByIssuer(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'issuerId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'issuer', caseSensitive: caseSensitive);
     });
   }
 
@@ -2354,10 +2779,18 @@ extension GiftcardDBQueryWhereDistinct
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByPurchaserId(
+  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByPurchaser(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'purchaserId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'purchaser', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByPurchaserName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'purchaserName',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -2368,15 +2801,31 @@ extension GiftcardDBQueryWhereDistinct
     });
   }
 
+  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByRecipientName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'recipientName',
+          caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct>
+      distinctByRecipientPhoneNumber({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'recipientPhoneNumber',
+          caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'status');
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByThemeId() {
+  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByTheme() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'themeId');
+      return query.addDistinctBy(r'theme');
     });
   }
 
@@ -2387,11 +2836,10 @@ extension GiftcardDBQueryWhereDistinct
     });
   }
 
-  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByTransactionId(
+  QueryBuilder<GiftcardDB, GiftcardDB, QDistinct> distinctByTransaction(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'transactionId',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'transaction', caseSensitive: caseSensitive);
     });
   }
 
@@ -2410,13 +2858,13 @@ extension GiftcardDBQueryProperty
     });
   }
 
-  QueryBuilder<GiftcardDB, String?, QQueryOperations> codeProperty() {
+  QueryBuilder<GiftcardDB, String, QQueryOperations> codeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'code');
     });
   }
 
-  QueryBuilder<GiftcardDB, int?, QQueryOperations> cvvProperty() {
+  QueryBuilder<GiftcardDB, int, QQueryOperations> cvvProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'cvv');
     });
@@ -2441,9 +2889,9 @@ extension GiftcardDBQueryProperty
     });
   }
 
-  QueryBuilder<GiftcardDB, String, QQueryOperations> issuerIdProperty() {
+  QueryBuilder<GiftcardDB, String, QQueryOperations> issuerProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'issuerId');
+      return query.addPropertyName(r'issuer');
     });
   }
 
@@ -2459,15 +2907,34 @@ extension GiftcardDBQueryProperty
     });
   }
 
-  QueryBuilder<GiftcardDB, String, QQueryOperations> purchaserIdProperty() {
+  QueryBuilder<GiftcardDB, String, QQueryOperations> purchaserProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'purchaserId');
+      return query.addPropertyName(r'purchaser');
     });
   }
 
-  QueryBuilder<GiftcardDB, String?, QQueryOperations> recipientProperty() {
+  QueryBuilder<GiftcardDB, String, QQueryOperations> purchaserNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'purchaserName');
+    });
+  }
+
+  QueryBuilder<GiftcardDB, String, QQueryOperations> recipientProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'recipient');
+    });
+  }
+
+  QueryBuilder<GiftcardDB, String, QQueryOperations> recipientNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'recipientName');
+    });
+  }
+
+  QueryBuilder<GiftcardDB, String, QQueryOperations>
+      recipientPhoneNumberProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'recipientPhoneNumber');
     });
   }
 
@@ -2477,9 +2944,9 @@ extension GiftcardDBQueryProperty
     });
   }
 
-  QueryBuilder<GiftcardDB, int, QQueryOperations> themeIdProperty() {
+  QueryBuilder<GiftcardDB, int, QQueryOperations> themeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'themeId');
+      return query.addPropertyName(r'theme');
     });
   }
 
@@ -2489,9 +2956,9 @@ extension GiftcardDBQueryProperty
     });
   }
 
-  QueryBuilder<GiftcardDB, String?, QQueryOperations> transactionIdProperty() {
+  QueryBuilder<GiftcardDB, String, QQueryOperations> transactionProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'transactionId');
+      return query.addPropertyName(r'transaction');
     });
   }
 
