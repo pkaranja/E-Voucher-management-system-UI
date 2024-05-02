@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:zawadi/core/presentation/widgets/app_bar_widget.dart';
 
-import '../../../../models/voucher_model.dart';
-import '../../../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
-import '../../../../pages/vouchers/carddesign/widgets/custom_gift_card.dart';
+import '../../../gift_cards/data/model/giftcard_theme_model.dart';
+import '../../../gift_cards/presentation/widgets/custom_gift_card.dart';
+import '../../../gift_cards/provider/selected_card_provider.dart';
 import '../../../gift_cards/provider/temporary_giftcard_provider.dart';
 import '../../data/model/order_items_model.dart';
 import '../widgets/order_details_widget.dart';

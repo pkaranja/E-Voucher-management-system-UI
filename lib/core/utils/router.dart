@@ -7,20 +7,19 @@ import 'package:zawadi/features/gift_cards/presentation/screens/incomplete_giftc
 import 'package:zawadi/features/issuers/presentation/screens/issuers_screen.dart';
 import 'package:zawadi/features/notifications/presentation/screens/notifications.dart';
 import 'package:zawadi/pages/base/base_screen.dart';
-import 'package:zawadi/pages/cart/cart_tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //Custom files
-import 'package:zawadi/global/app_state.dart';
+import 'package:zawadi/core/provider/app_state.dart';
 import 'package:zawadi/pages/settings/update_profile.dart';
 import 'package:zawadi/pages/settings/user_profile.dart';
 import '../../controllers/profile_controller.dart';
+import '../../features/authentication/presentation/screens/login_screen.dart';
 import '../../features/payment/presentation/screens/payment_verification_screen.dart';
 import '../handlers/error_types.dart';
-import '../../features/authentication/login_screen.dart';
-import '../../features/authentication/verify_screen.dart';
-import '../../features/onboarding/onboarding_page.dart';
-import '../../pages/global/errors/error_screen.dart';
+import '../../features/authentication/presentation/screens/verify_screen.dart';
+import '../../features/onboarding/presentation/screens/onboarding_page.dart';
+import '../presentation/screens/error_screen.dart';
 import '../../features/issuers/presentation/screens/issuer_screen.dart';
 
 class AppRouter {

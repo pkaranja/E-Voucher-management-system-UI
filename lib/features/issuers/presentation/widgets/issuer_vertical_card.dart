@@ -7,10 +7,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/features/gift_cards/provider/temporary_giftcard_provider.dart';
 import 'package:zawadi/core/utils/rgb_to_radix.dart';
+import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/router_utils.dart';
+import '../../../gift_cards/provider/selected_card_provider.dart';
 import '../../data/model/issuer_model.dart';
-import '../../../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
-import '../../../../global/styles/app_colors.dart';
 
 class IssuerVerticalCard extends ConsumerWidget {
 

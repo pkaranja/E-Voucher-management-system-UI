@@ -3,10 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zawadi/features/gift_cards/provider/temporary_giftcard_provider.dart';
 import '../../../../core/presentation/widgets/app_bar_widget.dart';
-import '../../../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
-import '../../../../pages/vouchers/carddesign/widgets/custom_arc_painter.dart';
-import '../../../../pages/vouchers/carddesign/widgets/custom_elevated_button.dart';
-import '../../../../pages/vouchers/carddesign/widgets/custom_gift_card.dart';
+import '../../provider/selected_card_provider.dart';
+import '../widgets/custom_gift_card.dart';
 
 class CardPurchasedScreen extends ConsumerWidget {
   const CardPurchasedScreen({Key? key}) : super(key: key);
@@ -87,7 +85,6 @@ class _BottomSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        const Positioned(top: 0, child: CustomArcLines()),
         Container(
           color: Colors.white,
           width: double.infinity,
@@ -114,10 +111,8 @@ class _BottomSheet extends ConsumerWidget {
               const Divider(height: 30, thickness: 1),
               Text("Card Number $uuid"),
               const Spacer(),
-              CustomElevatedButton(
-                text: 'Share This',
-                backgroundColor: Colors.black87,
-                fixedSize: Size(size.width, 50),
+              ElevatedButton(
+                child: Text('Share This'),
                 onPressed: () {
                   Navigator.popUntil(context, (route) => route.isFirst);
                 },

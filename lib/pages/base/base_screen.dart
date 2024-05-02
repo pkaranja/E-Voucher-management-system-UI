@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:zawadi/features/settings/presentation/screens/settings_screen.dart';
-import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/pages/home/home_tab.dart';
 import 'package:zawadi/features/gift_cards/presentation/screens/purchased_giftcards_screen.dart';
 import 'package:zawadi/features/gift_cards/presentation/screens/received_giftcards_screen.dart';
-import 'package:zawadi/pages/settings/user_profile.dart';
+
+import '../../core/styles/app_colors.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -52,13 +52,9 @@ class _BaseScreenState extends State<BaseScreen> {
             ),
             child: NavigationBar(
               elevation: 0,
-              backgroundColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .background,
+              backgroundColor: Theme.of(context).colorScheme.background,
               animationDuration: const Duration (seconds: 1),
-              labelBehavior: NavigationDestinationLabelBehavior
-                  .alwaysShow,
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
               height: 70,
               selectedIndex: currentIndex,
               onDestinationSelected: (index) {
@@ -74,9 +70,7 @@ class _BaseScreenState extends State<BaseScreen> {
                     'assets/svgs/explore.svg',
                     width: 30,
                     height: 30,
-                    colorFilter: ColorFilter.mode(Theme
-                        .of(context)
-                        .hintColor, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
                   ),
                   label: 'Explore',
                 ),
@@ -85,9 +79,7 @@ class _BaseScreenState extends State<BaseScreen> {
                     'assets/svgs/gift.svg',
                     width: 28,
                     height: 28,
-                    colorFilter: ColorFilter.mode(Theme
-                        .of(context)
-                        .hintColor, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
                   ),
                   label: 'Received',
                 ),
@@ -96,9 +88,7 @@ class _BaseScreenState extends State<BaseScreen> {
                     'assets/svgs/purchased.svg',
                     width: 30,
                     height: 30,
-                    colorFilter: ColorFilter.mode(Theme
-                        .of(context)
-                        .hintColor, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
                   ),
                   label: 'Purchased',
                 ),
@@ -107,9 +97,7 @@ class _BaseScreenState extends State<BaseScreen> {
                     'assets/svgs/settings.svg',
                     width: 30,
                     height: 30,
-                    colorFilter: ColorFilter.mode(Theme
-                        .of(context)
-                        .hintColor, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(Theme.of(context).hintColor, BlendMode.srcIn),
                   ),
                   label: 'Settings',
                 ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:zawadi/core/styles/app_colors.dart';
 
 import '../../../../core/utils/router_utils.dart';
 import '../../data/model/category_model.dart';
-import '../../../../global/styles/app_colors.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
@@ -33,7 +33,7 @@ class CategoryCard extends StatelessWidget {
             child: Container(
               width: 110.w,
               height: 110.h,
-              color: kGrayC,
+              color: themeLightGreyColor,
               child: Stack(
                 children: [
                   // Image Widget

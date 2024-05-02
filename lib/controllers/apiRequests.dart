@@ -4,8 +4,8 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:intl/intl.dart';
 import '../core/handlers/error_handler.dart';
 import '../features/authentication/utils/utils.dart';
-import '../global/build_search_body.dart';
-import '../models/profile_model.dart';
+import '../core/http/build_api_request_body.dart';
+import '../features/authentication/models/profile_model.dart';
 
 class ApiRequests {
   late final FirebaseRemoteConfig remoteConfig;

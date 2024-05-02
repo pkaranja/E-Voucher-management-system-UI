@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../global/styles/app_colors.dart';
+import '../../styles/app_colors.dart';
 
 class DateInputWidget extends StatelessWidget {
   const DateInputWidget(

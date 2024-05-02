@@ -1,16 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:zawadi/features/gift_cards/provider/temporary_giftcard_provider.dart';
 import '../../../../core/presentation/widgets/app_bar_widget.dart';
-import '../../../../widgets/error_message_widget.dart';
-import '../../../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
-import '../../../../pages/vouchers/carddesign/widgets/custom_gift_card.dart';
+import '../../../gift_cards/presentation/widgets/custom_gift_card.dart';
 import '../../../gift_cards/presentation/widgets/giftcard_details_form.dart';
+import '../../../gift_cards/provider/selected_card_provider.dart';
 
 class IssuerScreen extends ConsumerWidget {
   const IssuerScreen({Key? key}) : super(key: key);
@@ -19,6 +17,7 @@ class IssuerScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedCard = ref.watch(selectedCardProvider);
     final temporaryGiftCard = ref.watch(temporaryGiftcardProvider);
+    final size = MediaQuery.of(context).size;
 
     // Get the card id and issuer id
     final issuerId = temporaryGiftCard!.issuerId;
@@ -29,8 +28,9 @@ class IssuerScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: const QrooAppBar(hasBackButton: true),
+      bottomSheet:  GiftCardDetailsWidget(model: selectedCard.value, issuerId: temporaryGiftCard.issuerId),
       body: !isUUID(issuerId)
-        ? const ErrorMessage( message: 'Something went wrong with your request, try again later!',)
+        ? const Text('Something went wrong with your request, try again later!',)
         : Column(
             children: [
               Padding(
@@ -38,22 +38,14 @@ class IssuerScreen extends ConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    //TODO: Discuss section title
-                    //issuerName,
                     'Design your card',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
               ),
-              Expanded(
-                flex: 6,
-                child: _SelectedCard(backgroundColor: selectedCard.value?.bgColor, fontColor: selectedCard.value?.fontColor),
-              ),
-              Expanded(
-                flex: 4,
-                child: SingleChildScrollView(
-                  child: GiftCardDetailsWidget(model: selectedCard.value, issuerId: temporaryGiftCard.issuerId),
-                ),
+              SizedBox(
+                  height: size.height * 0.4,
+                  child: _SelectedCard( backgroundColor: selectedCard.value?.bgColor, fontColor: selectedCard.value?.fontColor ),
               ),
             ],
           ),

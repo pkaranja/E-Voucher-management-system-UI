@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zawadi/global/styles/app_colors.dart';
 
+import '../../../../core/presentation/widgets/loading_button_widget.dart';
+import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../data/model/order_items_model.dart';
@@ -20,16 +21,12 @@ class OrderDetailsBox extends StatelessWidget {
     return Container(
       // Set height to 20% of the screen height
       //TODO: find a better way to do this
-      height: screenHeight * 0.41,
+      height: screenHeight * 0.3,
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(30),
-          topLeft: Radius.circular(30),
-        ),
       ),
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.only(left: 15.w, top: 15.w, bottom: 0, right: 15.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,7 +42,7 @@ class OrderDetailsBox extends StatelessWidget {
               ),
               filled: true,
               fillColor: themeAlmostWhiteColor,
-              hintText: "Enter Discount Code",
+              hintText: "Enter discount code",
               hintStyle: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -53,140 +50,79 @@ class OrderDetailsBox extends StatelessWidget {
               ),
               suffixIcon: TextButton(
                 onPressed: () {},
-                child: const Text(
-                  "Apply",
-                  style: TextStyle(
-                    color: themePrimaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Text(
+                  "Apply", style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 20),
+
+          SizedBox(height: 10.h),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Amount",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
+              Text(
+                "Amount", style: Theme.of(context).textTheme.bodySmall
               ),
               Text(
-                Utils.formatMoney(59000),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                Utils.formatMoney(59000), style: Theme.of(context).textTheme.labelMedium
               )
             ],
           ),
-          const SizedBox(height: 20),
+
+          SizedBox(height: 10.h),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Platform fee (VAT inclusive)",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
+               Text(
+                "Platform fee (VAT inclusive)", style: Theme.of(context).textTheme.bodySmall
               ),
               Text(
-                Utils.formatMoney(500),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                Utils.formatMoney(500), style: Theme.of(context).textTheme.labelMedium
               )
             ],
           ),
-          const SizedBox(height: 20),
+
+          SizedBox(height: 10.h),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Discount (5%)",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
+              Text(
+                "Discount (5%)", style: Theme.of(context).textTheme.bodySmall,
               ),
               Text(
-                Utils.formatMoney(0),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                Utils.formatMoney(0), style: Theme.of(context).textTheme.labelMedium,
               )
             ],
           ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Redeemed points",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
-              ),
-              Text(
-                Utils.formatMoney(2000),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
+          SizedBox(height: 15.h),
           const Divider(),
-          const SizedBox(height: 10),
+          SizedBox(height: 5.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Total",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Text(
+                "Total", style: Theme.of(context).textTheme.labelMedium,
               ),
               Text(
-                Utils.formatMoney(42000),
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
+                Utils.formatMoney(42000), style: Theme.of(context).textTheme.titleMedium,
               )
             ],
           ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
+
+          SizedBox(height: 10.h),
+
+          TButton(
+            loading: false,
+            constraints: BoxConstraints.loose(Size.infinite),
+            btnColor:Theme.of(context).primaryColor,
+            btnText: 'Pay',
+            onPressed: () async {
               _dialogBuilder(context);
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: themePrimaryColor,
-              minimumSize: const Size(double.infinity, 55),
-            ),
-            child: const Text(
-              "Check out",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ),
         ],
       ),

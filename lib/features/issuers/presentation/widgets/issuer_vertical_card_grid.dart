@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../../core/handlers/error_handler.dart';
-import '../../../../pages/vouchers/carddesign/providers/filtered_cards_provider.dart';
-import '../../../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
+import '../../../gift_cards/provider/filtered_cards_provider.dart';
+import '../../../gift_cards/provider/selected_card_provider.dart';
 import '../../data/model/issuer_model.dart';
 import 'issuer_vertical_card.dart';
 

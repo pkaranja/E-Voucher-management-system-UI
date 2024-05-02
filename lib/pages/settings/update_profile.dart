@@ -5,15 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:zawadi/controllers/apiRequests.dart';
 import 'dart:io';
-import '../../core/helpers/flutter_toast.dart';
 import '../../controllers/profile_controller.dart';
 import '../../core/presentation/widgets/app_bar_widget.dart';
 import '../../core/presentation/widgets/date_input_widget.dart';
 import '../../core/presentation/widgets/text_input_widget.dart';
+import '../../core/styles/app_colors.dart';
 import '../../features/authentication/utils/utils.dart';
-import '../../global/styles/app_colors.dart';
 import '../../core/presentation/widgets/loading_button_widget.dart';
 import '../../core/helpers/input_validators.dart';
 
@@ -108,10 +108,14 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
         // Database update successful
         Navigator.pop(context);
         GoRouter.of(context).go("/");
-        ToastMessage().toastMessage('Updated!', Colors.green);
+        const CustomSnackBar.success(
+          message: 'Profile updated successfully!',
+        );
     } catch (error) {
       // Error occurred
-      ToastMessage().toastMessage(error.toString(), Colors.red);
+      CustomSnackBar.error(
+        message: error.toString(),
+      );
     } finally {
       setState(() {
         loading = false;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/services/text_formatter.dart';
 
-import '../../../global/styles/app_colors.dart';
+import '../../styles/app_colors.dart';
 
 class DynamicInputWidget extends StatelessWidget {
   const DynamicInputWidget(

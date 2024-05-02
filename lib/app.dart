@@ -5,14 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zawadi/global/app_state.dart';
+import 'package:zawadi/core/provider/app_state.dart';
 import 'package:zawadi/core/utils/router.dart';
-import 'package:zawadi/global/auth_provider.dart';
+import 'package:zawadi/features/authentication/provider/auth_provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:zawadi/global/styles/app_colors.dart';
 import 'core/handlers/permissions_handler.dart';
 import 'core/helpers/network_state.dart';
-import 'global/styles/theme.dart';
+import 'core/styles/app_colors.dart';
+import 'core/styles/theme.dart';
 
 class MyApp extends StatefulWidget {
   SharedPreferences prefs;
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
           final themeSwitch = Provider.of<ThemeSwitch>(context);
 
           final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-          final systemNavigationBarColor = isDarkMode ? themeAlmostBlackColor : themeLightGreyColor;
+          final systemNavigationBarColor = isDarkMode ? themeDarkScaffold : themeLightScaffold;
 
           return ScreenUtilInit(
             designSize: const Size(390, 844),

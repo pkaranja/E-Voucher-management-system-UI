@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zawadi/controllers/apiRequests.dart';
-import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:zawadi/core/styles/app_colors.dart';
 import '../core/handlers/error_handler.dart';
-import '../models/profile_model.dart';
-import '../models/user_model.dart';
+import '../features/authentication/models/profile_model.dart';
+import '../features/authentication/models/user_model.dart';
 
 class ProfileController with ChangeNotifier {
   DatabaseReference dbref = FirebaseDatabase.instance.ref().child('Users');
@@ -59,7 +59,7 @@ class ProfileController with ChangeNotifier {
                     },
                     leading: const Icon(
                       Icons.camera,
-                      color: kGreenColor,
+                      color: themePrimaryColor,
                     ),
                     title: const Text('Camera'),
                   ),
@@ -70,7 +70,7 @@ class ProfileController with ChangeNotifier {
                     },
                     leading: const Icon(
                       Icons.image,
-                      color: kGreenColor,
+                      color: themePrimaryColor,
                     ),
                     title: const Text('Gallery'),
                   )

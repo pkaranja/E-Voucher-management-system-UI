@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zawadi/global/styles/app_colors.dart';
 import '../../config/constants.dart';
+import '../../styles/app_colors.dart';
 import '../../utils/router_utils.dart';
 
 class QrooAppBar extends StatefulWidget implements PreferredSizeWidget {

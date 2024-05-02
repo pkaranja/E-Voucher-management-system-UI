@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../models/voucher_model.dart';
+import '../data/model/giftcard_theme_model.dart';
 
 part 'giftcard_theme_repository.g.dart';
 

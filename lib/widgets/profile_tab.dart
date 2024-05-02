@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../global/styles/app_colors.dart';
+import '../core/styles/app_colors.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({

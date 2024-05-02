@@ -7,12 +7,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/features/gift_cards/data/model/giftcard_model.dart';
 import 'package:zawadi/features/gift_cards/data/model/temporary_card_model.dart';
-import 'package:zawadi/global/styles/app_colors.dart';
 import '../../../../core/presentation/widgets/app_bar_widget.dart';
+import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/router_utils.dart';
 import '../../../../core/utils/utils.dart';
-import '../../../../pages/vouchers/carddesign/providers/selected_card_provider.dart';
 import '../../provider/giftcard_provider.dart';
+import '../../provider/selected_card_provider.dart';
 import '../../provider/temporary_giftcard_provider.dart';
 import '../../repository/giftcard_repository_impl.dart';
 
@@ -81,8 +81,8 @@ class GiftcardsListWidget extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Delete giftcard"),
-          content: const Text("Would you like to delete giftcard permanently?"),
+          title: const Text("Delete gift card"),
+          content: const Text("Would you like to delete gift card permanently?"),
           actions: [
             TextButton(
               child: const Text("Cancel"),

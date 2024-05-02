@@ -1,8 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zawadi/global/styles/theme.dart';
-import 'package:zawadi/global/styles/app_colors.dart';
 import 'package:zawadi/pages/settings/update_profile.dart';
 import 'package:zawadi/widgets/profile_tab.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,10 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import '../../core/presentation/widgets/app_bar_widget.dart';
-import '../../features/authentication/forgot_password.dart';
 import '../../core/presentation/widgets/loading_button_widget.dart';
-import '../../widgets/error_message_widget.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+
+import '../../core/styles/app_colors.dart';
+import '../../core/styles/theme.dart';
+import '../../features/authentication/presentation/screens/forgot_password.dart';
 
 
 class UserProfileScreen extends StatefulWidget {
@@ -49,9 +49,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ErrorMessage(
-                          message: 'Something went wrong!',
-                        ),
+                        Text('Something went wrong with your request, please try again later!'),
                       ],
                     ),
                   );

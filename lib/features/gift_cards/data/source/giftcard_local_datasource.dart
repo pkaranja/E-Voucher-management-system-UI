@@ -4,7 +4,7 @@ import 'package:isar/isar.dart';
 import '../../../../controllers/profile_controller.dart';
 import '../../../../core/database/database.dart';
 import '../../../../core/helpers/app_exception.dart';
-import '../../../../models/profile_model.dart';
+import '../../../authentication/models/profile_model.dart';
 import '../database/giftcard_db.dart';
 import '../enums/filter_type.dart';
 import '../model/giftcard_model.dart';

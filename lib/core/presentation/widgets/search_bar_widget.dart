@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../pages/vouchers/carddesign/providers/search_query_provider.dart';
+import '../../../features/gift_cards/provider/search_query_provider.dart';
+
 
 class CustomSearchBar extends ConsumerWidget {
   final TextEditingController _searchControl = TextEditingController();

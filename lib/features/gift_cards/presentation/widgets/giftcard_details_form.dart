@@ -14,9 +14,8 @@ import '../../../../core/handlers/error_handler.dart';
 import '../../../../core/helpers/input_validators.dart';
 import '../../../../core/presentation/widgets/loading_button_widget.dart';
 import '../../../../core/presentation/widgets/text_input_widget.dart';
-import '../../../../models/profile_model.dart';
-import '../../../../models/voucher_model.dart';
-import '../../../../pages/vouchers/carddesign/screens/card_detail_input_data_screen.dart';
+import '../../../authentication/models/profile_model.dart';
+import '../../data/model/giftcard_theme_model.dart';
 import '../../../payment/presentation/screens/order_details_screen.dart';
 import '../../data/model/giftcard_model.dart';
 import '../../provider/giftcard_provider.dart';
@@ -109,10 +108,7 @@ class _GiftCardDetailsWidgetState extends ConsumerState<GiftCardDetailsWidget>{
   @override
   Widget build(BuildContext context) {
     bool loading = false;
-
     final temporaryGiftcard = ref.read( temporaryGiftcardProvider );
-    final selectedCard = widget.model;
-print(temporaryGiftcard);
 
     createGiftcard(){
       loading = false;

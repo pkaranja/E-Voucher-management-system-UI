@@ -8,7 +8,7 @@ class Notifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const QrooAppBar(),
+      appBar: const QrooAppBar(hasBackButton: true,),
       body: Column(
           children: [
             Padding(
@@ -43,8 +43,8 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+      margin: EdgeInsets.only(bottom: 15.h),
+      padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
       decoration: ShapeDecoration(
         color: isRead ? null : Color(0x190043CE),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -60,7 +60,7 @@ class NotificationCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 8,
+            width: 10.w,
           ),
           Container(
             width: 54,
@@ -72,7 +72,7 @@ class NotificationCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 16,
+            width: 16.w,
           ),
           Expanded(
             child: Column(
@@ -101,7 +101,7 @@ class NotificationCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 8,
+            width: 10.w,
           ),
           Icon(
             Icons.delete_outline,
