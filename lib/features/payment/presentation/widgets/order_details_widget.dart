@@ -16,7 +16,6 @@ import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../authentication/models/profile_model.dart';
-import '../../../gift_cards/data/dto/giftcard_api_dto.dart';
 import '../../../gift_cards/provider/temporary_giftcard_provider.dart';
 
 class OrderDetailsWidget extends ConsumerStatefulWidget {
@@ -35,7 +34,6 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
   @override
   void initState() {
     super.initState();
-
     initiateProfile();
   }
 
@@ -43,17 +41,17 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
     final giftcardDetails = ref.watch(temporaryGiftcardProvider);
     //init gift card object
     giftcard = GiftcardModel(
-        theme: giftcardDetails!.themeId,
-        title: giftcardDetails.title,
-        value: giftcardDetails.amount,
-        expirationDate: DateTime.now(),
-        message: giftcardDetails.message,
-        purchaserName: userProfileData.fullName ?? '',
-        purchaser: userProfileData.profileId!,
-        recipientPhoneNumber: giftcardDetails.recipient!.phoneNumber!.number.toString(),
-        recipientName: giftcardDetails.recipient?.fullName ?? '',
-        issuer: giftcardDetails.issuerId,
-        status: GiftcardState.PENDING
+      theme: giftcardDetails!.themeId,
+      title: giftcardDetails.title,
+      value: giftcardDetails.amount,
+      expirationDate: DateTime.now(),
+      message: giftcardDetails.message,
+      purchaserName: userProfileData.fullName ?? '',
+      purchaser: userProfileData.profileId!,
+      recipientPhoneNumber: giftcardDetails.recipient!.phoneNumber!.number.toString(),
+      recipientName: giftcardDetails.recipient?.fullName ?? '',
+      issuer: giftcardDetails.issuerId,
+      status: GiftcardState.PENDING
     );
   }
 
@@ -218,7 +216,8 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
             btnText: 'Pay',
             onPressed: () async {
               await _createGiftcard(ref);
-              //await _handleTransaction(context, ref, total);
+              await _handleTransaction(context, ref, total);
+
               _dialogBuilder(context);
             },
           ),

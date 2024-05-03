@@ -16,7 +16,9 @@ final giftcardDatasourceProvider = Provider<GiftcardDatasource>((ref) {
   final isDeviceConnected = ref.watch(networkStateProvider).isDeviceConnected;
 
   //TODO: Implement local data sources
-  return GiftcardLocalDatasource();
+  //return GiftcardLocalDatasource();
+
+  return GiftcardRemoteDatasource(api);
 
 });
 

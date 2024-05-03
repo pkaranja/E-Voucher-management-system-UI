@@ -32,6 +32,7 @@ class Endpoints {
     baseUrl = dotenv.env['API_BASE_URL'] ?? remoteConfig.getString('api_base');
   }
 
+  static String apiHealthPath = "/actuator/health";
   static String categoriesPath = "/api/categories";
   static String issuersPath = "/api/issuers";
   static String giftCardsPath = "/api/giftcards";
@@ -39,6 +40,7 @@ class Endpoints {
   static String transactionsPath = "/api/transactions";
   static String auditPath = "/api/audits";
   static String themesPath = "/api/themes";
+  static String paymentCallback  = "/api/transactions/handler";
 }
 
 //Convert string to ENUM
