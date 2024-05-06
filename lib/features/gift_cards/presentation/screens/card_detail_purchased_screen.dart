@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zawadi/features/gift_cards/provider/temporary_giftcard_provider.dart';
 import '../../../../core/presentation/widgets/app_bar_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../provider/selected_card_provider.dart';
 import '../widgets/custom_gift_card.dart';
 
@@ -22,7 +23,9 @@ class CardPurchasedScreen extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            child: Container(
+            child: AnimatedContainer(
+              duration: AppAnimation.kAnimationDuration,
+              curve: AppAnimation.kAnimationCurve,
               height: size.height * 0.5,
               padding: const EdgeInsets.only(
                 left: 40.0,
@@ -31,7 +34,9 @@ class CardPurchasedScreen extends ConsumerWidget {
               ),
               child: selectedCardTheme.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
-                data: (card) => Container(
+                data: (card) => AnimatedContainer(
+                  duration: AppAnimation.kAnimationDuration,
+                  curve: AppAnimation.kAnimationCurve,
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
                   decoration: const BoxDecoration(
                     boxShadow: [
@@ -85,7 +90,9 @@ class _BottomSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        Container(
+        AnimatedContainer(
+          duration: AppAnimation.kAnimationDuration,
+          curve: AppAnimation.kAnimationCurve,
           color: Colors.white,
           width: double.infinity,
           height: height,

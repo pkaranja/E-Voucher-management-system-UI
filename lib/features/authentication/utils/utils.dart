@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/styles/animations.dart';
+
 showSnackBar(BuildContext context,
     {required String message, required bool hasError}) {
   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -19,7 +21,9 @@ loadingDialog(BuildContext context) {
       child: PopScope(
         canPop: false,
         child: Center(
-          child: Container(
+          child: AnimatedContainer(
+            duration: AppAnimation.kAnimationDuration,
+            curve: AppAnimation.kAnimationCurve,
             height: 135,
             width: 135,
             decoration: BoxDecoration(

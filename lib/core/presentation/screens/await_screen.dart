@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../../styles/animations.dart';
 import '../../styles/app_colors.dart';
 
 class AwaitScreen extends StatelessWidget {
@@ -13,7 +14,9 @@ class AwaitScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
           child: Center(
-            child: Container(
+            child: AnimatedContainer(
+              duration: AppAnimation.kAnimationDuration,
+              curve: AppAnimation.kAnimationCurve,
               height: 500,
               width: 135,
               decoration: BoxDecoration(

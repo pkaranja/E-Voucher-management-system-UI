@@ -4,6 +4,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,11 +24,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   // Show loading screen while initializing Firebase
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: ScreenUtilInit(
-      designSize: const Size(390, 844),
+      designSize: Size(390, 844),
       child: AwaitScreen(),
     ),
   ));
@@ -38,7 +43,7 @@ void main() async {
     runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ScreenUtilInit(
-        designSize: const Size(390, 844),
+        designSize: Size(390, 844),
         child: ProviderScope( child: ErrorScreen(ErrorType.network) ),
       ),
     ));
@@ -51,7 +56,7 @@ void main() async {
 
     //initialize firebase
     await Firebase.initializeApp(
-      name: 'zawadi-tz',
+      //name: 'zawadi-tz',
       options: DefaultFirebaseOptions.currentPlatform,);
 
     // Initialize other services
@@ -68,7 +73,7 @@ void main() async {
     runApp(const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: ScreenUtilInit(
-          designSize: const Size(390, 844),
+          designSize: Size(390, 844),
           child: ProviderScope( child: ErrorScreen(ErrorType.initialization) ),
         )
     ));
@@ -77,6 +82,7 @@ void main() async {
 
 //Initialize required services
 Future<void> initializeServices(SharedPreferences prefs) async {
+
   try {
     //Load ENV files
     await dotenv.load(fileName: '.env');

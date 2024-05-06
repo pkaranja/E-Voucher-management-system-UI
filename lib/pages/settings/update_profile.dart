@@ -12,6 +12,7 @@ import '../../controllers/profile_controller.dart';
 import '../../core/presentation/widgets/app_bar_widget.dart';
 import '../../core/presentation/widgets/date_input_widget.dart';
 import '../../core/presentation/widgets/text_input_widget.dart';
+import '../../core/styles/animations.dart';
 import '../../core/styles/app_colors.dart';
 import '../../features/authentication/utils/utils.dart';
 import '../../core/presentation/widgets/loading_button_widget.dart';
@@ -155,7 +156,9 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                               Center(
                                 child: Stack(
                                   children: [
-                                    Container(
+                                    AnimatedContainer(
+                                      duration: AppAnimation.kAnimationDuration,
+                                      curve: AppAnimation.kAnimationCurve,
                                       height: 130,
                                       width: 130,
                                       decoration: BoxDecoration(
@@ -174,7 +177,9 @@ class _UpdateAccountScreenState extends State<UpdateAccountScreen> {
                                     Positioned(
                                       bottom: 10,
                                       right: 3,
-                                      child: Container(
+                                      child: AnimatedContainer(
+                                        duration: AppAnimation.kAnimationDuration,
+                                        curve: AppAnimation.kAnimationCurve,
                                         height: 35,
                                         width: 35,
                                         decoration: BoxDecoration(

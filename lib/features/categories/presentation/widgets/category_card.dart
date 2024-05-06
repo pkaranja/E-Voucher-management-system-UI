@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/core/styles/app_colors.dart';
 
+import '../../../../core/styles/animations.dart';
 import '../../../../core/utils/router_utils.dart';
 import '../../data/model/category_model.dart';
 
@@ -30,7 +31,9 @@ class CategoryCard extends StatelessWidget {
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
-            child: Container(
+            child: AnimatedContainer(
+              duration: AppAnimation.kAnimationDuration,
+              curve: AppAnimation.kAnimationCurve,
               width: 110.w,
               height: 110.h,
               color: themeLightGreyColor,
@@ -46,7 +49,9 @@ class CategoryCard extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: Container(
+                    child: AnimatedContainer(
+                      duration: AppAnimation.kAnimationDuration,
+                      curve: AppAnimation.kAnimationCurve,
                       width: double.infinity,
                       height: 37.h,
                       color: const Color(0xff525252),

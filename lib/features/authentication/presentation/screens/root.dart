@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zawadi/features/authentication/presentation/screens/sign_up_screen.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../onboarding/presentation/widgets/custom_onboarding_background.dart';
 import 'login_screen.dart';
@@ -45,7 +46,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             curve: Curves.ease,
             left: pageValue * -w,
             top: 0,
-            child: Container(
+            child: AnimatedContainer(
+              duration: AppAnimation.kAnimationDuration,
+              curve: AppAnimation.kAnimationCurve,
               height: h,
               width: w * 3,
               decoration: const BoxDecoration(),

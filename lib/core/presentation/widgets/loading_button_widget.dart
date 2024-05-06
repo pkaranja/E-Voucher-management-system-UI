@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../styles/animations.dart';
+
 class TButton extends StatelessWidget {
   const TButton(
       {super.key,
@@ -17,7 +19,9 @@ class TButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: AppAnimation.kAnimationDuration,
+      curve: AppAnimation.kAnimationCurve,
       width: constraints.maxWidth,
       decoration: BoxDecoration(
         color: btnColor,

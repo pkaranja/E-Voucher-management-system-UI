@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:zawadi/features/gift_cards/data/model/giftcard_model.dart';
 import 'package:zawadi/features/gift_cards/data/model/temporary_card_model.dart';
 import '../../../../core/presentation/widgets/app_bar_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/router_utils.dart';
 import '../../../../core/utils/utils.dart';
@@ -159,7 +160,9 @@ class GiftcardsListWidget extends StatelessWidget {
                 color: themePrimaryColor,
                 child: ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  leading: Container(
+                  leading: AnimatedContainer(
+                    duration: AppAnimation.kAnimationDuration,
+                    curve: AppAnimation.kAnimationCurve,
                     width: 80,
                     height: 80,
                     decoration: const ShapeDecoration( shape: CircleBorder(), color: Colors.white ),

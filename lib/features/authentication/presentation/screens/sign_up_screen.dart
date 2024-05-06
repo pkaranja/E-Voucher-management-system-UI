@@ -8,6 +8,7 @@ import 'package:zawadi/features/authentication/presentation/screens/verify_scree
 import '../../../../core/presentation/widgets/logo_widget.dart';
 import '../../../../core/presentation/widgets/text_input_widget.dart';
 import '../../../../core/presentation/widgets/loading_button_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../core/styles/app_colors.dart';
 import 'login_screen.dart';
 
@@ -126,7 +127,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: AppAnimation.kAnimationDuration,
+                          curve: AppAnimation.kAnimationCurve,
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 30),
 

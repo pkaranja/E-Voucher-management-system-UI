@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zawadi/features/gift_cards/provider/temporary_giftcard_provider.dart';
 import 'package:zawadi/core/utils/rgb_to_radix.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/router_utils.dart';
 import '../../../gift_cards/provider/selected_card_provider.dart';
@@ -23,7 +24,9 @@ class IssuerVerticalCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
+    return AnimatedContainer(
+        duration: AppAnimation.kAnimationDuration,
+        curve: AppAnimation.kAnimationCurve,
         height: 220.h,
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(

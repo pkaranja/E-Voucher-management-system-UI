@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../gen/assets.gen.dart';
 import '../../config/constants.dart';
+import '../../styles/animations.dart';
 import '../../styles/app_colors.dart';
 import '../../utils/router_utils.dart';
 
@@ -105,8 +106,10 @@ class _QrooAppBarState extends State<QrooAppBar> {
             Positioned(
               top: 0,
               right: 0,
-              child: Container(
-                padding: EdgeInsets.all(4),
+              child: AnimatedContainer(
+                duration: AppAnimation.kAnimationDuration,
+                curve: AppAnimation.kAnimationCurve,
+                padding: const EdgeInsets.all(4),
                 decoration: const BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.all(Radius.circular(50)),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:zawadi/core/presentation/widgets/app_bar_widget.dart';
 import 'package:zawadi/core/styles/app_colors.dart';
 
+import '../../../../core/styles/animations.dart';
 import '../../../gift_cards/data/model/giftcard_theme_model.dart';
 import '../../../gift_cards/presentation/widgets/custom_gift_card.dart';
 import '../../../gift_cards/provider/selected_card_provider.dart';
@@ -33,13 +34,17 @@ class _OrderDetailsScreenState extends ConsumerState<OrderDetailsScreen> {
     return Scaffold(
       appBar: const QrooAppBar(hasBackButton: true),
       bottomSheet: const OrderDetailsWidget(),
-      body: Container(
+      body: AnimatedContainer(
+        duration: AppAnimation.kAnimationDuration,
+        curve: AppAnimation.kAnimationCurve,
         // Set height to 50% of the screen height
         //TODO: find a better way to do this
         height: size.height * 0.6,
         color: selectedCard.value?.bgColor,
         padding: const EdgeInsets.all(20.0),
-        child: Container(
+        child: AnimatedContainer(
+          duration: AppAnimation.kAnimationDuration,
+          curve: AppAnimation.kAnimationCurve,
           decoration: const BoxDecoration(
             boxShadow: [
               BoxShadow(

@@ -40,7 +40,6 @@ class Endpoints {
   static String transactionsPath = "/api/transactions";
   static String auditPath = "/api/audits";
   static String themesPath = "/api/themes";
-  static String paymentCallback  = "/api/transactions/handler";
 }
 
 //Convert string to ENUM

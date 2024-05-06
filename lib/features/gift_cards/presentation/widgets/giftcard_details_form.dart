@@ -15,6 +15,7 @@ import '../../../../core/handlers/error_handler.dart';
 import '../../../../core/helpers/input_validators.dart';
 import '../../../../core/presentation/widgets/loading_button_widget.dart';
 import '../../../../core/presentation/widgets/text_input_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../authentication/models/profile_model.dart';
 import '../../data/model/giftcard_theme_model.dart';
@@ -168,7 +169,9 @@ class _GiftCardDetailsWidgetState extends ConsumerState<GiftCardDetailsWidget>{
     //   loading = false;
     // }
 
-    return Container(
+    return AnimatedContainer(
+      duration: AppAnimation.kAnimationDuration,
+      curve: AppAnimation.kAnimationCurve,
       color: Theme.of(context).colorScheme.background,
       padding: const EdgeInsets.only( left: 20.0, right: 20.0, ),
       width: double.infinity,
@@ -267,9 +270,9 @@ class _GiftCardDetailsWidgetState extends ConsumerState<GiftCardDetailsWidget>{
             btnText: 'Continue',
             onPressed: () {
               Navigator.push( context,
-                  MaterialPageRoute(
-                    builder: (context) => OrderDetailsScreen( model: widget.model!, ),
-                  )
+                MaterialPageRoute(
+                  builder: (context) => OrderDetailsScreen( model: widget.model!, ),
+                )
               );
             },
           ),

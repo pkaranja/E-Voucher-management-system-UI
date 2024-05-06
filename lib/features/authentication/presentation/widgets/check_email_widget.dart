@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/styles/animations.dart';
+
 class CheckEmailWidget extends StatelessWidget {
   const CheckEmailWidget({
     required this.mailText,
@@ -35,7 +37,9 @@ class CheckEmailWidget extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        Container(
+        AnimatedContainer(
+          duration: AppAnimation.kAnimationDuration,
+          curve: AppAnimation.kAnimationCurve,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: const BorderRadius.all(Radius.circular(12)),

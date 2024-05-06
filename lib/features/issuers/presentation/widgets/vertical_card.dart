@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/rgb_to_radix.dart';
 import '../../../../core/utils/router_utils.dart';
@@ -22,7 +23,9 @@ class IssuersVerticalCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
+    return AnimatedContainer(
+      duration: AppAnimation.kAnimationDuration,
+      curve: AppAnimation.kAnimationCurve,
       height: 220.h,
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
@@ -94,7 +97,9 @@ class ContainerWithCircle extends ConsumerWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(top: circleRadius / 2.0),
-          child: Container(
+          child: AnimatedContainer(
+            duration: AppAnimation.kAnimationDuration,
+            curve: AppAnimation.kAnimationCurve,
             height: 60.h,
             decoration: const ShapeDecoration(
               color: Color(0xFFC4C4C4),
@@ -150,7 +155,9 @@ class ContainerWithCircle extends ConsumerWidget {
 
         Padding(
           padding: EdgeInsets.only(left: 15.w),
-          child: Container(
+          child: AnimatedContainer(
+            duration: AppAnimation.kAnimationDuration,
+            curve: AppAnimation.kAnimationCurve,
             width: circleRadius,
             height: circleRadius,
             decoration: const ShapeDecoration( shape: CircleBorder(), color: Colors.white ),

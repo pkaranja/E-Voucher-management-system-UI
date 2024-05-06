@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../styles/animations.dart';
+
 class bottomAppBar extends StatelessWidget {
   const bottomAppBar({
     Key? key,
@@ -10,7 +12,9 @@ class bottomAppBar extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
-        child: Container(
+        child: AnimatedContainer(
+          duration: AppAnimation.kAnimationDuration,
+          curve: AppAnimation.kAnimationCurve,
           color: Color(0xFF313131).withOpacity(0.7),
           height: 50,
           width: double.maxFinite,

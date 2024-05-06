@@ -106,6 +106,9 @@ class $AssetsImagesGen {
   AssetGenImage get logoWhite =>
       const AssetGenImage('assets/images/logo_white.png');
 
+  $AssetsImagesPaymentmethodsGen get paymentmethods =>
+      const $AssetsImagesPaymentmethodsGen();
+
   /// File path: assets/images/zawadi_logo_hq.png
   AssetGenImage get zawadiLogoHq =>
       const AssetGenImage('assets/images/zawadi_logo_hq.png');
@@ -169,6 +172,9 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/cart.svg
   String get cart => 'assets/svgs/cart.svg';
 
+  /// File path: assets/svgs/check.svg
+  String get check => 'assets/svgs/check.svg';
+
   /// File path: assets/svgs/color.svg
   String get color => 'assets/svgs/color.svg';
 
@@ -190,6 +196,9 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/gift.svg
   String get gift => 'assets/svgs/gift.svg';
 
+  /// File path: assets/svgs/giftfilled.svg
+  String get giftfilled => 'assets/svgs/giftfilled.svg';
+
   /// File path: assets/svgs/message.svg
   String get message => 'assets/svgs/message.svg';
 
@@ -201,6 +210,9 @@ class $AssetsSvgsGen {
 
   /// File path: assets/svgs/notification.svg
   String get notification => 'assets/svgs/notification.svg';
+
+  /// File path: assets/svgs/phone.svg
+  String get phone => 'assets/svgs/phone.svg';
 
   /// File path: assets/svgs/profile.svg
   String get profile => 'assets/svgs/profile.svg';
@@ -228,6 +240,7 @@ class $AssetsSvgsGen {
         camera,
         card,
         cart,
+        check,
         color,
         contacts,
         danger,
@@ -235,10 +248,12 @@ class $AssetsSvgsGen {
         documentError,
         explore,
         gift,
+        giftfilled,
         message,
         money,
         narrative,
         notification,
+        phone,
         profile,
         purchased,
         refresh,
@@ -419,6 +434,34 @@ class $AssetsImagesErrorsGen {
   /// List of all assets
   List<AssetGenImage> get values =>
       [camera, connection, generic, location, payment, results];
+}
+
+class $AssetsImagesPaymentmethodsGen {
+  const $AssetsImagesPaymentmethodsGen();
+
+  /// File path: assets/images/paymentmethods/airtelmoney.png
+  AssetGenImage get airtelmoney =>
+      const AssetGenImage('assets/images/paymentmethods/airtelmoney.png');
+
+  /// File path: assets/images/paymentmethods/mpesa.jpg
+  AssetGenImage get mpesa =>
+      const AssetGenImage('assets/images/paymentmethods/mpesa.jpg');
+
+  /// File path: assets/images/paymentmethods/paypal.png
+  AssetGenImage get paypal =>
+      const AssetGenImage('assets/images/paymentmethods/paypal.png');
+
+  /// File path: assets/images/paymentmethods/tigopesa.png
+  AssetGenImage get tigopesa =>
+      const AssetGenImage('assets/images/paymentmethods/tigopesa.png');
+
+  /// File path: assets/images/paymentmethods/visa.png
+  AssetGenImage get visa =>
+      const AssetGenImage('assets/images/paymentmethods/visa.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values =>
+      [airtelmoney, mpesa, paypal, tigopesa, visa];
 }
 
 class Assets {

@@ -2,12 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:zawadi/features/gift_cards/data/enums/filter_type.dart';
 import '../../../../core/config/constants.dart';
 import '../../../../core/helpers/app_exception.dart';
-import '../../../../core/helpers/data/pagination/pagination_dto.dart';
 import '../../../../core/http/api_provider.dart';
 import '../dto/giftcard_dto.dart';
 import '../model/giftcard_model.dart';
 import 'giftcard_datasource.dart';
-import 'giftcard_local_datasource.dart';
 
 class GiftcardRemoteDatasource extends GiftcardDatasource {
   GiftcardRemoteDatasource(this._api);

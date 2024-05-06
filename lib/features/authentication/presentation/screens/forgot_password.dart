@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/presentation/widgets/logo_widget.dart';
 import '../../../../core/presentation/widgets/text_input_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../core/styles/app_colors.dart';
 import 'check_mail_screen.dart';
 
@@ -85,9 +86,10 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 30),
+                        child: AnimatedContainer(
+                          duration: AppAnimation.kAnimationDuration,
+                          curve: AppAnimation.kAnimationCurve,
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                           decoration: BoxDecoration(
                             color: Theme.of(context).cardColor,
                             borderRadius:

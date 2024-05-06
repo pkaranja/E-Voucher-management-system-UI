@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:zawadi/features/gift_cards/data/model/giftcard_model.dart';
 import 'package:zawadi/features/gift_cards/provider/giftcard_provider.dart';
 import '../../../../core/presentation/widgets/app_bar_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../repository/giftcard_repository_impl.dart';
 
 class PurchasedGiftcardsScreeen extends ConsumerStatefulWidget {
@@ -141,7 +142,9 @@ class GiftcardsListWidget extends StatelessWidget {
               child: Card(
                 child: ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  leading: Container(
+                  leading: AnimatedContainer(
+                    duration: AppAnimation.kAnimationDuration,
+                    curve: AppAnimation.kAnimationCurve,
                     padding: EdgeInsets.only(right: 12.0),
                     decoration: new BoxDecoration(
                         border: new Border(

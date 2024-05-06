@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zawadi/core/presentation/widgets/app_bar_widget.dart';
 
+import '../../../../core/styles/animations.dart';
+
 class Notifications extends StatelessWidget {
   const Notifications({super.key});
 
@@ -42,7 +44,9 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: AppAnimation.kAnimationDuration,
+      curve: AppAnimation.kAnimationCurve,
       margin: EdgeInsets.only(bottom: 15.h),
       padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
       decoration: ShapeDecoration(
@@ -51,7 +55,9 @@ class NotificationCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
+          AnimatedContainer(
+            duration: AppAnimation.kAnimationDuration,
+            curve: AppAnimation.kAnimationCurve,
             width: 8,
             height: 8,
             decoration: BoxDecoration(
@@ -62,7 +68,9 @@ class NotificationCard extends StatelessWidget {
           SizedBox(
             width: 10.w,
           ),
-          Container(
+          AnimatedContainer(
+            duration: AppAnimation.kAnimationDuration,
+            curve: AppAnimation.kAnimationCurve,
             width: 54,
             height: 54,
             decoration: ShapeDecoration(

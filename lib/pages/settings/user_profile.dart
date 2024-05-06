@@ -12,6 +12,7 @@ import '../../core/presentation/widgets/app_bar_widget.dart';
 import '../../core/presentation/widgets/loading_button_widget.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
+import '../../core/styles/animations.dart';
 import '../../core/styles/app_colors.dart';
 import '../../core/styles/theme.dart';
 import '../../features/authentication/presentation/screens/forgot_password.dart';
@@ -93,7 +94,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
+                                    AnimatedContainer(
+                                      duration: AppAnimation.kAnimationDuration,
+                                      curve: AppAnimation.kAnimationCurve,
                                       height:
                                       orientation == Orientation.portrait
                                           ? constraints.maxHeight * 0.2

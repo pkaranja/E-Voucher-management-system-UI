@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:zawadi/core/presentation/widgets/app_bar_widget.dart';
 import '../../data/model/category_model.dart';
 import '../../provider/category_provider.dart';
 
@@ -26,9 +27,7 @@ class _ListScreenState extends ConsumerState<ListScreen> {
     bool isLoading = ref.watch(categoryProvider).isLoading;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Categories List"),
-      ),
+      appBar: const QrooAppBar(),
       body: Wrap(
         children: [
           CategoriesListWidget(ref: ref, isLoading: isLoading, categories: categories),

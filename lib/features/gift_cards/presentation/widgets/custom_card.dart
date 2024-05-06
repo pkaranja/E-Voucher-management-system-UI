@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/styles/animations.dart';
+
 class CustomCard extends StatelessWidget {
   const CustomCard(
       {super.key,
@@ -21,7 +23,9 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: AppAnimation.kAnimationDuration,
+      curve: AppAnimation.kAnimationCurve,
       height: orientation == Orientation.portrait ? verHeight : horiHeight,
       width: orientation == Orientation.portrait ? verWidth : horiWidth,
       decoration: BoxDecoration(

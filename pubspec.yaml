@@ -103,6 +103,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_switch: ^0.3.2
   fluttertoast: ^8.2.1
+  modular_ui: ^0.0.5
 
 
 
@@ -145,6 +146,7 @@ flutter:
     - assets/images/errors/
     - assets/images/categories/
     - assets/images/cardthemes/
+    - assets/images/paymentmethods/
     - assets/prints/
     - assets/icon/
     - assets/lotties/

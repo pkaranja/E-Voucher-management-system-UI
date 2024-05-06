@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:zawadi/features/gift_cards/provider/temporary_giftcard_provider.dart';
 import '../../../../core/presentation/widgets/app_bar_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../gift_cards/presentation/widgets/custom_gift_card.dart';
 import '../../../gift_cards/presentation/widgets/giftcard_details_form.dart';
 import '../../../gift_cards/provider/selected_card_provider.dart';
@@ -66,7 +67,9 @@ class _SelectedCard extends ConsumerWidget {
     final selectedCardNotifier = ref.read(selectedCardProvider.notifier);
     final temporaryGiftcard = ref.watch( temporaryGiftcardProvider );
 
-    return Container(
+    return AnimatedContainer(
+      duration: AppAnimation.kAnimationDuration,
+      curve: AppAnimation.kAnimationCurve,
       color: backgroundColor,
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: selectedCardTheme.when(
@@ -84,8 +87,10 @@ class _SelectedCard extends ConsumerWidget {
               color: fontColor,
             ),
             Expanded(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: AnimatedContainer(
+                duration: AppAnimation.kAnimationDuration,
+                curve: AppAnimation.kAnimationCurve,
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(

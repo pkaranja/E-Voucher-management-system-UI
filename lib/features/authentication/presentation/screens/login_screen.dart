@@ -10,6 +10,7 @@ import 'package:zawadi/features/authentication/presentation/screens/sign_up_scre
 import '../../../../core/handlers/error_handler.dart';
 import '../../../../core/presentation/widgets/logo_widget.dart';
 import '../../../../core/presentation/widgets/text_input_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/presentation/widgets/loading_button_widget.dart';
 import 'forgot_password.dart';
@@ -130,7 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Stack(
                               children: [
-                                Container(
+                                AnimatedContainer(
+                                  duration: AppAnimation.kAnimationDuration,
+                                  curve: AppAnimation.kAnimationCurve,
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 30),
                                     decoration: BoxDecoration(

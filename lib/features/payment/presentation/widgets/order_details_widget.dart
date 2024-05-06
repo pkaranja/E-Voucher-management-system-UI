@@ -9,9 +9,11 @@ import 'package:flutterwave_standard/models/responses/charge_response.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zawadi/features/gift_cards/data/model/giftcard_model.dart';
 import 'package:zawadi/features/gift_cards/repository/giftcard_repository_impl.dart';
+import 'package:zawadi/features/payment/presentation/widgets/payment_form_widget.dart';
 import '../../../../controllers/profile_controller.dart';
 import '../../../../core/config/constants.dart';
 import '../../../../core/presentation/widgets/loading_button_widget.dart';
+import '../../../../core/styles/animations.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../gen/assets.gen.dart';
@@ -77,10 +79,8 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
 
   _createGiftcard(WidgetRef ref){
     ref
-        .read(giftcardRepositoryProvider)
-        .createOne(request: giftcard);
-    //create giftcard on zawadi
-
+      .read(giftcardRepositoryProvider)
+      .createOne(request: giftcard);
   }
 
   _handleTransaction(BuildContext currentContext, WidgetRef ref, double amount) async{
@@ -112,56 +112,22 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
     //Total
    final total = giftcardDetails.amount + fee;
 
-    return Container(
+    return AnimatedContainer(
+      duration: AppAnimation.kAnimationDuration,
+      curve: AppAnimation.kAnimationCurve,
       // Set height to 20% of the screen height
       //TODO: find a better way to do this
       height: screenHeight * 0.3,
       width: double.infinity,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: EdgeInsets.only(left: 15.w, top: 15.w, bottom: 0, right: 15.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-                borderSide: BorderSide.none,
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 5,
-                horizontal: 15,
-              ),
-              filled: true,
-              fillColor: themeAlmostWhiteColor,
-              hintText: "Enter discount code",
-              hintStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
-              ),
-              suffixIcon: TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Apply", style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ),
-            ),
-          ),
-
-          SizedBox(height: 10.h),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Amount", style: Theme.of(context).textTheme.bodySmall
-              ),
-              Text(
-                Utils.formatMoney(giftcardDetails.amount), style: Theme.of(context).textTheme.labelMedium
-              )
+              Text( "Amount", style: Theme.of(context).textTheme.bodySmall ),
+              Text( Utils.formatMoney(giftcardDetails.amount), style: Theme.of(context).textTheme.labelMedium )
             ],
           ),
 
@@ -170,12 +136,8 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text(
-                "Platform fee (VAT inclusive)", style: Theme.of(context).textTheme.bodySmall
-              ),
-              Text(
-                Utils.formatMoney(fee), style: Theme.of(context).textTheme.labelMedium
-              )
+              Text( "Platform fee (VAT inclusive)", style: Theme.of(context).textTheme.bodySmall ),
+              Text( Utils.formatMoney(fee), style: Theme.of(context).textTheme.labelMedium )
             ],
           ),
 
@@ -184,26 +146,18 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Discount", style: Theme.of(context).textTheme.bodySmall,
-              ),
-              Text(
-                Utils.formatMoney(0), style: Theme.of(context).textTheme.labelMedium,
-              )
+              Text( "Discount", style: Theme.of(context).textTheme.bodySmall, ),
+              Text( Utils.formatMoney(0), style: Theme.of(context).textTheme.labelMedium, )
             ],
           ),
           SizedBox(height: 15.h),
-          const Divider(),
+          const Divider( color: themePrimaryColor ),
           SizedBox(height: 5.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Total", style: Theme.of(context).textTheme.labelMedium,
-              ),
-              Text(
-                Utils.formatMoney(total), style: Theme.of(context).textTheme.titleMedium,
-              )
+              Text( "Total", style: Theme.of(context).textTheme.labelMedium, ),
+              Text( Utils.formatMoney(total), style: Theme.of(context).textTheme.titleMedium )
             ],
           ),
 
@@ -213,12 +167,14 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
             loading: false,
             constraints: BoxConstraints.loose(Size.infinite),
             btnColor:Theme.of(context).primaryColor,
-            btnText: 'Pay',
+            btnText: 'Confirm and pay',
             onPressed: () async {
-              await _createGiftcard(ref);
-              await _handleTransaction(context, ref, total);
-
-              _dialogBuilder(context);
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return PaymentFormWidget();
+                },
+              );
             },
           ),
         ],
@@ -234,13 +190,17 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
         return AlertDialog(
           contentPadding: EdgeInsets.only(left: 26.w, right: 26.w),
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
-          content: Container(
+          content: AnimatedContainer(
+            duration: AppAnimation.kAnimationDuration,
+            curve: AppAnimation.kAnimationCurve,
             width: 339.w,
             height: 452.h,
             alignment: Alignment.center,
             child: Column(
               children: [
-                Container(
+                AnimatedContainer(
+                  duration: AppAnimation.kAnimationDuration,
+                  curve: AppAnimation.kAnimationCurve,
                   height: 150.w,
                   width: 150.w,
                   margin: EdgeInsets.only(top: 56.h, bottom: 42.h),
@@ -252,14 +212,18 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
                     shape: BoxShape.circle,
                   ),
                 ),
-                Container(
+                AnimatedContainer(
+                  duration: AppAnimation.kAnimationDuration,
+                  curve: AppAnimation.kAnimationCurve,
                   height: 15.h,
                   width: 269.w,
                   margin: EdgeInsets.only(bottom: 14.h),
                   decoration: BoxDecoration(
                       color: Color(0xffababab), borderRadius: BorderRadius.circular(50)),
                 ),
-                Container(
+                AnimatedContainer(
+                  duration: AppAnimation.kAnimationDuration,
+                  curve: AppAnimation.kAnimationCurve,
                   height: 15.h,
                   width: 169.w,
                   margin: EdgeInsets.only(bottom: 48.h),
@@ -269,14 +233,18 @@ class _OrderDetailsWidgetState extends ConsumerState<OrderDetailsWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    AnimatedContainer(
+                      duration: AppAnimation.kAnimationDuration,
+                      curve: AppAnimation.kAnimationCurve,
                       height: 58.h,
                       width: 120.w,
                       decoration: BoxDecoration(
                           color: Color(0xffc4c4c4),
                           borderRadius: BorderRadius.circular(50)),
                     ),
-                    Container(
+                    AnimatedContainer(
+                      duration: AppAnimation.kAnimationDuration,
+                      curve: AppAnimation.kAnimationCurve,
                       height: 58.h,
                       width: 120.w,
                       decoration: BoxDecoration(
