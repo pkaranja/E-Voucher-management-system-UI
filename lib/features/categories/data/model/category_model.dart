@@ -8,7 +8,7 @@ part 'category_model.g.dart';
 class CategoryModel with _$CategoryModel {
   CategoryModel._();
   factory CategoryModel({
-    required int id,
+    required String id,
     required String name,
     required String icon,
     required String status,
@@ -21,6 +21,7 @@ class CategoryModel with _$CategoryModel {
 
   Map<String, dynamic> toRequest() {
     return {
+      'id': id,
       'name': name,
       'icon': icon,
       'status': status,

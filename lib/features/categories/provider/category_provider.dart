@@ -21,7 +21,7 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
     );
   }
 
-  void getOne(int id) async {
+  void getOne(String id) async {
     state = state.copyWith(isLoading: true, category: null);
     final response = await repository.getOne(id: id);
     response.fold(

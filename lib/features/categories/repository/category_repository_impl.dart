@@ -37,28 +37,13 @@ class CategoryRepositoryImpl extends CategoryRepository {
   final CategoryDatasource datasource;
 
   @override
-  Future<Either<AppException, CategoryModel>> createOne( {required CategoryModel request}) {
-    return datasource.createOne(request: request);
-  }
-
-  @override
-  Future<Either<AppException, CategoryModel>> deleteOne( {required int id}) {
-    return datasource.deleteOne(id: id);
-  }
-
-  @override
   Future<Either<AppException, List<CategoryModel>>> getAll() {
     return datasource.getAll();
   }
 
   @override
-  Future<Either<AppException, CategoryModel>> getOne( {required int id}) {
+  Future<Either<AppException, CategoryModel>> getOne( {required String id}) {
     return datasource.getOne(id: id);
   }
 
-  @override
-  Future<Either<AppException, CategoryModel>> updateOne(
-      {required int id, required CategoryModel request}) {
-    return datasource.updateOne(id: id, request: request);
-  }
 }

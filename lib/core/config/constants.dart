@@ -7,6 +7,7 @@ enum FilterOperator { EQUAL, NOT_EQUAL, LIKE, IN, BETWEEN }
 enum ActiveStatus { ACTIVE, INACTIVE }
 enum IssuerListType { CATEGORY, SEARCH, POPULAR, FEATURED, PURCHASED, RECEIVED }
 enum GiftcardState { PENDING, ACTIVE, REDEEMED, EXPIRED, CANCELLED, REFUNDED }
+enum PaymentType { CARD, MOBILE, PAYPAL, APPLE_PAY, GOOGLE_PAY }
 
 class Constants {
   static final bool testMode = dotenv.env['TEST_MODE']?.toLowerCase() == 'true';

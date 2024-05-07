@@ -65,7 +65,8 @@ class PaymentNumberInputWidget extends ConsumerWidget {
         transactionAmount: giftcardDetails.amount,
         transactionPhoneNumber: paymentNumberController.text,
         provider: selectedPaymentMethod!.name,
-        currency: 'TZS'
+        currency: 'TZS',
+        paymentType: selectedPaymentMethod.type,
       );
 
       //perform transaction

@@ -1,6 +1,8 @@
+import '../../../../core/config/constants.dart';
+
 class PaymentMethod {
   final String name;
-  final String type;
+  final PaymentType type;
   final String assetName;
 
   PaymentMethod({

@@ -30,6 +30,10 @@ mixin _$TransactionModel {
   String get transactionPhoneNumber => throw _privateConstructorUsedError;
   String get provider => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
+  String? get deviceFingerprint => throw _privateConstructorUsedError;
+  String? get clientIp => throw _privateConstructorUsedError;
+  String? get narrative => throw _privateConstructorUsedError;
+  PaymentType get paymentType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +57,11 @@ abstract class $TransactionModelCopyWith<$Res> {
       int transactionAmount,
       String transactionPhoneNumber,
       String provider,
-      String currency});
+      String currency,
+      String? deviceFingerprint,
+      String? clientIp,
+      String? narrative,
+      PaymentType paymentType});
 }
 
 /// @nodoc
@@ -79,6 +87,10 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
     Object? transactionPhoneNumber = null,
     Object? provider = null,
     Object? currency = null,
+    Object? deviceFingerprint = freezed,
+    Object? clientIp = freezed,
+    Object? narrative = freezed,
+    Object? paymentType = null,
   }) {
     return _then(_value.copyWith(
       issuerId: null == issuerId
@@ -121,6 +133,22 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      deviceFingerprint: freezed == deviceFingerprint
+          ? _value.deviceFingerprint
+          : deviceFingerprint // ignore: cast_nullable_to_non_nullable
+              as String?,
+      clientIp: freezed == clientIp
+          ? _value.clientIp
+          : clientIp // ignore: cast_nullable_to_non_nullable
+              as String?,
+      narrative: freezed == narrative
+          ? _value.narrative
+          : narrative // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentType: null == paymentType
+          ? _value.paymentType
+          : paymentType // ignore: cast_nullable_to_non_nullable
+              as PaymentType,
     ) as $Val);
   }
 }
@@ -143,7 +171,11 @@ abstract class _$$TransactionModelImplCopyWith<$Res>
       int transactionAmount,
       String transactionPhoneNumber,
       String provider,
-      String currency});
+      String currency,
+      String? deviceFingerprint,
+      String? clientIp,
+      String? narrative,
+      PaymentType paymentType});
 }
 
 /// @nodoc
@@ -167,6 +199,10 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
     Object? transactionPhoneNumber = null,
     Object? provider = null,
     Object? currency = null,
+    Object? deviceFingerprint = freezed,
+    Object? clientIp = freezed,
+    Object? narrative = freezed,
+    Object? paymentType = null,
   }) {
     return _then(_$TransactionModelImpl(
       issuerId: null == issuerId
@@ -209,6 +245,22 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      deviceFingerprint: freezed == deviceFingerprint
+          ? _value.deviceFingerprint
+          : deviceFingerprint // ignore: cast_nullable_to_non_nullable
+              as String?,
+      clientIp: freezed == clientIp
+          ? _value.clientIp
+          : clientIp // ignore: cast_nullable_to_non_nullable
+              as String?,
+      narrative: freezed == narrative
+          ? _value.narrative
+          : narrative // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentType: null == paymentType
+          ? _value.paymentType
+          : paymentType // ignore: cast_nullable_to_non_nullable
+              as PaymentType,
     ));
   }
 }
@@ -226,7 +278,11 @@ class _$TransactionModelImpl extends _TransactionModel {
       required this.transactionAmount,
       required this.transactionPhoneNumber,
       required this.provider,
-      required this.currency})
+      required this.currency,
+      this.deviceFingerprint,
+      this.clientIp,
+      this.narrative,
+      required this.paymentType})
       : super._();
 
   factory _$TransactionModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -252,10 +308,18 @@ class _$TransactionModelImpl extends _TransactionModel {
   final String provider;
   @override
   final String currency;
+  @override
+  final String? deviceFingerprint;
+  @override
+  final String? clientIp;
+  @override
+  final String? narrative;
+  @override
+  final PaymentType paymentType;
 
   @override
   String toString() {
-    return 'TransactionModel(issuerId: $issuerId, purchaserId: $purchaserId, recipient: $recipient, giftcardTheme: $giftcardTheme, giftcartTitle: $giftcartTitle, giftCardMessage: $giftCardMessage, transactionAmount: $transactionAmount, transactionPhoneNumber: $transactionPhoneNumber, provider: $provider, currency: $currency)';
+    return 'TransactionModel(issuerId: $issuerId, purchaserId: $purchaserId, recipient: $recipient, giftcardTheme: $giftcardTheme, giftcartTitle: $giftcartTitle, giftCardMessage: $giftCardMessage, transactionAmount: $transactionAmount, transactionPhoneNumber: $transactionPhoneNumber, provider: $provider, currency: $currency, deviceFingerprint: $deviceFingerprint, clientIp: $clientIp, narrative: $narrative, paymentType: $paymentType)';
   }
 
   @override
@@ -282,7 +346,15 @@ class _$TransactionModelImpl extends _TransactionModel {
             (identical(other.provider, provider) ||
                 other.provider == provider) &&
             (identical(other.currency, currency) ||
-                other.currency == currency));
+                other.currency == currency) &&
+            (identical(other.deviceFingerprint, deviceFingerprint) ||
+                other.deviceFingerprint == deviceFingerprint) &&
+            (identical(other.clientIp, clientIp) ||
+                other.clientIp == clientIp) &&
+            (identical(other.narrative, narrative) ||
+                other.narrative == narrative) &&
+            (identical(other.paymentType, paymentType) ||
+                other.paymentType == paymentType));
   }
 
   @JsonKey(ignore: true)
@@ -298,7 +370,11 @@ class _$TransactionModelImpl extends _TransactionModel {
       transactionAmount,
       transactionPhoneNumber,
       provider,
-      currency);
+      currency,
+      deviceFingerprint,
+      clientIp,
+      narrative,
+      paymentType);
 
   @JsonKey(ignore: true)
   @override
@@ -326,7 +402,11 @@ abstract class _TransactionModel extends TransactionModel {
       required final int transactionAmount,
       required final String transactionPhoneNumber,
       required final String provider,
-      required final String currency}) = _$TransactionModelImpl;
+      required final String currency,
+      final String? deviceFingerprint,
+      final String? clientIp,
+      final String? narrative,
+      required final PaymentType paymentType}) = _$TransactionModelImpl;
   _TransactionModel._() : super._();
 
   factory _TransactionModel.fromJson(Map<String, dynamic> json) =
@@ -352,6 +432,14 @@ abstract class _TransactionModel extends TransactionModel {
   String get provider;
   @override
   String get currency;
+  @override
+  String? get deviceFingerprint;
+  @override
+  String? get clientIp;
+  @override
+  String? get narrative;
+  @override
+  PaymentType get paymentType;
   @override
   @JsonKey(ignore: true)
   _$$TransactionModelImplCopyWith<_$TransactionModelImpl> get copyWith =>

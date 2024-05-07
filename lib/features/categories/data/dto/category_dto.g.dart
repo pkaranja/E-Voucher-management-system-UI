@@ -36,7 +36,7 @@ Map<String, dynamic> _$$CategoryDetailDTOImplToJson(
 
 _$DataDTOImpl _$$DataDTOImplFromJson(Map<String, dynamic> json) =>
     _$DataDTOImpl(
-      id: json['id'] as int,
+      id: json['id'] as String,
       attributes:
           AttributeDTO.fromJson(json['attributes'] as Map<String, dynamic>),
     );
@@ -61,7 +61,7 @@ Map<String, dynamic> _$$MetaDTOImplToJson(_$MetaDTOImpl instance) =>
 
 _$AttributeDTOImpl _$$AttributeDTOImplFromJson(Map<String, dynamic> json) =>
     _$AttributeDTOImpl(
-      id: json['id'] as int,
+      id: json['id'] as String,
       name: json['name'] as String,
       icon: json['icon'] as String,
       status: json['status'] as String,

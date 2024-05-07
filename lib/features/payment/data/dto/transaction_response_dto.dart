@@ -6,8 +6,8 @@ part 'transaction_response_dto.g.dart';
 @freezed
 class TransactionResponseDto with _$TransactionResponseDto {
   factory TransactionResponseDto({
-    required int status,
-    required String code,
+    required bool status,
+    required int code,
     required String message,
   }) = _TransactionResponseDto;
 

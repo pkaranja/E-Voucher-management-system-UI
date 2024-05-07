@@ -374,7 +374,7 @@ DataDTO _$DataDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DataDTO {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   AttributeDTO get attributes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -387,7 +387,7 @@ abstract class $DataDTOCopyWith<$Res> {
   factory $DataDTOCopyWith(DataDTO value, $Res Function(DataDTO) then) =
       _$DataDTOCopyWithImpl<$Res, DataDTO>;
   @useResult
-  $Res call({int id, AttributeDTO attributes});
+  $Res call({String id, AttributeDTO attributes});
 
   $AttributeDTOCopyWith<$Res> get attributes;
 }
@@ -412,7 +412,7 @@ class _$DataDTOCopyWithImpl<$Res, $Val extends DataDTO>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       attributes: null == attributes
           ? _value.attributes
           : attributes // ignore: cast_nullable_to_non_nullable
@@ -436,7 +436,7 @@ abstract class _$$DataDTOImplCopyWith<$Res> implements $DataDTOCopyWith<$Res> {
       __$$DataDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, AttributeDTO attributes});
+  $Res call({String id, AttributeDTO attributes});
 
   @override
   $AttributeDTOCopyWith<$Res> get attributes;
@@ -460,7 +460,7 @@ class __$$DataDTOImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       attributes: null == attributes
           ? _value.attributes
           : attributes // ignore: cast_nullable_to_non_nullable
@@ -478,7 +478,7 @@ class _$DataDTOImpl extends _DataDTO {
       _$$DataDTOImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final AttributeDTO attributes;
 
@@ -517,14 +517,14 @@ class _$DataDTOImpl extends _DataDTO {
 
 abstract class _DataDTO extends DataDTO {
   factory _DataDTO(
-      {required final int id,
+      {required final String id,
       required final AttributeDTO attributes}) = _$DataDTOImpl;
   _DataDTO._() : super._();
 
   factory _DataDTO.fromJson(Map<String, dynamic> json) = _$DataDTOImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   AttributeDTO get attributes;
   @override
@@ -689,7 +689,7 @@ AttributeDTO _$AttributeDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AttributeDTO {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get icon => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
@@ -709,7 +709,7 @@ abstract class $AttributeDTOCopyWith<$Res> {
       _$AttributeDTOCopyWithImpl<$Res, AttributeDTO>;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String name,
       String icon,
       String status,
@@ -741,7 +741,7 @@ class _$AttributeDTOCopyWithImpl<$Res, $Val extends AttributeDTO>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -775,7 +775,7 @@ abstract class _$$AttributeDTOImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String name,
       String icon,
       String status,
@@ -805,7 +805,7 @@ class __$$AttributeDTOImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -845,7 +845,7 @@ class _$AttributeDTOImpl implements _AttributeDTO {
       _$$AttributeDTOImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String name;
   @override
@@ -898,7 +898,7 @@ class _$AttributeDTOImpl implements _AttributeDTO {
 
 abstract class _AttributeDTO implements AttributeDTO {
   factory _AttributeDTO(
-      {required final int id,
+      {required final String id,
       required final String name,
       required final String icon,
       required final String status,
@@ -909,7 +909,7 @@ abstract class _AttributeDTO implements AttributeDTO {
       _$AttributeDTOImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get name;
   @override

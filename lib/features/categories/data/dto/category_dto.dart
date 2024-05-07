@@ -30,7 +30,7 @@ class CategoryDetailDTO with _$CategoryDetailDTO {
 @freezed
 class DataDTO with _$DataDTO {
 
-  factory DataDTO({ required int id, required AttributeDTO attributes, }) = _DataDTO;
+  factory DataDTO({ required String id, required AttributeDTO attributes, }) = _DataDTO;
   DataDTO._();
 
   CategoryModel toModel() {
@@ -59,7 +59,7 @@ class MetaDTO with _$MetaDTO {
 @freezed
 class AttributeDTO with _$AttributeDTO {
   factory AttributeDTO({
-    required int id,
+    required String id,
     required String name,
     required String icon,
     required String status,

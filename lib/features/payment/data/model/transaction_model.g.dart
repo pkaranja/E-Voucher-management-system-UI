@@ -19,6 +19,10 @@ _$TransactionModelImpl _$$TransactionModelImplFromJson(
       transactionPhoneNumber: json['transactionPhoneNumber'] as String,
       provider: json['provider'] as String,
       currency: json['currency'] as String,
+      deviceFingerprint: json['deviceFingerprint'] as String?,
+      clientIp: json['clientIp'] as String?,
+      narrative: json['narrative'] as String?,
+      paymentType: $enumDecode(_$PaymentTypeEnumMap, json['paymentType']),
     );
 
 Map<String, dynamic> _$$TransactionModelImplToJson(
@@ -34,4 +38,16 @@ Map<String, dynamic> _$$TransactionModelImplToJson(
       'transactionPhoneNumber': instance.transactionPhoneNumber,
       'provider': instance.provider,
       'currency': instance.currency,
+      'deviceFingerprint': instance.deviceFingerprint,
+      'clientIp': instance.clientIp,
+      'narrative': instance.narrative,
+      'paymentType': _$PaymentTypeEnumMap[instance.paymentType]!,
     };
+
+const _$PaymentTypeEnumMap = {
+  PaymentType.CARD: 'CARD',
+  PaymentType.MOBILE: 'MOBILE',
+  PaymentType.PAYPAL: 'PAYPAL',
+  PaymentType.APPLE_PAY: 'APPLE_PAY',
+  PaymentType.GOOGLE_PAY: 'GOOGLE_PAY',
+};

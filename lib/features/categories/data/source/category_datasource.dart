@@ -6,20 +6,6 @@ abstract class CategoryDatasource {
   Future<Either<AppException, List<CategoryModel>>> getAll();
 
   Future<Either<AppException, CategoryModel>> getOne({
-    required int id,
+    required String id,
   });
-
-  Future<Either<AppException, CategoryModel>> createOne({
-    required CategoryModel request,
-  });
-
-  Future<Either<AppException, CategoryModel>> updateOne({
-    required int id,
-    required CategoryModel request,
-  });
-
-  Future<Either<AppException, CategoryModel>> deleteOne({
-    required int id,
-  });
-
 }

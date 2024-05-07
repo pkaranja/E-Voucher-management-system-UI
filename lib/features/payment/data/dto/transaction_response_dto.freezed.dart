@@ -21,8 +21,8 @@ TransactionResponseDto _$TransactionResponseDtoFromJson(
 
 /// @nodoc
 mixin _$TransactionResponseDto {
-  int get status => throw _privateConstructorUsedError;
-  String get code => throw _privateConstructorUsedError;
+  bool get status => throw _privateConstructorUsedError;
+  int get code => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $TransactionResponseDtoCopyWith<$Res> {
           $Res Function(TransactionResponseDto) then) =
       _$TransactionResponseDtoCopyWithImpl<$Res, TransactionResponseDto>;
   @useResult
-  $Res call({int status, String code, String message});
+  $Res call({bool status, int code, String message});
 }
 
 /// @nodoc
@@ -62,11 +62,11 @@ class _$TransactionResponseDtoCopyWithImpl<$Res,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as int,
+              as bool,
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -84,7 +84,7 @@ abstract class _$$TransactionResponseDtoImplCopyWith<$Res>
       __$$TransactionResponseDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int status, String code, String message});
+  $Res call({bool status, int code, String message});
 }
 
 /// @nodoc
@@ -108,11 +108,11 @@ class __$$TransactionResponseDtoImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as int,
+              as bool,
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -131,9 +131,9 @@ class _$TransactionResponseDtoImpl implements _TransactionResponseDto {
       _$$TransactionResponseDtoImplFromJson(json);
 
   @override
-  final int status;
+  final bool status;
   @override
-  final String code;
+  final int code;
   @override
   final String message;
 
@@ -173,17 +173,17 @@ class _$TransactionResponseDtoImpl implements _TransactionResponseDto {
 
 abstract class _TransactionResponseDto implements TransactionResponseDto {
   factory _TransactionResponseDto(
-      {required final int status,
-      required final String code,
+      {required final bool status,
+      required final int code,
       required final String message}) = _$TransactionResponseDtoImpl;
 
   factory _TransactionResponseDto.fromJson(Map<String, dynamic> json) =
       _$TransactionResponseDtoImpl.fromJson;
 
   @override
-  int get status;
+  bool get status;
   @override
-  String get code;
+  int get code;
   @override
   String get message;
   @override

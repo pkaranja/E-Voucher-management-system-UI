@@ -20,7 +20,7 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CategoryModel {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get icon => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $CategoryModelCopyWith<$Res> {
       _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String name,
       String icon,
       String status,
@@ -72,7 +72,7 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -106,7 +106,7 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String name,
       String icon,
       String status,
@@ -136,7 +136,7 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -177,7 +177,7 @@ class _$CategoryModelImpl extends _CategoryModel with DiagnosticableTreeMixin {
       _$$CategoryModelImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String name;
   @override
@@ -242,7 +242,7 @@ class _$CategoryModelImpl extends _CategoryModel with DiagnosticableTreeMixin {
 
 abstract class _CategoryModel extends CategoryModel {
   factory _CategoryModel(
-      {required final int id,
+      {required final String id,
       required final String name,
       required final String icon,
       required final String status,
@@ -254,7 +254,7 @@ abstract class _CategoryModel extends CategoryModel {
       _$CategoryModelImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get name;
   @override

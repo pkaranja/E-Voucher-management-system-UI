@@ -10,37 +10,6 @@ import 'category_datasource.dart';
 class CategoryLocalDatasource extends CategoryDatasource {
 
   @override
-  Future<Either<AppException, CategoryModel>> createOne( {required CategoryModel request}) async {
-    try {
-      final newCategory = CategoryDB()
-        ..name = request.name
-        ..icon = request.icon
-        ..status = request.status
-        ..backgroundColor = request.backgroundColor
-        ..order = request.order;
-
-      await isarDB.writeTxn(() async {
-        await isarDB.categories.put(newCategory);
-      });
-
-      return Right(
-        CategoryModel(
-          id: 0,
-          name: request.name,
-          icon: request.icon,
-          status: request.status,
-          backgroundColor: request.backgroundColor,
-          order: request.order,
-        ),
-      );
-    } on DioException catch (ex) {
-      return Left(AppException.errorWithMessage(ex.response?.data));
-    }
-  }
-
- 
-
-  @override
   Future<Either<AppException, List<CategoryModel>>> getAll() async {
     try {
       final response = await isarDB.categories.where().findAll();
@@ -59,23 +28,9 @@ class CategoryLocalDatasource extends CategoryDatasource {
     }
   }
 
-  //No delete allowed
   @override
-  Future<Either<AppException, CategoryModel>> deleteOne({required int id}) {
-    // TODO: implement deleteOne
-    throw UnimplementedError();
-  }
-
-
-  @override
-  Future<Either<AppException, CategoryModel>> getOne({required int id}) {
+  Future<Either<AppException, CategoryModel>> getOne({required String id}) {
     // TODO: implement getOne
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<AppException, CategoryModel>> updateOne({required int id, required CategoryModel request}) {
-    // TODO: implement updateOne
     throw UnimplementedError();
   }
   

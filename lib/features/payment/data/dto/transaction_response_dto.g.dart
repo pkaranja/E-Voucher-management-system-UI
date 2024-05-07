@@ -9,8 +9,8 @@ part of 'transaction_response_dto.dart';
 _$TransactionResponseDtoImpl _$$TransactionResponseDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$TransactionResponseDtoImpl(
-      status: json['status'] as int,
-      code: json['code'] as String,
+      status: json['status'] as bool,
+      code: json['code'] as int,
       message: json['message'] as String,
     );
 

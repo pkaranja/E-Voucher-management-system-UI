@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/config/constants.dart';
+
 part 'transaction_model.freezed.dart';
 part 'transaction_model.g.dart';
 
@@ -18,6 +20,10 @@ class TransactionModel with _$TransactionModel {
     required String transactionPhoneNumber,
     required String provider,
     required String currency,
+    String? deviceFingerprint,
+    String? clientIp,
+    String? narrative,
+    required PaymentType paymentType,
   }) = _TransactionModel;
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
@@ -34,7 +40,11 @@ class TransactionModel with _$TransactionModel {
       "transactionAmount": transactionAmount,
       "transactionPhoneNumber": transactionPhoneNumber,
       "provider": provider,
-      "currency": currency
+      "currency": currency,
+      "deviceFingerprint": deviceFingerprint,
+      "clientIp": clientIp,
+      "narrative": narrative,
+      "paymentType": paymentType,
     };
   }
 }

@@ -31,7 +31,7 @@ class CategoryRemoteDatasource extends CategoryDatasource {
   }
 
   @override
-  Future<Either<AppException, CategoryModel>> getOne({ required int id, }) async {
+  Future<Either<AppException, CategoryModel>> getOne({ required String id, }) async {
     final response = await _api.get( "${Endpoints.categoriesPath}/$id", );
 
     return response.when(
@@ -48,26 +48,4 @@ class CategoryRemoteDatasource extends CategoryDatasource {
       },
     );
   }
-
-  //No create allowed
-  @override
-  Future<Either<AppException, CategoryModel>> createOne({required CategoryModel request}) {
-    // TODO: implement createOne
-    throw UnimplementedError();
-  }
-
-  //No delete allowed
-  @override
-  Future<Either<AppException, CategoryModel>> deleteOne({required int id}) {
-    // TODO: implement deleteOne
-    throw UnimplementedError();
-  }
-
-  //No update allowed
-  @override
-  Future<Either<AppException, CategoryModel>> updateOne({required int id, required CategoryModel request}) {
-    // TODO: implement updateOne
-    throw UnimplementedError();
-  }
-
 }
